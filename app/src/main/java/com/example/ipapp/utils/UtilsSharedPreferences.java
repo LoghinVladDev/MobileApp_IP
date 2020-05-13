@@ -13,6 +13,7 @@ public class UtilsSharedPreferences {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         return preferences.getString(key, defaultValue);
     }
+
     public static void setString(Context context, String key, String value) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
