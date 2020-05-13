@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">IPApp</string>
+    <string name="hintPassword">Enter password here</string>
+    <string name="hintEmail">Enter email here</string>
+    <string name="buttonLogin">Login</string>
 </resources>
