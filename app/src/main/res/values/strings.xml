@@ -4,4 +4,6 @@
     <string name="hintEmail">Enter email here</string>
     <string name="buttonLogin">Login</string>
     <string name="buttonRegister">Register</string>
+    <string name="hintFirstName">Enter your first name</string>
+    <string name="hintLastName">Enter your last name</string>
 </resources>

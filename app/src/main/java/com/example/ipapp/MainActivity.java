@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.ipapp.utils.UtilsSharedPreferences;
-
 public class MainActivity extends AppCompatActivity {
+    private static final String LOG_TAG = "MAIN ACTIVITY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.v(LOG_TAG, "Main Activity -> LoginActivity");
         startActivity(new Intent(this, LoginActivity.class));
     }
 
