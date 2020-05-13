@@ -3,12 +3,14 @@ package com.example.ipapp.utils;
 public class ApiUrls {
     private static final String API_ROOTPATH = "https://fiscaldocumentsapi.azurewebsites.net";
 
+    //<editor-fold desc="ACCOUNT">
     public static final String ACCOUNT_LOGIN = API_ROOTPATH + "/Account/Login.php";
     public static final String ACCOUNT_CREATE = API_ROOTPATH + "/Account/Create.php";
     public static final String ACCOUNT_MODIFY = API_ROOTPATH + "/Account/Modify.php";
     public static final String ACCOUNT_RETRIEVE_INFORMATION = API_ROOTPATH + "/Account/Retrieve.php";
+    //</editor-fold>
 
-
+    //<editor-fold desc="INSTITUTIONS">
     public static final String INSTITUTION_CREATE = API_ROOTPATH + "/Institution/Create.php";
     public static final String INSTITUTION_MODIFY = API_ROOTPATH + "/Institution/Modify.php";
     public static final String INSTITUTION_DELETE = API_ROOTPATH + "/Institution/Delete.php";
@@ -31,8 +33,9 @@ public class ApiUrls {
     public static final String INSTITUTION_CONTACT_INFORMATION_EDIT = API_ROOTPATH + "/Institution/Contact/Edit.php";
     public static final String INSTITUTION_CONTACT_INFORMATION_DELETE = API_ROOTPATH + "/Institution/Contact/Delete.php";
     public static final String INSTITUTION_CONTACT_INFORMATION_RETRIEVE = API_ROOTPATH + "/Institution/Contact/Retrieve.php";
+    //</editor-fold>
 
-
+    //<editor-fold desc="DOCUMENTS">
     public static final String DOCUMENT_UPLOAD_INVOICE = API_ROOTPATH + "/Document/UploadInvoice.php";
     public static final String DOCUMENT_UPLOAD_RECEIPT = API_ROOTPATH + "/Document/UploadReceipt.php";
     public static final String DOCUMENT_MODIFY_INVOICE = API_ROOTPATH + "/Document/ModifyInvoice.php";
@@ -53,11 +56,13 @@ public class ApiUrls {
     public static final String DOCUMENT_RETRIEVE_FILTER_INSTITUTION_CREATED = API_ROOTPATH + "/Document/Filters/InstitutionCreated.php";
     public static final String DOCUMENT_RETRIEVE_FILTER_INSTITUTION_SENT = API_ROOTPATH + "/Document/Filters/InstitutionSent.php";
     public static final String DOCUMENT_RETRIEVE_FILTER_INSTITUTION_RECEIVED = API_ROOTPATH + "/Document/Filters/InstitutionReceived.php";
+    //</editor-fold>
 
-
+    //<editor-fold desc="INGNORE FOR NOW BRO">
     public static final String NEWSFEED_CREATE = API_ROOTPATH + "/Newsfeed/Create.php";
     public static final String NEWSFEED_MODIFY = API_ROOTPATH + "/Newsfeed/Modify.php";
     public static final String NEWSFEED_DELETE = API_ROOTPATH + "/Newsfeed/Delete.php";
     public static final String NEWSFEED_RETRIEVE_ALL = API_ROOTPATH + "/Newsfeed/Retrieve.php";
+    //</editor-fold>
 
 }

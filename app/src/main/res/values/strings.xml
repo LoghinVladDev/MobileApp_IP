@@ -6,4 +6,7 @@
     <string name="buttonRegister">Register</string>
     <string name="hintFirstName">Enter your first name</string>
     <string name="hintLastName">Enter your last name</string>
+    <string name="bottomNavBarDocuments">Documents</string>
+    <string name="bottomNavBarAccount">My Account</string>
+    <string name="bottomNavBarInstitutions">Institutions</string>
 </resources>
