@@ -26,4 +26,9 @@
         android:layout_height="wrap_content"
         android:text="@string/buttonLogin"
         android:id="@+id/buttonLogin"/>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/buttonRegister"
+        android:id="@+id/buttonRegister"/>
 </LinearLayout>

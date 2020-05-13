@@ -3,4 +3,5 @@
     <string name="hintPassword">Enter password here</string>
     <string name="hintEmail">Enter email here</string>
     <string name="buttonLogin">Login</string>
+    <string name="buttonRegister">Register</string>
 </resources>

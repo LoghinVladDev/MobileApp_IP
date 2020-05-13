@@ -2,6 +2,7 @@ package com.example.ipapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +25,13 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "LOGIN ACTIVITY";
-    private EditText editTextEmail, editTextPassword;
-    private Button buttonLogin;
     private RequestQueue httpRequestQueue;
+
+    //<editor-fold desc="UI ELEMENTS">
+    private EditText editTextEmail, editTextPassword;
+    private Button buttonLogin, buttonRegister;
+    //</editor-fold>
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
 
         httpRequestQueue = Volley.newRequestQueue(this);
 
+        initializeUI();
+    }
+
+    private void initializeUI() {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
@@ -45,7 +54,21 @@ public class LoginActivity extends AppCompatActivity {
                 onClickButtonLogin(v);
             }
         });
+
+        buttonRegister = findViewById(R.id.buttonRegister);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickButtonRegister(v);
+            }
+        });
     }
+
+    private void onClickButtonRegister(View v) {
+        Intent goToRegisterActivity = new Intent(this, RegisterActivity.class);
+        startActivity(goToRegisterActivity);
+    }
+
     private void onClickButtonLogin(View v) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("email", editTextEmail.getText().toString());
@@ -84,4 +107,5 @@ public class LoginActivity extends AppCompatActivity {
         };
         httpRequestQueue.add(loginRequest);
     }
+
 }
