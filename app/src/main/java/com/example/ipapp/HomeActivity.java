@@ -1,11 +1,14 @@
 package com.example.ipapp;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.volley.RequestQueue;
 import com.example.ipapp.object.institution.Institution;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,12 +18,14 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private List<Institution> appInstitutionList;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        this.requestQueue = LoginActivity.getRequestQueue();
 
         initialiseBottomNavigation();
     }
@@ -35,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
     }
 
 }
