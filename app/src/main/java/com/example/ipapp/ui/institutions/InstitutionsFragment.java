@@ -46,6 +46,7 @@ public class InstitutionsFragment extends Fragment {
     private List<Institution> institutions;
     private List<String> institutionNames;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         // TODO IMPLEMENT GET MEMBERS INST REQ HERE
@@ -73,28 +74,33 @@ public class InstitutionsFragment extends Fragment {
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestPopulateInstitutions(){
         Map<String, String> requestParams = new HashMap<>();
 
         requestParams.put("email", UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL,""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
 
-        Log.d("INSTITUTION_FRAGMENT", "EMAIL PARAM TEST : " +  UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL,""));
+        //Log.d("INSTITUTION_FRAGMENT", "EMAIL PARAM TEST : " +  UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL,""));
 
         this.makeHTTPGetInstitutionsForMemberRequest(requestParams);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void makeHTTPGetInstitutionsForMemberRequest(final Map<String, String> bodyParameters){
-        StringBuilder sb = new StringBuilder();
+              StringBuilder sb = new StringBuilder();
 
         String URL = ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER + "?";
+        bodyParameters.entrySet().forEach((k) -> {sb.append(k.getKey()).append("=").append(k.getValue()).append("&");});
 
-        for(bodyParameters.entrySet())
+        URL = (URL + sb.toString());
+        URL = URL.substring(0, URL.length() - 1);
+
+        //Log.d("DEBUG_INST_FRAG", "test : " + URL);
 
         StringRequest getRequest = new StringRequest(
                 Request.Method.GET,
-                ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER +  '?';,
+                URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

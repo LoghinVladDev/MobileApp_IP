@@ -2,6 +2,7 @@ package com.example.ipapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         initializeUI();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initializeUI() {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
@@ -67,6 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                 onClickButtonRegister(v);
             }
         });
+
+        editTextEmail.setText("vlad.loghin00@gmail.com");
+        editTextPassword.setText("parola");
     }
 
     private void onClickButtonRegister(View v) {
