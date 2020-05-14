@@ -1,5 +1,11 @@
 package com.example.ipapp.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.util.Map;
+
 public class ApiUrls {
     private static final String API_ROOTPATH = "https://fiscaldocumentsapi.azurewebsites.net";
 
@@ -84,5 +90,14 @@ public class ApiUrls {
     public static final String NEWSFEED_DELETE = API_ROOTPATH + "/Newsfeed/Delete.php";
     public static final String NEWSFEED_RETRIEVE_ALL = API_ROOTPATH + "/Newsfeed/Retrieve.php";
     //</editor-fold>
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static String encodeGetURLParams(String BaseURL, Map<String, String> params){
+        StringBuilder sb = new StringBuilder();
+
+        params.entrySet().forEach(e -> sb.append(e.getKey()).append("=").append(e.getValue()).append("&"));
+
+        return BaseURL + "?" + (sb.toString()).substring(0, sb.toString().length() - 1);
+    }
 
 }

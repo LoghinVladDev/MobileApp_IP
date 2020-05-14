@@ -90,33 +90,26 @@ public class InstitutionsFragment extends Fragment {
     private void makeHTTPGetInstitutionsForMemberRequest(final Map<String, String> bodyParameters){
               StringBuilder sb = new StringBuilder();
 
-        String URL = ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER + "?";
-        bodyParameters.entrySet().forEach((k) -> {sb.append(k.getKey()).append("=").append(k.getValue()).append("&");});
+        //String URL = ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER + "?";
+        //bodyParameters.entrySet().forEach((k) -> {sb.append(k.getKey()).append("=").append(k.getValue()).append("&");});
 
-        URL = (URL + sb.toString());
-        URL = URL.substring(0, URL.length() - 1);
+        //URL = (URL + sb.toString());
+        //URL = URL.substring(0, URL.length() - 1);
 
         //Log.d("DEBUG_INST_FRAG", "test : " + URL);
 
         StringRequest getRequest = new StringRequest(
                 Request.Method.GET,
-                URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
-                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                    }
+                ApiUrls.encodeGetURLParams(ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER, bodyParameters),
+                response -> {
+                    Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
+                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("INSTITUTIONS_FRAGMNENT", "VOLLEY ERROR : " + error.toString());
-                        Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_SHORT).show();
-                    }
+                error -> {
+                    Log.d("INSTITUTIONS_FRAGMNENT", "VOLLEY ERROR : " + error.toString());
+                    Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_SHORT).show();
                 }
-        )
-        {
+        ) {
             protected Map<String, String> getParams() { return bodyParameters; }
         };
         this.requestQueue.add(getRequest);
