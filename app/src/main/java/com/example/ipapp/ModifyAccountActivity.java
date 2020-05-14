@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,6 +28,9 @@ public class ModifyAccountActivity extends AppCompatActivity {
     private EditText editTextNewPassword, editTextNewFirstName, editTextNewLastName;
     private Button buttonModifyAccount;
     private RequestQueue httpRequestQueue;
+    private CheckBox passwordCheckBox;
+    private CheckBox firstNameCheckBox;
+    private CheckBox lastNameCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,10 @@ public class ModifyAccountActivity extends AppCompatActivity {
         editTextNewFirstName = findViewById(R.id.editTextLastName);
         editTextNewLastName = findViewById(R.id.editTextNewLastName);
         buttonModifyAccount = findViewById(R.id.buttonModifyAccount);
+        passwordCheckBox = findViewById(R.id.newPasswordCheckBox);
+        firstNameCheckBox = findViewById(R.id.newFirstNameCheckBox);
+        lastNameCheckBox = findViewById(R.id.newLastNameCheckBox);
+
         buttonModifyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
