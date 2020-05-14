@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>
+public class CustomAdapter<T> extends RecyclerView.Adapter<CustomAdapter.ViewHolder>
 {
 
-    private List<String> mData;
+    private List<T> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public CustomAdapter(Context context, List<String> data)
+    public CustomAdapter(Context context, List<T> data)
     {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -37,8 +37,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        String document = mData.get(position);
-        holder.myTextView.setText(document);
+        T item = mData.get(position);
+        holder.myTextView.setText(item.toString());
     }
 
 
@@ -69,7 +69,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     // convenience method for getting data at click position
-    String getItem(int id)
+    T getItem(int id)
     {
         return mData.get(id);
     }

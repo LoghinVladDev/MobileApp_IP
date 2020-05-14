@@ -32,6 +32,10 @@ import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +44,8 @@ import java.util.Map;
 public class InstitutionsFragment extends Fragment {
 
     CustomAdapter adapter;
+
+    private static final String CLASS_TAG = "INSTITUTIONS_FRAGMENT";
 
     private RequestQueue requestQueue;
 
@@ -68,10 +74,35 @@ public class InstitutionsFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        adapter = new CustomAdapter(root.getContext(), this.institutionNames);
+        adapter = new CustomAdapter(root.getContext(), this.institutions);
         recyclerView.setAdapter(adapter);
 
         return root;
+    }
+
+    private void callbackPopulateInstitutionsList(String JSONEncodedResponse) {
+        try {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            //Log.d(CLASS_TAG, "RESPONSE : " + responseObject.toString());
+
+            JSONArray institutionListJSON = (JSONArray) responseObject.get("institution");
+
+            for(int i = 0, length = institutionListJSON.length(); i < length; i++){
+                JSONObject currentInstitutionJSON = (JSONObject) institutionListJSON.getJSONObject(i);
+                this.institutions.add(
+                        new Institution()
+                                .setName(currentInstitutionJSON.getString("institutionName"))
+                                .setID(currentInstitutionJSON.getInt("ID"))
+                );
+
+                //Log.d(CLASS_TAG, "STATUS_UPD : " + currentInstitutionJSON.toString());
+            }
+            Log.d(CLASS_TAG, "LIST : " + this.institutions.toString());
+        } catch (JSONException e){
+            Log.e(CLASS_TAG, "ERROR : " + e.toString());
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -102,11 +133,13 @@ public class InstitutionsFragment extends Fragment {
                 Request.Method.GET,
                 ApiUrls.encodeGetURLParams(ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER, bodyParameters),
                 response -> {
-                    Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
+                    if(response.contains("SUCCESS"))
+                        callbackPopulateInstitutionsList(response);
+                    //Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
                     Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                 },
                 error -> {
-                    Log.d("INSTITUTIONS_FRAGMNENT", "VOLLEY ERROR : " + error.toString());
+                    Log.d(CLASS_TAG, "VOLLEY ERROR : " + error.toString());
                     Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_SHORT).show();
                 }
         ) {

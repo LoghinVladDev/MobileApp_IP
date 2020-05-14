@@ -1,5 +1,7 @@
 package com.example.ipapp.object.institution;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +14,15 @@ public class Institution {
     private List<Member> memberList;
     private List<Role> roleList;
     private List<Address> addressList;
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "{ name = "  +
+                this.name +
+                ", id = " +
+                this.ID + "}";
+    }
 
     public Institution(){
         this.memberList = new ArrayList<>();
