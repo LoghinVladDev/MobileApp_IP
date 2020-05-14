@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ipapp.utils.ApiUrls;
+import com.example.ipapp.utils.UtilsSharedPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,11 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "LOGIN ACTIVITY";
-    private RequestQueue httpRequestQueue;
+    private static RequestQueue httpRequestQueue;
+
+    public static RequestQueue getRequestQueue(){
+        return LoginActivity.httpRequestQueue;
+    }
 
     //<editor-fold desc="UI ELEMENTS">
     private EditText editTextEmail, editTextPassword;
@@ -38,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        httpRequestQueue = Volley.newRequestQueue(this);
+        LoginActivity.httpRequestQueue = Volley.newRequestQueue(this);
 
         initializeUI();
     }
@@ -73,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("email", editTextEmail.getText().toString());
         requestParams.put("hashedPassword", editTextPassword.getText().toString());
+        UtilsSharedPreferences.setString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, editTextEmail.getText().toString());
+        UtilsSharedPreferences.setString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, editTextPassword.getText().toString());
 
         makeHTTPLoginRequest(requestParams);
     }
@@ -84,7 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d(LOG_TAG, "RESPONSE : " + response);
                         if (response.contains("SUCCESS")) {
+
                             Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                            Bundle bundle = new Bundle();
+
                             startActivity(goToHome);
                         } else {
                             Toast.makeText(getApplicationContext(),
