@@ -83,9 +83,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d(LOG_TAG, "RESPONSE : " + response);
-                        Toast.makeText(getApplicationContext(),
-                                response,
-                                Toast.LENGTH_SHORT).show();
+                        if (response.contains("SUCCESS")) {
+                            Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(goToHome);
+                        } else {
+                            Toast.makeText(getApplicationContext(),
+                                    response,
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 },
                 new Response.ErrorListener() {

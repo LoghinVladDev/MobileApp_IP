@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/bottom_navigation_institutions">
+
+    <fragment
+        android:id="@+id/bottom_navigation_institutions"
+        android:name="com.example.ipapp.ui.institutions.InstitutionsFragment"
+        android:label="@string/title_institutions"
+        tools:layout="@layout/fragment_institutions" />
+
+    <fragment
+        android:id="@+id/bottom_navigation_account"
+        android:name="com.example.ipapp.ui.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
+
+    <fragment
+        android:id="@+id/bottom_navigation_documents"
+        android:name="com.example.ipapp.ui.documents.DocumentsFragment"
+        android:label="@string/title_documents"
+        tools:layout="@layout/fragment_documents" />
+</navigation>

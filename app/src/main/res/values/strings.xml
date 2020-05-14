@@ -1,12 +1,25 @@
 <resources>
     <string name="app_name">IPApp</string>
+
     <string name="hintPassword">Enter password here</string>
     <string name="hintEmail">Enter email here</string>
     <string name="buttonLogin">Login</string>
     <string name="buttonRegister">Register</string>
     <string name="hintFirstName">Enter your first name</string>
     <string name="hintLastName">Enter your last name</string>
+
     <string name="bottomNavBarDocuments">Documents</string>
     <string name="bottomNavBarAccount">My Account</string>
     <string name="bottomNavBarInstitutions">Institutions</string>
+
+    <string name="hintNewPassword">Enter your new password here</string>
+    <string name="hintNewFirstName">Enter your first name here</string>
+    <string name="hintNewLastName">Enter your last name here</string>
+    <string name="buttonModifyAccount">Modify Account</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_institutions">Institutions</string>
+    <string name="title_account">Account</string>
+    <string name="title_documents">Documents</string>
+
+
 </resources>
