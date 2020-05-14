@@ -2,6 +2,7 @@ package com.example.ipapp;
 
 import android.os.Bundle;
 
+import com.example.ipapp.object.institution.Institution;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +11,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
+
+    private List<Institution> appInstitutionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
