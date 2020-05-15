@@ -14,12 +14,15 @@ import java.util.List;
 public class CustomAdapter<T> extends RecyclerView.Adapter<CustomAdapter.ViewHolder>
 {
 
+    private final int recyclerViewID;
+
     private List<T> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public CustomAdapter(Context context, List<T> data)
+    public CustomAdapter(Context context, List<T> data,int recyclerViewID)
     {
+        this.recyclerViewID = recyclerViewID;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -29,7 +32,7 @@ public class CustomAdapter<T> extends RecyclerView.Adapter<CustomAdapter.ViewHol
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view = mInflater.inflate(R.layout.recyclerview_institution, parent, false);
+        View view = mInflater.inflate(this.recyclerViewID, parent, false);
         return new ViewHolder(view);
     }
 
