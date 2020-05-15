@@ -21,6 +21,14 @@
     <string name="title_institutions">Institutions</string>
     <string name="title_account">Account</string>
     <string name="title_documents">Documents</string>
+    <string name="checkBoxChangePassword">Change Password</string>
+    <string name="checkBoxFirstNameCheckBox">Change first name</string>
+    <string name="checkBoxChangeLastName">Change last name</string>
+    <string name="toastModifyAccountNoBoxChecked">Nothing to be changed to your account! Check the desired boxes!</string>
+    <string name="toastModifyAccountRequestSuccess">Account modified with success!</string>
+    <string name="hintCurrentEmail">Your current email</string>
+    <string name="hintCurrentFirstName">Your current first name</string>
+    <string name="textViewAccountDetails">Your account details</string>
 
 
 </resources>

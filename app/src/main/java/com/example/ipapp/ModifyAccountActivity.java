@@ -12,31 +12,24 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ModifyAccountActivity extends AppCompatActivity {
     private final static String LOG_TAG = "MODIFY ACC ACTIVITY";
-    private final static String KEY_NEW_PASSWORD = "newHashedPassword";
-    private final static String KEY_NEW_FIRST_NAME = "newFirstName";
-    private final static String KEY_NEW_LAST_NAME = "newLastName";
 
-    private static Map<String, String> params = new HashMap<>();
-
+    //<editor-fold desc="UI ELEMENTS">
     private EditText editTextNewPassword, editTextNewFirstName, editTextNewLastName;
+    private CheckBox checkBoxPassword, checkBoxFirstName, checkBoxLastName;
     private Button buttonModifyAccount;
+    //</editor-fold>
+
     private RequestQueue httpRequestQueue;
-    private CheckBox passwordCheckBox;
-    private CheckBox firstNameCheckBox;
-    private CheckBox lastNameCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +37,6 @@ public class ModifyAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_account);
 
         initialiseUI();
-
-        getInitParams();
 
         httpRequestQueue = Volley.newRequestQueue(this);
     }
@@ -55,104 +46,66 @@ public class ModifyAccountActivity extends AppCompatActivity {
         editTextNewFirstName = findViewById(R.id.editTextNewFirstName);
         editTextNewLastName = findViewById(R.id.editTextNewLastName);
         buttonModifyAccount = findViewById(R.id.buttonModifyAccount);
-        passwordCheckBox = findViewById(R.id.newPasswordCheckBox);
-        firstNameCheckBox = findViewById(R.id.newFirstNameCheckBox);
-        lastNameCheckBox = findViewById(R.id.newLastNameCheckBox);
-
-        passwordCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPasswordCheckBox(passwordCheckBox);
-            }
-        });
-
-        firstNameCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickFirstNameCheckBox(firstNameCheckBox);
-            }
-        });
-
-        lastNameCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLastNameCheckBox(lastNameCheckBox);
-            }
-        });
+        checkBoxPassword = findViewById(R.id.newPasswordCheckBox);
+        checkBoxFirstName = findViewById(R.id.newFirstNameCheckBox);
+        checkBoxLastName = findViewById(R.id.newLastNameCheckBox);
 
 
-        buttonModifyAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickButtonModifyAccount();
-            }
-        });
-    }
+        checkBoxPassword.setChecked(false);
+        checkBoxFirstName.setChecked(false);
+        checkBoxLastName.setChecked(false);
 
-    private void onClickPasswordCheckBox(CheckBox c)
-    {
-        if (c.isChecked() && !editTextNewPassword.getText().toString().equals(""))
-        {
-            params.put(KEY_NEW_PASSWORD, editTextNewPassword.getText().toString());
-        }
-        else
-        {
-            params.put(KEY_NEW_PASSWORD, "");
-        }
-    }
+        editTextNewPassword.setVisibility(View.GONE);
+        editTextNewLastName.setVisibility(View.GONE);
+        editTextNewFirstName.setVisibility(View.GONE);
 
-    private void onClickFirstNameCheckBox(CheckBox c)
-    {
-        if (c.isChecked() && !editTextNewFirstName.getText().toString().equals(""))
-        {
-            params.put(KEY_NEW_FIRST_NAME, editTextNewFirstName.getText().toString());
-        }
-        else
-        {
-            params.put(KEY_NEW_FIRST_NAME, "");
-        }
-    }
+        checkBoxPassword.setOnCheckedChangeListener((buttonView, isChecked) -> editTextNewPassword.setVisibility(isChecked ? View.VISIBLE : View.GONE));
+        checkBoxLastName.setOnCheckedChangeListener(((buttonView, isChecked) -> editTextNewLastName.setVisibility(isChecked ? View.VISIBLE : View.GONE)));
+        checkBoxFirstName.setOnCheckedChangeListener(((buttonView, isChecked) -> editTextNewFirstName.setVisibility(isChecked ? View.VISIBLE : View.GONE)));
 
-    private void onClickLastNameCheckBox(CheckBox c)
-    {
-        if (c.isChecked() && !editTextNewLastName.getText().toString().equals(""))
-        {
-            params.put(KEY_NEW_LAST_NAME, editTextNewLastName.getText().toString());
-        }
-        else
-        {
-            params.put(KEY_NEW_LAST_NAME, "");
-        }
+        buttonModifyAccount.setOnClickListener(v -> onClickButtonModifyAccount());
     }
 
     private void onClickButtonModifyAccount() {
-        if (!checkFormInput())
+        final String PARAM_EMAIL = "email";
+        final String PARAM_PASSWORD = "hashedPassword";
+        final String PARAM_NEW_PASSWORD = "newHashedPassword";
+        final String PARAM_NEW_FIRST_NAME = "newFirstName";
+        final String PARAM_NEW_LAST_NAME = "newLastName";
+
+        if (!checkBoxFirstName.isChecked() && !checkBoxLastName.isChecked() && !checkBoxPassword.isChecked()) {
+            Toast.makeText(getApplicationContext(), getString(R.string.toastModifyAccountNoBoxChecked), Toast.LENGTH_SHORT).show();
             return;
+        }
         Toast.makeText(getApplicationContext(), UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""), Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""), Toast.LENGTH_SHORT).show();
+
+        Map<String, String> params = new HashMap<>();
+        params.put(PARAM_EMAIL, UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        params.put(PARAM_PASSWORD, UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        params.put(PARAM_NEW_PASSWORD, checkBoxPassword.isChecked() ? editTextNewPassword.getText().toString() : "");
+        params.put(PARAM_NEW_FIRST_NAME, checkBoxFirstName.isChecked() ? editTextNewFirstName.getText().toString() : "");
+        params.put(PARAM_NEW_LAST_NAME, checkBoxLastName.isChecked() ? editTextNewLastName.getText().toString() : "");
+
+        Log.v(LOG_TAG, "PARAMS MAP MODIFY ACC REQ:" + params);
         makeHTTPModifyAccountRequest(params);
     }
 
     private void makeHTTPModifyAccountRequest(final Map<String, String> requestParameters) {
         StringRequest modifyAccountRequest = new StringRequest(Request.Method.POST, ApiUrls.ACCOUNT_MODIFY,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // TODO IMPLEMENT PROPER USER RESPONSE (ON MODIFYING ACC)
-                        Log.d(LOG_TAG, "RESPONSE : " + response);
-                        Toast.makeText(getApplicationContext(),
-                                response,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                response -> {
+                    // TODO IMPLEMENT PROPER USER RESPONSE (ON MODIFYING ACC)
+                    Log.d(LOG_TAG, "RESPONSE : " + response);
+                    if (response.contains("SUCCESS"))
+                        Toast.makeText(getApplicationContext(), getString(R.string.toastModifyAccountRequestSuccess), Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(), "Error : " + response, Toast.LENGTH_LONG).show();
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
-                        Toast.makeText(getApplicationContext(),
-                                "Error : " + error,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                error -> {
+                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Networking Error :" + error,
+                            Toast.LENGTH_SHORT).show();
                 }
         ) {
             @Override
@@ -161,21 +114,5 @@ public class ModifyAccountActivity extends AppCompatActivity {
             }
         };
         httpRequestQueue.add(modifyAccountRequest);
-    }
-
-    private void getInitParams()
-    {
-        params.put("email", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
-        params.put("currentHashedPassword", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
-        params.put(KEY_NEW_PASSWORD, "");
-        params.put(KEY_NEW_FIRST_NAME, "");
-        params.put(KEY_NEW_LAST_NAME, "");
-    }
-
-
-
-    private boolean checkFormInput() {
-        // TOOD CHECK FORM INPUT - IF INPUT IS BAD SHOW A TOAST TO ALERT THE USER ACCORDINGLY
-        return true;
     }
 }
