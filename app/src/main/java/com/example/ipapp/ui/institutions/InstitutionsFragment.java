@@ -6,26 +6,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.ipapp.CustomAdapter;
-import com.example.ipapp.HomeActivity;
+import com.example.ipapp.InstitutionsAdapter;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
@@ -43,7 +35,7 @@ import java.util.Map;
 
 public class InstitutionsFragment extends Fragment {
 
-    CustomAdapter adapter;
+    private InstitutionsAdapter<Institution> adapter;
 
     private static final String CLASS_TAG = "INSTITUTIONS_FRAGMENT";
 
@@ -74,7 +66,7 @@ public class InstitutionsFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        adapter = new CustomAdapter(root.getContext(), this.institutions, R.layout.recyclerview_institution);
+        adapter = new InstitutionsAdapter<>(root.getContext(), this.institutions, R.layout.recyclerview_institution);
         recyclerView.setAdapter(adapter);
 
         return root;

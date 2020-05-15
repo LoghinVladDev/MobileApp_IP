@@ -11,69 +11,58 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CustomAdapter<T> extends RecyclerView.Adapter<CustomAdapter.ViewHolder>
-{
-
+public class InstitutionsAdapter<T> extends RecyclerView.Adapter<InstitutionsAdapter.ViewHolder> {
     private final int recyclerViewID;
 
     private List<T> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public CustomAdapter(Context context, List<T> data,int recyclerViewID)
-    {
+    public InstitutionsAdapter(Context context, int recyclerViewID, List<T> mData) {
         this.recyclerViewID = recyclerViewID;
+        this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
     }
 
     // inflates the row layout from xml when needed
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(this.recyclerViewID, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
-    {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         T item = mData.get(position);
-        holder.myTextView.setText(item.toString());
+        holder.textViewInstitutionToString.setText(item.toString());
     }
-
 
     // total number of rows
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mData.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
-        TextView myTextView;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView textViewInstitutionToString;
 
-        ViewHolder(View itemView)
-        {
+        ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.institution);
+            textViewInstitutionToString = itemView.findViewById(R.id.textInstitution);
         }
 
         @Override
-        public void onClick(View view)
-        {
+        public void onClick(View view) {
 
         }
     }
 
     // convenience method for getting data at click position
-    T getItem(int id)
-    {
+    T getItem(int id) {
         return mData.get(id);
     }
 

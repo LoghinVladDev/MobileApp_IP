@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Receipt extends Document {
+    // TODO PAYMENT METHOD TOTAL INVOICE LINKAGE
     private List<Pair<Item, Integer>> items;
 
     public Receipt(){
