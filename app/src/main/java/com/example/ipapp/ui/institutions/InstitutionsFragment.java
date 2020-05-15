@@ -50,7 +50,6 @@ public class InstitutionsFragment extends Fragment {
     private RequestQueue requestQueue;
 
     private List<Institution> institutions;
-    private List<String> institutionNames;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,7 +62,6 @@ public class InstitutionsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_institutions, container, false);
 
         this.institutions = new ArrayList<>();
-        this.institutionNames = new ArrayList<>();
 
         /*ArrayList<String> documentNames = new ArrayList<>();
         documentNames.add("BRD grup soșiete jeneral");
@@ -149,6 +147,5 @@ public class InstitutionsFragment extends Fragment {
         };
         this.requestQueue.add(getRequest);
     }
-
 }
 
