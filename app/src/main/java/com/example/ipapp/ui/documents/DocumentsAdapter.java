@@ -27,7 +27,7 @@ class DocumentsAdapter<T> extends RecyclerView.Adapter<DocumentsAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(this.recyclerViewID, parent, false);
+        View view = mInflater.inflate(R.layout.rv_document_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -48,7 +48,7 @@ class DocumentsAdapter<T> extends RecyclerView.Adapter<DocumentsAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewDocumentToString = itemView.findViewById(R.id.textDocument);
+            textViewDocumentToString = itemView.findViewById(R.id.documentRow);
         }
 
         @Override

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,7 +36,7 @@ import java.util.Map;
 
 public class InstitutionsFragment extends Fragment {
 
-    private InstitutionsAdapter<Institution> adapter;
+    private InstitutionsAdapter adapter;
 
     private static final String CLASS_TAG = "INSTITUTIONS_FRAGMENT";
 
@@ -66,8 +67,9 @@ public class InstitutionsFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        adapter = new InstitutionsAdapter<>(root.getContext(), this.institutions, R.layout.recyclerview_institution);
+        adapter = new InstitutionsAdapter(root.getContext(), this.institutions);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         return root;
     }

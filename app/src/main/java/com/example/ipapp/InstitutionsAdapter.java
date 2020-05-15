@@ -4,22 +4,29 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ipapp.object.institution.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class InstitutionsAdapter<T> extends RecyclerView.Adapter<InstitutionsAdapter.ViewHolder> {
-    private final int recyclerViewID;
+public class InstitutionsAdapter extends RecyclerView.Adapter<InstitutionsAdapter.ViewHolder> {
 
-    private List<T> mData;
+    private List<Institution> mData;
     private LayoutInflater mInflater;
+    private Context context;
 
     // data is passed into the constructor
-    public InstitutionsAdapter(Context context, int recyclerViewID, List<T> mData) {
-        this.recyclerViewID = recyclerViewID;
+    public InstitutionsAdapter(Context context, List<Institution> mData) {
+        this.context = context;
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
     }
@@ -28,14 +35,14 @@ public class InstitutionsAdapter<T> extends RecyclerView.Adapter<InstitutionsAda
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(this.recyclerViewID, parent, false);
+        View view = mInflater.inflate(R.layout.rv_institution_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        T item = mData.get(position);
+        Institution item = mData.get(position);
         holder.textViewInstitutionToString.setText(item.toString());
     }
 
@@ -52,7 +59,7 @@ public class InstitutionsAdapter<T> extends RecyclerView.Adapter<InstitutionsAda
 
         ViewHolder(View itemView) {
             super(itemView);
-            textViewInstitutionToString = itemView.findViewById(R.id.textInstitution);
+            textViewInstitutionToString = itemView.findViewById(R.id.institutionRow);
         }
 
         @Override
@@ -62,7 +69,7 @@ public class InstitutionsAdapter<T> extends RecyclerView.Adapter<InstitutionsAda
     }
 
     // convenience method for getting data at click position
-    T getItem(int id) {
+    Institution getItem(int id) {
         return mData.get(id);
     }
 
