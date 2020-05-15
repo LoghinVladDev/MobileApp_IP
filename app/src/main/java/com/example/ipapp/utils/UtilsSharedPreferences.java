@@ -26,5 +26,11 @@ public class UtilsSharedPreferences {
         editor.putString(key, value);
         editor.apply();
     }
+
+    public static void removeCredentials(Context context)
+    {
+        setString(context, KEY_LOGGED_EMAIL, "");
+        setString(context, KEY_LOGGED_PASSWORD, "");
+    }
     //</editor-fold>
 }
