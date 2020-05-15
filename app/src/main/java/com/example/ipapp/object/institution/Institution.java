@@ -18,10 +18,7 @@ public class Institution {
     @NonNull
     @Override
     public String toString() {
-        return "{ name = "  +
-                this.name +
-                ", id = " +
-                this.ID + "}";
+        return this.name;
     }
 
     public Institution(){

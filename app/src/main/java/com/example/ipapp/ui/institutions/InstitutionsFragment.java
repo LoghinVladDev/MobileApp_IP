@@ -72,9 +72,11 @@ public class InstitutionsFragment extends Fragment {
         documentNames.add("Judecatoria Iasi");
          */
 
+        this.institutions.add(new Institution().setID(1).setName("plm"));
+
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        adapter = new CustomAdapter(root.getContext(), this.institutions);
+        adapter = new CustomAdapter(root.getContext(), this.institutions, R.layout.recyclerview_institution);
         recyclerView.setAdapter(adapter);
 
         return root;
@@ -96,7 +98,7 @@ public class InstitutionsFragment extends Fragment {
                                 .setName(currentInstitutionJSON.getString("institutionName"))
                                 .setID(currentInstitutionJSON.getInt("ID"))
                 );
-
+                adapter.notifyDataSetChanged();
                 //Log.d(CLASS_TAG, "STATUS_UPD : " + currentInstitutionJSON.toString());
             }
             Log.d(CLASS_TAG, "LIST : " + this.institutions.toString());
