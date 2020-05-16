@@ -48,8 +48,10 @@ public class AccountFragment extends Fragment {
         emailEditText.setText(UtilsSharedPreferences.getString(getContext(),"EMAIL", ""));
 
         EditText firstNameEditText = root.findViewById(R.id.editTextCurrentFirstName);
+        firstNameEditText.setText(UtilsSharedPreferences.getString(getContext(), "FIRST_NAME", ""));
 
         EditText lastNameEditText = root.findViewById(R.id.editTextCurrentLastName);
+        lastNameEditText.setText(UtilsSharedPreferences.getString(getContext(), "LAST_NAME", ""));
 
         Button buttonLogout = root.findViewById(R.id.buttonLogout);
 

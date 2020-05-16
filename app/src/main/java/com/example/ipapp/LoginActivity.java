@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, "RESPONSE : " + response);
                     if (response.contains("SUCCESS")) {
 
-                        requestRetrieveAccount();
+                        requestRetrieveAccount(bodyParameters);
 
                         Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
                         Bundle bundle = new Bundle();
@@ -135,12 +135,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void requestRetrieveAccount()
+    private void requestRetrieveAccount(Map<String, String> requestParams)
     {
-        Map<String, String> requestParams = new HashMap<>();
-
-        requestParams.put("email", editTextEmail.getText().toString());
-        requestParams.put("hashedPassword", editTextPassword.getText().toString());
         requestParams.put("apiKey", "");
 
         this.makeHTTPRetrieveAccountRequest(requestParams);
@@ -153,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), bodyParameters.get("hashedPassword"), Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), bodyParameters.get("apiKey"), Toast.LENGTH_SHORT).show();
 
-        StringRequest retrieveAccountRequest = new StringRequest(Request.Method.GET, ApiUrls.ACCOUNT_RETRIEVE_INFORMATION,
+        StringRequest retrieveAccountRequest = new StringRequest(Request.Method.GET, ApiUrls.encodeGetURLParams(ApiUrls.ACCOUNT_RETRIEVE_INFORMATION, bodyParameters),
                 response ->
                 {
                     Log.d(LOG_TAG, "RESPONSE : " + response);
