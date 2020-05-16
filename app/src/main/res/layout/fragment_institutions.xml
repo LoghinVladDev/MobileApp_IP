@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     tools:context=".ui.institutions.InstitutionsFragment">
 
     <!-- TODO [DESIGN] RECYCLER VIEW HERE (WITH FAKE DATA AT FIRST) -->
     <!-- (WHERE ALL INSTITUTIONS OF THE LOGGED MEMBER WILL BE SHOWN) -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvInstitutions"
         android:layout_width="0dp"
@@ -18,4 +16,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

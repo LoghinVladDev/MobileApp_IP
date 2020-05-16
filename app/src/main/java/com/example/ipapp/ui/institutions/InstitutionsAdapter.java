@@ -18,11 +18,9 @@ public class InstitutionsAdapter extends RecyclerView.Adapter<InstitutionsAdapte
 
     private List<Institution> mData;
     private LayoutInflater mInflater;
-    private Context context;
 
     // data is passed into the constructor
     public InstitutionsAdapter(Context context, List<Institution> mData) {
-        this.context = context;
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
     }

@@ -30,4 +30,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/bottom_navigation" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCreateInstitution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_fab_add"
+        android:layout_margin="@dimen/marginFloatingActionButton"
+        app:elevation="20dp"
+        android:contentDescription="@string/descriptionFabAddInstitution"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

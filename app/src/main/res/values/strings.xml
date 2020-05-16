@@ -29,6 +29,7 @@
     <string name="hintCurrentEmail">Your current email</string>
     <string name="hintCurrentFirstName">Your current first name</string>
     <string name="textViewAccountDetails">Your account details</string>
+    <string name="descriptionFabAddInstitution">Add institution</string>
 
 
 </resources>

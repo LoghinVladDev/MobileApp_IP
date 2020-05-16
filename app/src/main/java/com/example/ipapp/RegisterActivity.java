@@ -24,11 +24,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Register Activity";
     //<editor-fold desc="UI ELEMENTS">
-    private EditText editTextEmail, editTextFirstName, editTextLastName,editTextPassword;
+    private EditText editTextEmail, editTextFirstName, editTextLastName, editTextPassword;
     private Button buttonRegister;
     //</editor-fold>
 
     private RequestQueue httpRequestQueue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         httpRequestQueue = Volley.newRequestQueue(this);
     }
+
     private void initialiseUI() {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -45,12 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
 
         buttonRegister = findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickButtonRegister(v);
-            }
-        });
+        buttonRegister.setOnClickListener(v -> onClickButtonRegister(v));
     }
 
     private void onClickButtonRegister(View v) {
@@ -62,32 +59,24 @@ public class RegisterActivity extends AppCompatActivity {
 
         makeHTTPRegisterRequest(bodyParameters);
     }
+
     private void makeHTTPRegisterRequest(final Map<String, String> bodyParameters) {
         StringRequest loginRequest = new StringRequest(Request.Method.POST, ApiUrls.ACCOUNT_CREATE,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(LOG_TAG, "RESPONSE : " + response);
-                        Toast.makeText(getApplicationContext(),
-                                response,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                response -> {
+                    Log.d(LOG_TAG, "RESPONSE : " + response);
+                    Toast.makeText(getApplicationContext(),
+                            response,
+                            Toast.LENGTH_SHORT).show();
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
-                        Toast.makeText(getApplicationContext(),
-                                "Error : " + error,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                error -> {
+                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Error : " + error,
+                            Toast.LENGTH_SHORT).show();
                 }
-        )
-        {
+        ) {
             @Override
-            protected Map<String, String> getParams()
-            {
+            protected Map<String, String> getParams() {
                 return bodyParameters;
             }
         };

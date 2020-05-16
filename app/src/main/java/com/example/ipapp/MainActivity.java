@@ -15,10 +15,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.v(LOG_TAG, "Main Activity -> LoginActivity");
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
-        // TODO Implement "boolean isNoInternetError(VolleyError error);" function should log the actual error with Log.e("Volley error:", error.toString());
-        // for details regarding the task go here - https://stackoverflow.com/questions/21011279/android-volley-checking-internet-state
-
     }
 
 }

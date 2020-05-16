@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="progressCircleMinHeight">50dp</dimen>
     <dimen name="progressCircleMinWidth">50dp</dimen>
+    <dimen name="marginFloatingActionButton">16dp</dimen>
 </resources>

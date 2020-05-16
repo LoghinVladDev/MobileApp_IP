@@ -55,13 +55,6 @@ public class InstitutionsFragment extends Fragment {
 
         this.institutions = new ArrayList<>();
 
-        /*ArrayList<String> documentNames = new ArrayList<>();
-        documentNames.add("BRD grup soșiete jeneral");
-        documentNames.add("RDS");
-        documentNames.add("Varu BC");
-        documentNames.add("Judecatoria Iasi");
-         */
-
         this.institutions.add(new Institution().setID(1).setName("plm"));
 
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
@@ -102,8 +95,8 @@ public class InstitutionsFragment extends Fragment {
     private void requestPopulateInstitutions(){
         Map<String, String> requestParams = new HashMap<>();
 
-        requestParams.put("email", UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL,""));
-        requestParams.put("hashedPassword", UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
 
         //Log.d("INSTITUTION_FRAGMENT", "EMAIL PARAM TEST : " +  UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL,""));
 
