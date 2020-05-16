@@ -7,9 +7,6 @@
     android:background="@color/colorAccent"
     tools:context=".ui.institutions.InstitutionsFragment">
 
-    <!-- TODO [DESIGN] RECYCLER VIEW HERE (WITH FAKE DATA AT FIRST) -->
-    <!-- (WHERE ALL INSTITUTIONS OF THE LOGGED MEMBER WILL BE SHOWN) -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvInstitutions"
         android:layout_width="0dp"

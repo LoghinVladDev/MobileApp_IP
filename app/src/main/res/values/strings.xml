@@ -28,6 +28,7 @@
     <string name="toastModifyAccountRequestSuccess">Account modified with success!</string>
     <string name="hintCurrentEmail">Your current email</string>
     <string name="hintCurrentFirstName">Your current first name</string>
+    <string name="hintCurrentLastName">Your current last name</string>
     <string name="textViewAccountDetails">Your account details</string>
 
 

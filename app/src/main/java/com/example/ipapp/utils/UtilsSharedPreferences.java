@@ -9,6 +9,8 @@ public class UtilsSharedPreferences {
     private final static String PREFERENCE_FILE_KEY = "SPECTER_PREFERENCES";
     public final static String KEY_LOGGED_EMAIL = "EMAIL";
     public final static String KEY_LOGGED_PASSWORD = "PASSWORD";
+    public final static String KEY_FIRST_NAME = "FIRST_NAME";
+    public final static String KEY_LAST_NAME = "LAST_NAME";
 
     public static boolean isUserLoggedIn(Context context){
         return !context.getSharedPreferences(PREFERENCE_FILE_KEY, Context.MODE_PRIVATE).getString(KEY_LOGGED_EMAIL, "").isEmpty();
