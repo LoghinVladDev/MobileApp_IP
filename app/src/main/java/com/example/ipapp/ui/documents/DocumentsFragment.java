@@ -5,17 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ipapp.InstitutionsAdapter;
 import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
-import com.example.ipapp.object.document.Invoice;
 
 import java.util.ArrayList;
 import java.util.List;

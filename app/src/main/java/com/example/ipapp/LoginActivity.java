@@ -90,32 +90,25 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void makeHTTPLoginRequest( final Map<String, String> bodyParameters) {
         StringRequest loginRequest = new StringRequest(Request.Method.POST, ApiUrls.ACCOUNT_LOGIN,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(LOG_TAG, "RESPONSE : " + response);
-                        if (response.contains("SUCCESS")) {
+                response -> {
+                    Log.d(LOG_TAG, "RESPONSE : " + response);
+                    if (response.contains("SUCCESS")) {
 
-                            Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
-                            Bundle bundle = new Bundle();
+                        Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
+                        Bundle bundle = new Bundle();
 
-                            startActivity(goToHome);
-                        } else {
-                            Toast.makeText(getApplicationContext(),
-                                    response,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                        startActivity(goToHome);
+                    } else {
                         Toast.makeText(getApplicationContext(),
-                                "Error : " + error,
+                                response,
                                 Toast.LENGTH_SHORT).show();
                     }
+                },
+                error -> {
+                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Error : " + error,
+                            Toast.LENGTH_SHORT).show();
                 }
         )
         {

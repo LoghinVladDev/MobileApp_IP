@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import com.example.ipapp.InstitutionsAdapter;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
