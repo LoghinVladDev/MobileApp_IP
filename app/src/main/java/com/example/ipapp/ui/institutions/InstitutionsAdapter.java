@@ -16,13 +16,15 @@ import java.util.List;
 
 public class InstitutionsAdapter extends RecyclerView.Adapter<InstitutionsAdapter.ViewHolder> {
 
+    private final View.OnClickListener listRowOnClickListener;
     private List<Institution> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public InstitutionsAdapter(Context context, List<Institution> mData) {
+    public InstitutionsAdapter(Context context, List<Institution> mData, View.OnClickListener rowOnClickListener) {
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
+        this.listRowOnClickListener = rowOnClickListener;
     }
 
     // inflates the row layout from xml when needed
@@ -30,6 +32,7 @@ public class InstitutionsAdapter extends RecyclerView.Adapter<InstitutionsAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.rv_institution_row, parent, false);
+        view.setOnClickListener(listRowOnClickListener);
         return new ViewHolder(view);
     }
 
@@ -53,12 +56,11 @@ public class InstitutionsAdapter extends RecyclerView.Adapter<InstitutionsAdapte
 
         ViewHolder(View itemView) {
             super(itemView);
-            textViewInstitutionToString = itemView.findViewById(R.id.institutionRow);
+            textViewInstitutionToString = itemView.findViewById(R.id.textViewRVRowInstitutionName);
         }
 
         @Override
         public void onClick(View view) {
-
         }
     }
 

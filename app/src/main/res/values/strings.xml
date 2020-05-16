@@ -31,6 +31,7 @@
     <string name="hintCurrentLastName">Your current last name</string>
     <string name="textViewAccountDetails">Your account details</string>
     <string name="descriptionFabAddInstitution">Add institution</string>
+    <string name="descriptionInstitution">Institution</string>
 
 
 </resources>

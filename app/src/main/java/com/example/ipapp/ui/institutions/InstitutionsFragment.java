@@ -1,11 +1,13 @@
 package com.example.ipapp.ui.institutions;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.example.ipapp.HomeActivity;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
+import com.example.ipapp.SelectedInstitutionActivity;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
@@ -34,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InstitutionsFragment extends Fragment {
+    private static final String INTENT_KEY_INSTITUTION_NAME = "institutionName";
 
     private InstitutionsAdapter adapter;
 
@@ -50,19 +55,27 @@ public class InstitutionsFragment extends Fragment {
         this.requestQueue = LoginActivity.getRequestQueue();
         this.requestPopulateInstitutions();
 
-        View root = inflater.inflate(R.layout.fragment_institutions, container, false);
+
 
         this.institutions = new ArrayList<>();
 
-        this.institutions.add(new Institution().setID(1).setName("plm"));
+        View root = inflater.inflate(R.layout.fragment_institutions, container, false);
+        initialiseUI(root);
+        return root;
+    }
 
+    private void initialiseUI(View root) {
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        adapter = new InstitutionsAdapter(root.getContext(), this.institutions);
+        adapter = new InstitutionsAdapter(root.getContext(), this.institutions, v -> {
+            TextView textView = v.findViewById(R.id.textViewRVRowInstitutionName);
+
+            Intent goToSelectedInstitution = new Intent(this.getActivity(), SelectedInstitutionActivity.class);
+            goToSelectedInstitution.putExtra(INTENT_KEY_INSTITUTION_NAME, textView.getText().toString());
+            startActivity(goToSelectedInstitution);
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
-        return root;
     }
 
     private void callbackPopulateInstitutionsList(String JSONEncodedResponse) {
@@ -97,23 +110,11 @@ public class InstitutionsFragment extends Fragment {
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
 
-        //Log.d("INSTITUTION_FRAGMENT", "EMAIL PARAM TEST : " +  UtilsSharedPreferences.getString(this.getContext().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL,""));
-
         this.makeHTTPGetInstitutionsForMemberRequest(requestParams);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void makeHTTPGetInstitutionsForMemberRequest(final Map<String, String> bodyParameters){
-              StringBuilder sb = new StringBuilder();
-
-        //String URL = ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER + "?";
-        //bodyParameters.entrySet().forEach((k) -> {sb.append(k.getKey()).append("=").append(k.getValue()).append("&");});
-
-        //URL = (URL + sb.toString());
-        //URL = URL.substring(0, URL.length() - 1);
-
-        //Log.d("DEBUG_INST_FRAG", "test : " + URL);
-
         StringRequest getRequest = new StringRequest(
                 Request.Method.GET,
                 ApiUrls.encodeGetURLParams(ApiUrls.INSTITUTION_MEMBER_RETRIEVE_INSTITUTIONS_FOR_MEMBER, bodyParameters),
