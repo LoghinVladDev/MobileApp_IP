@@ -2,11 +2,17 @@ package com.example.ipapp.ui.documents;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +23,7 @@ import com.example.ipapp.object.document.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DocumentsFragment extends Fragment {
+public class DocumentsFragment extends Fragment{
 
     private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
@@ -33,6 +39,9 @@ public class DocumentsFragment extends Fragment {
         this.documents = new ArrayList<>();
 
         this.adapter = new DocumentsAdapter<Document>(root.getContext(), R.id.recyclerViewDocuments, this.documents);
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
+        getActivity().setActionBar(toolbar);
+        toolbar.setTitle("Document");
         return root;
     }
 
@@ -41,4 +50,11 @@ public class DocumentsFragment extends Fragment {
         ProgressBar progressBar = this.getActivity().findViewById(R.id.progressBarLoadDocuments);
         progressBar.setVisibility(View.INVISIBLE);
     }
+
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getActivity().getMenuInflater().inflate(R.menu.document_spinner, menu);
+//        return true;
+//    }
 }

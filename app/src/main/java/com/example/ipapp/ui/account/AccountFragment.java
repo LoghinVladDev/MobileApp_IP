@@ -44,28 +44,48 @@ public class AccountFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
 
+        EditText emailEditText = root.findViewById(R.id.editTextCurrentEmail);
+        emailEditText.setText(UtilsSharedPreferences.getString(getContext(),"EMAIL", ""));
+
+        EditText firstNameEditText = root.findViewById(R.id.editTextCurrentFirstName);
+        firstNameEditText.setText(UtilsSharedPreferences.getString(getContext(), "FIRST_NAME", ""));
+
+        EditText lastNameEditText = root.findViewById(R.id.editTextCurrentLastName);
+        lastNameEditText.setText(UtilsSharedPreferences.getString(getContext(), "LAST_NAME", ""));
+
         Button buttonLogout = root.findViewById(R.id.buttonLogout);
 
         Button buttonModifyAccount = root.findViewById(R.id.buttonModifyAccount);
 
-        buttonLogout.setOnClickListener(v -> {
-            Intent goToLoginActivity = new Intent();
+        buttonLogout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent goToLoginActivity = new Intent();
 
-            goToLoginActivity.setClass(getActivity(), LoginActivity.class);
+                goToLoginActivity.setClass(getActivity(), LoginActivity.class);
 
-            UtilsSharedPreferences.removeCredentials(getContext());
+                UtilsSharedPreferences.removeCredentials(getContext());
 
-            startActivity(goToLoginActivity);
+                startActivity(goToLoginActivity);
 
-            getActivity().finish();
+                getActivity().finish();
+            }
         });
 
-        buttonModifyAccount.setOnClickListener(v -> {
-            Intent goToModifyAccountActivity = new Intent();
+        buttonModifyAccount.setOnClickListener(new View.OnClickListener()
+        {
 
-            goToModifyAccountActivity.setClass(getActivity(), ModifyAccountActivity.class);
+            @Override
+            public void onClick(View v)
+            {
+                Intent goToModifyAccountActivity = new Intent();
 
-            startActivity(goToModifyAccountActivity);
+                goToModifyAccountActivity.setClass(getActivity(), ModifyAccountActivity.class);
+
+                startActivity(goToModifyAccountActivity);
+            }
         });
 
         return root;
