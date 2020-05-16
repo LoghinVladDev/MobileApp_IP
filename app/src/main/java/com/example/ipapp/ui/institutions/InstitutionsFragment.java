@@ -46,7 +46,6 @@ public class InstitutionsFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        // TODO IMPLEMENT GET MEMBERS INST REQ HERE
 
         this.requestQueue = LoginActivity.getRequestQueue();
         this.requestPopulateInstitutions();
@@ -122,11 +121,11 @@ public class InstitutionsFragment extends Fragment {
                     if(response.contains("SUCCESS"))
                         callbackPopulateInstitutionsList(response);
                     //Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
-                    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                 },
                 error -> {
                     Log.d(CLASS_TAG, "VOLLEY ERROR : " + error.toString());
-                    Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(getContext(), "Error : " + error, Toast.LENGTH_SHORT).show();
                 }
         ) {
             protected Map<String, String> getParams() { return bodyParameters; }
