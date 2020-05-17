@@ -17,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ipapp.object.institution.Institution;
+import com.example.ipapp.object.institution.Member;
 import com.example.ipapp.object.institution.Role;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
@@ -84,6 +85,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         this.makeHTTPRetrieveInstitutionRolesRequest(parameters);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void rolesRequestCallback(JSONObject responseData){
         Log.d(LOG_TAG, "RESPONSE OBJECT : " + responseData.toString() );
 
@@ -99,24 +101,24 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                 roleList.add(
                     new Role()
                         .setName(role.getString("name"))
-                        .setID(rights.getInt("ID"))
-                        .setRight(Role.CAN_MODIFY_INSTITUTION,rights.getInt(Role.CAN_MODIFY_INSTITUTION) == 1)
-                        .setRight(Role.CAN_DELETE_INSTITUTION, rights.getInt(Role.CAN_MODIFY_INSTITUTION) == 1)
-                        .setRight(Role.CAN_ADD_MEMBERS, rights.getInt(Role.CAN_ADD_MEMBERS)==1)
-                        .setRight(Role.CAN_REMOVE_MEMBERS, rights.getInt(Role.CAN_REMOVE_MEMBERS)==1)
-                        .setRight(Role.CAN_UPLOAD_DOCUMENTS, rights.getInt(Role.CAN_UPLOAD_DOCUMENTS)==1)
-                        .setRight(Role.CAN_PREVIEW_UPLOADED_DOCUMENTS, rights.getInt(Role.CAN_PREVIEW_UPLOADED_DOCUMENTS)==1)
-                        .setRight(Role.CAN_REMOVE_UPLOADED_DOCUMENT, rights.getInt(Role.CAN_REMOVE_UPLOADED_DOCUMENT)==1)
-                        .setRight(Role.CAN_SEND_DOCUMENTS, rights.getInt(Role.CAN_SEND_DOCUMENTS)==1)
-                        .setRight(Role.CAN_PREVIEW_RECEIVED_DOCUMENTS, rights.getInt(Role.CAN_PREVIEW_RECEIVED_DOCUMENTS)==1)
-                        .setRight(Role.CAN_PREVIEW_SPECIFIC_RECEIVED_DOCUMENT, rights.getInt(Role.CAN_PREVIEW_SPECIFIC_RECEIVED_DOCUMENT)==1)
-                        .setRight(Role.CAN_REMOVE_RECEIVED_DOCUMENT, rights.getInt(Role.CAN_REMOVE_RECEIVED_DOCUMENT)==1)
-                        .setRight(Role.CAN_DOWNLOAD_DOCUMENTS, rights.getInt(Role.CAN_DOWNLOAD_DOCUMENTS)==1)
-                        .setRight(Role.CAN_ADD_ROLES, rights.getInt(Role.CAN_ADD_ROLES)==1)
-                        .setRight(Role.CAN_REMOVE_ROLES, rights.getInt(Role.CAN_REMOVE_ROLES)==1)
-                        .setRight(Role.CAN_MODIFY_ROLES, rights.getInt(Role.CAN_MODIFY_ROLES)==1)
-                        .setRight(Role.CAN_ASSIGN_ROLES, rights.getInt(Role.CAN_ASSIGN_ROLES)==1)
-                        .setRight(Role.CAN_DE_ASSIGN_ROLES, rights.getInt(Role.CAN_DE_ASSIGN_ROLES)==1)
+                        .setID(role.getInt("ID"))
+                        .setRight(Role.CAN_MODIFY_INSTITUTION,                  rights.getInt(Role.CAN_MODIFY_INSTITUTION)                  ==1)
+                        .setRight(Role.CAN_DELETE_INSTITUTION,                  rights.getInt(Role.CAN_MODIFY_INSTITUTION)                  ==1)
+                        .setRight(Role.CAN_ADD_MEMBERS,                         rights.getInt(Role.CAN_ADD_MEMBERS)                         ==1)
+                        .setRight(Role.CAN_REMOVE_MEMBERS,                      rights.getInt(Role.CAN_REMOVE_MEMBERS)                      ==1)
+                        .setRight(Role.CAN_UPLOAD_DOCUMENTS,                    rights.getInt(Role.CAN_UPLOAD_DOCUMENTS)                    ==1)
+                        .setRight(Role.CAN_PREVIEW_UPLOADED_DOCUMENTS,          rights.getInt(Role.CAN_PREVIEW_UPLOADED_DOCUMENTS)          ==1)
+                        .setRight(Role.CAN_REMOVE_UPLOADED_DOCUMENT,            rights.getInt(Role.CAN_REMOVE_UPLOADED_DOCUMENT)            ==1)
+                        .setRight(Role.CAN_SEND_DOCUMENTS,                      rights.getInt(Role.CAN_SEND_DOCUMENTS)                      ==1)
+                        .setRight(Role.CAN_PREVIEW_RECEIVED_DOCUMENTS,          rights.getInt(Role.CAN_PREVIEW_RECEIVED_DOCUMENTS)          ==1)
+                        .setRight(Role.CAN_PREVIEW_SPECIFIC_RECEIVED_DOCUMENT,  rights.getInt(Role.CAN_PREVIEW_SPECIFIC_RECEIVED_DOCUMENT)  ==1)
+                        .setRight(Role.CAN_REMOVE_RECEIVED_DOCUMENT,            rights.getInt(Role.CAN_REMOVE_RECEIVED_DOCUMENT)            ==1)
+                        .setRight(Role.CAN_DOWNLOAD_DOCUMENTS,                  rights.getInt(Role.CAN_DOWNLOAD_DOCUMENTS)                  ==1)
+                        .setRight(Role.CAN_ADD_ROLES,                           rights.getInt(Role.CAN_ADD_ROLES)                           ==1)
+                        .setRight(Role.CAN_REMOVE_ROLES,                        rights.getInt(Role.CAN_REMOVE_ROLES)                        ==1)
+                        .setRight(Role.CAN_MODIFY_ROLES,                        rights.getInt(Role.CAN_MODIFY_ROLES)                        ==1)
+                        .setRight(Role.CAN_ASSIGN_ROLES,                        rights.getInt(Role.CAN_ASSIGN_ROLES)                        ==1)
+                        .setRight(Role.CAN_DE_ASSIGN_ROLES,                     rights.getInt(Role.CAN_DE_ASSIGN_ROLES)                     ==1)
                 );
             }
 
@@ -125,7 +127,81 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        this.membersRequest();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void membersRequest(){
+        Map<String, String> parameters = new HashMap<>();
+
+        parameters.put("email", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        parameters.put("hashedPassword", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        parameters.put("institutionName", this.institution.getName());
+
+        this.makeHTTPRetrieveInstitutionMembersRequest(parameters);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void membersRequestCallback(JSONObject responseObject){
+        Log.d(LOG_TAG, "INSTITUTION MEMBERS : " + responseObject.toString() );
+
+        try {
+            JSONArray membersArray = responseObject.getJSONArray("members");
+
+            for(int i = 0, length = membersArray.length(); i < length; i++){
+                JSONObject memberJSON = (JSONObject) membersArray.get(i);
+
+                List<Member> members = new ArrayList<>();
+
+                Role role = null;
+
+                for (Role r : this.institution.getRoleList()) {
+                    if(r.getID() == memberJSON.getInt("id"))
+                        role = r;
+                }
+
+                members.add(
+                        new Member()
+                            .setUsername(memberJSON.getString("email"))
+                            .setUserID(memberJSON.getInt("userID"))
+                            .setRole(role)
+                );
+
+                this.institution.addMembers(members);
+            }
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
         Log.d(LOG_TAG, "INSTITUTION : " + this.institution.debugToString());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void makeHTTPRetrieveInstitutionMembersRequest(final Map<String, String> bodyParameters){
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                ApiUrls.encodeGetURLParams(ApiUrls.INSTITUTION_MEMBER_RETRIEVE_MEMBERS, bodyParameters),
+                response -> {
+                    Log.d(LOG_TAG, "RESPONSE : " + response);
+                    if(response.contains("SUCCESS")){
+                        try{
+                            this.membersRequestCallback(new JSONObject(response).getJSONObject("returnedObject"));
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), response , Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> {
+                    Log.d(LOG_TAG, "VOLLEY_ERROR : " + error.toString());
+                    Toast.makeText(getApplicationContext(), "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+                }
+        ) {
+            protected Map<String, String> getParams() { return bodyParameters; }
+        };
+        this.requestQueue.add(request);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
