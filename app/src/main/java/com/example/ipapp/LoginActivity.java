@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                         requestRetrieveAccount(bodyParameters);
 
                         Intent goToHome = new Intent(LoginActivity.this, HomeActivity.class);
-                        Bundle bundle = new Bundle();
 
                         startActivity(goToHome);
                     } else {

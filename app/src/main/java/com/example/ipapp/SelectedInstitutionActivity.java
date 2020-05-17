@@ -66,9 +66,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (null != getSupportActionBar())
-            getSupportActionBar().setTitle(institutionName);
-
         Toast
                 .makeText(this.getApplicationContext(), "From Selected Inst : " + institutionName, Toast.LENGTH_LONG)
                 .show();
