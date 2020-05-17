@@ -1,9 +1,21 @@
 package com.example.ipapp.object.institution;
 
+
 public class Member {
     private String username;
     private int userID;
     private Role role;
+
+    public String toString(){
+        return
+                "{username=" +
+                this.username +
+                ",ID=" +
+                this.userID +
+                ",role=" +
+                (this.role == null ? "null" : this.role.getName() )+
+                "}";
+    }
 
     public Member(){
         this.role = null;

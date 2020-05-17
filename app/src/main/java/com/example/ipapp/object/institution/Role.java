@@ -5,6 +5,10 @@ import java.util.Map;
 
 public class Role {
 
+    public String toString(){
+        return "{id=" + this.ID + ",name=" + this.name + ",rights=" + this.rightsDictionary.toString() + "}";
+    }
+
     public static final String CAN_MODIFY_INSTITUTION = "Can_Modify_Institution";
     public static final String CAN_DELETE_INSTITUTION = "Can_Delete_Institution";
     public static final String CAN_ADD_MEMBERS = "Can_Add_Members";
@@ -49,6 +53,10 @@ public class Role {
     public Role setRight(String rightName, boolean toggle){
         this.rightsDictionary.put(rightName, toggle);
         return this;
+    }
+
+    public boolean isAllowed(String rightName){
+        return this.rightsDictionary.get(rightName);
     }
 
     public int getID() {

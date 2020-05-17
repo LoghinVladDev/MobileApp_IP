@@ -39,6 +39,7 @@ import java.util.Map;
 
 public class InstitutionsFragment extends Fragment {
     private static final String INTENT_KEY_INSTITUTION_NAME = "institutionName";
+    private static final String INTENT_KEY_INSTITUTION_JSON = "institution";
 
     private InstitutionsAdapter adapter;
 
@@ -64,6 +65,7 @@ public class InstitutionsFragment extends Fragment {
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initialiseUI(View root) {
         RecyclerView recyclerView = root.findViewById(R.id.rvInstitutions);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
@@ -71,7 +73,31 @@ public class InstitutionsFragment extends Fragment {
             TextView textView = v.findViewById(R.id.textViewRVRowInstitutionName);
 
             Intent goToSelectedInstitution = new Intent(this.getActivity(), SelectedInstitutionActivity.class);
-            goToSelectedInstitution.putExtra(INTENT_KEY_INSTITUTION_NAME, textView.getText().toString());
+
+            JSONObject param = new JSONObject();
+
+            Institution institution = null;
+
+            for (Institution i : this.institutions)
+                if(i.getName().equals(textView.getText().toString()))
+                    institution = i;
+
+            try {
+                if (institution != null) {
+                    param.put("ID", institution.getID());
+                    param.put("name", institution.getName());
+
+                    goToSelectedInstitution.putExtra(INTENT_KEY_INSTITUTION_JSON, param.toString());
+                }
+                else{
+                    Log.e(CLASS_TAG, "INTENT PARAM ERROR : " + "institution null?");
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //goToSelectedInstitution.putExtra(INTENT_KEY_INSTITUTION_NAME, textView.getText().toString());
             startActivity(goToSelectedInstitution);
         });
         recyclerView.setAdapter(adapter);

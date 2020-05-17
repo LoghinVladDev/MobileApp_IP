@@ -21,6 +21,21 @@ public class Institution {
         return this.name;
     }
 
+    public String debugToString(){
+        return
+            "{ID=" +
+            this.ID +
+            ",name=" +
+            this.name +
+            ",members=" +
+            this.memberList +
+            ",roles=" +
+            this.roleList +
+            ",addresses=" +
+            this.addressList +
+            "}";
+    }
+
     public Institution(){
         this.memberList = new ArrayList<>();
         this.roleList = new ArrayList<>();
