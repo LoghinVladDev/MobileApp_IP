@@ -49,7 +49,7 @@ public class DocumentsFragment extends Fragment{
 
     private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
-    private List<String> documents;
+    private ArrayList<String> documents;
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
 
     private RequestQueue requestQueue;
@@ -60,22 +60,14 @@ public class DocumentsFragment extends Fragment{
 
         this.documents = new ArrayList<>();
 
-        View root = inflater.inflate(R.layout.fragment_documents, container, false);
-
-        this.recyclerViewDocuments = root.findViewById(R.id.recyclerViewDocuments);
-        this.recyclerViewDocuments.setLayoutManager(new LinearLayoutManager(root.getContext()));
-
-
-        this.adapter = new DocumentsAdapter<String>(this.getContext(), this.documents);
-
         this.requestQueue = LoginActivity.getRequestQueue();
         this.requestRetrieveUserCreatedDocuments();
 
-        this.recyclerViewDocuments.setAdapter(adapter);
+        View root = inflater.inflate(R.layout.fragment_documents, container, false);
 
-        this.recyclerViewDocuments.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        this.initRv(root);
 
-
+        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
 //        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
 //        actionBar.setCustomView(R.layout.action_bar_documents);
 //
@@ -87,6 +79,19 @@ public class DocumentsFragment extends Fragment{
 //        spinnerSortDocuments.setAdapter(spinnerAdapter);
 
         return root;
+    }
+
+    private void initRv(View root)
+    {
+        this.documents.add("Hello");
+        this.documents.add("DE CE NU VREI");
+
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewDocuments);
+        recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
+
+        adapter = new DocumentsAdapter(root.getContext(), this.documents);
+
+        recyclerView.setAdapter(adapter);
     }
 
 //    @Override
@@ -143,7 +148,132 @@ public class DocumentsFragment extends Fragment{
             {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
                 this.documents.add(currentDocumentJSON.getString("documentType"));
-                Toast.makeText(getContext(), "HELLO", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+            }
+            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
+        }
+        catch (JSONException e)
+        {
+            Log.e(LOG_TAG, "ERROR : " + e.toString());
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void requestRetrieveUserSentDocuments()
+    {
+        Map<String, String> requestParams = new HashMap<>();
+
+        requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        requestParams.put("institutionName", "");
+        requestParams.put("apiKey", "");
+
+        this.makeHTTPGetUserSentDocuments(requestParams);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void makeHTTPGetUserSentDocuments(final Map<String, String> bodyParameters)
+    {
+
+        StringRequest getRequest = new StringRequest(Request.Method.GET,
+                ApiUrls.encodeGetURLParams(ApiUrls.DOCUMENT_RETRIEVE_FILTER_USER_SENT, bodyParameters),
+                response ->
+                {
+                    if(response.contains("SUCCESS"))
+                    {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                        callbackGetUserSentDocuments(response);
+                    }
+                },
+                error ->
+                {
+                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                }
+        ) {
+            protected Map<String, String> getParams() { return bodyParameters; }
+        };
+        this.requestQueue.add(getRequest);
+    }
+
+    private void callbackGetUserSentDocuments(String JSONEncodedResponse)
+    {
+        try
+        {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
+
+            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
+            {
+                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
+                this.documents.add(currentDocumentJSON.getString("documentType"));
+                adapter.notifyDataSetChanged();
+            }
+            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
+        }
+        catch (JSONException e)
+        {
+            Log.e(LOG_TAG, "ERROR : " + e.toString());
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void requestRetrieveUserReceivedDocuments()
+    {
+        Map<String, String> requestParams = new HashMap<>();
+
+        requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        requestParams.put("institutionName", "");
+        requestParams.put("apiKey", "");
+
+        this.makeHTTPGetUserReceivedDocuments(requestParams);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void makeHTTPGetUserReceivedDocuments(final Map<String, String> bodyParameters)
+    {
+        StringRequest getRequest = new StringRequest(Request.Method.GET,
+                ApiUrls.encodeGetURLParams(ApiUrls.DOCUMENT_RETRIEVE_FILTER_USER_RECEIVED, bodyParameters),
+                response ->
+                {
+                    if(response.contains("SUCCESS"))
+                    {
+                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                        callbackGetUserReceivedDocuments(response);
+                    }
+                },
+                error ->
+                {
+                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                }
+        ) {
+            protected Map<String, String> getParams() { return bodyParameters; }
+        };
+        this.requestQueue.add(getRequest);
+    }
+
+    private void callbackGetUserReceivedDocuments(String JSONEncodedResponse)
+    {
+        try
+        {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
+
+            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
+            {
+                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
+                this.documents.add(currentDocumentJSON.getString("documentType"));
+                adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
         }

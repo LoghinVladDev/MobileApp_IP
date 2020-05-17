@@ -6,6 +6,13 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_institution_row"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/descriptionInstitution" />
+
     <TextView
         android:id="@+id/documentRow"
         android:layout_width="wrap_content"
