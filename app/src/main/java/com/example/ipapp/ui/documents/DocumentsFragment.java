@@ -106,7 +106,7 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        requestParams.put("apiKey", "");
+        //requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserCreatedDocuments(requestParams);
     }
@@ -134,7 +134,8 @@ public class DocumentsFragment extends Fragment{
         this.requestQueue.add(getRequest);
     }
 
-    private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
+    private void callbackGetDocuments(String JSONEncodedResponse) {
+        Log.d(LOG_TAG, "DOCS ARRAY : " + JSONEncodedResponse);
         try {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
@@ -143,11 +144,29 @@ public class DocumentsFragment extends Fragment{
 
             for(int i = 0, length = documentsListJSON.length(); i < length; i++) {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
+                Document document = null;
                 if (currentDocumentJSON.getString("documentType").equals("Receipt")) {
-                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                    document = new Receipt();
+                    //this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
                 }
                 else if(currentDocumentJSON.getString("documentType").equals("Invoice")) {
-                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                    document = new Invoice();
+                    //this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
+                if(document != null){
+                    this.documents.add(document
+                        .setID(Integer.parseInt(currentDocumentJSON.getString("ID").equals("null") ? "-1" : currentDocumentJSON.getString("ID")))
+                        .setSenderID(Integer.parseInt(currentDocumentJSON.getString("senderID").equals("null") ? "-1" : currentDocumentJSON.getString("senderID")))
+                        .setSenderInstitutionID(Integer.parseInt(currentDocumentJSON.getString("senderInstitutionID").equals("null") ? "-1" : currentDocumentJSON.getString("senderInstitutionID")))
+                        .setSenderAddressID(Integer.parseInt(currentDocumentJSON.getString("senderAddressID").equals("null") ? "-1" : currentDocumentJSON.getString("senderAddressID")))
+                        .setReceiverID(Integer.parseInt((currentDocumentJSON.getString("receiverID").equals("null")) ? "-1" : currentDocumentJSON.getString("receiverID")))
+                        .setReceiverInstitutionID(Integer.parseInt(currentDocumentJSON.getString("receiverInstitutionID").equals("null") ? "-1" : currentDocumentJSON.getString("receiverInstitutionID")))
+                        .setReceiverAddressID(Integer.parseInt(currentDocumentJSON.getString("receiverAddressID").equals("null") ? "-1" : currentDocumentJSON.getString("receiverAddressID")))
+                        .setCreatorID(Integer.parseInt(currentDocumentJSON.getString("creatorID").equals("null") ? "-1" : currentDocumentJSON.getString("creatorID")))
+                        .setDateCreated(currentDocumentJSON.getString("dateCreated"))
+                        .setDateSent(currentDocumentJSON.getString("dateSent"))
+                        .setSent(currentDocumentJSON.getInt("isSent") == 1)
+                    );
                 }
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
@@ -156,6 +175,10 @@ public class DocumentsFragment extends Fragment{
             Log.e(LOG_TAG, "ERROR : " + e.toString());
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
+        this.callbackGetDocuments(JSONEncodedResponse);
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -198,34 +221,8 @@ public class DocumentsFragment extends Fragment{
         this.requestQueue.add(getRequest);
     }
 
-    private void callbackGetUserSentDocuments(String JSONEncodedResponse)
-    {
-        try
-        {
-            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
-            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
-
-            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
-
-            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
-            {
-                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
-                {
-                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
-                }
-                else
-                {
-                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
-                }
-                adapter.notifyDataSetChanged();
-            }
-            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
-        }
-        catch (JSONException e)
-        {
-            Log.e(LOG_TAG, "ERROR : " + e.toString());
-        }
+    private void callbackGetUserSentDocuments(String JSONEncodedResponse) {
+        this.callbackGetDocuments(JSONEncodedResponse);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -270,31 +267,6 @@ public class DocumentsFragment extends Fragment{
 
     private void callbackGetUserReceivedDocuments(String JSONEncodedResponse)
     {
-        try
-        {
-            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
-            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
-
-            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
-
-            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
-            {
-                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
-                {
-                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
-                }
-                else
-                {
-                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
-                }
-                adapter.notifyDataSetChanged();
-            }
-            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
-        }
-        catch (JSONException e)
-        {
-            Log.e(LOG_TAG, "ERROR : " + e.toString());
-        }
+        this.callbackGetDocuments(JSONEncodedResponse);
     }
 }

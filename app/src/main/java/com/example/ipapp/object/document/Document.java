@@ -28,13 +28,26 @@ public abstract class Document {
     protected Address toLocation;
 
     @NonNull
-    @Override
-    public String toString() {
+    public String toViewString() {
         return "Document " + this.ID;
     }
 
     protected Document(){
 
+    }
+
+    public String toString(){
+        return "{id=" + this.ID +
+                ",senderID=" + this.senderID +
+                ",senderInstitutionID=" + this.senderInstitutionID +
+                ",senderAddressID=" + this.senderAddressID +
+                ",receiverID=" + this.receiverID +
+                ",receiverInstitutionID=" + this.receiverInstitutionID +
+                ",receiverAddressID=" + this.receiverAddressID +
+                ",creatorID=" + this.creatorID +
+                ",isSent=" + this.isSent +
+                ",dateCreated=" + this.dateCreated +
+                ",dateSent=" + this.dateSent + "}";
     }
 
     public Document setID(int ID) {

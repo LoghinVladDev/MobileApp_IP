@@ -11,8 +11,13 @@ public class Receipt extends Document {
     // TODO PAYMENT METHOD TOTAL INVOICE LINKAGE
     private List<Pair<Item, Integer>> items;
 
-    public String toString(){
+    public String toViewString(){
         return "Receipt, id = " + this.ID;
+    }
+
+    public String toString(){
+        return
+                "{documentHeader=" + super.toString() + ",type=Receipt}";
     }
 
     public Receipt(){
