@@ -4,13 +4,19 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Invoice extends Document {
     private List<Pair<Item, Integer>> items;
 
+    public String toString(){
+        return "Invoice, id = " + this.ID;
+    }
+
     public Invoice(){
         super();
+        this.items = new ArrayList<>();
     }
 
     public List<Pair<Item, Integer>> getItems() {
