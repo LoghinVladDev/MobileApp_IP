@@ -2,28 +2,21 @@ package com.example.ipapp.ui.documents;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
-import android.net.IpSecManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +29,6 @@ import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
 import com.example.ipapp.object.document.Receipt;
-import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
@@ -69,7 +61,7 @@ public class DocumentsFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_documents, container, false);
 
-        this.initRv(root);
+        this.initialiseRecyclerViewDocuments(root);
 
         Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
         ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
@@ -119,10 +111,7 @@ public class DocumentsFragment extends Fragment {
                     requestRetrieveUserSentDocuments();
 //                    initRv(root);
                 }
-//                LinearLayout l = root.findViewById(R.id.layoutSpinner);
-//                l.setVisibility(View.GONE);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -135,7 +124,7 @@ public class DocumentsFragment extends Fragment {
         return root;
     }
 
-    private void initRv(View root)
+    private void initialiseRecyclerViewDocuments(View root)
     {
         recyclerView = root.findViewById(R.id.recyclerViewDocuments);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
