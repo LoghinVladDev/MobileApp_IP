@@ -76,6 +76,7 @@ public class DocumentsFragment extends Fragment {
 //        View actionBarRoot = actionBar.getCustomView();
 
         List<String> categories = new ArrayList<>();
+        categories.add("");
         categories.add("Created");
         categories.add("Received");
         categories.add("Sent");
