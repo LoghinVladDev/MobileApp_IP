@@ -32,11 +32,12 @@
     <string name="textViewAccountDetails">Your account details</string>
     <string name="descriptionFabAddInstitution">Add institution</string>
     <string name="descriptionInstitution">Institution</string>
+    <string name="textViewShow">Show only:</string>
 
     <string-array name="spinnerSortDocuments">
-        <item> Sent by user </item>
-        <item> Received by user </item>
-        <item> Created by user </item>
+        <item>Sent by user</item>
+        <item>Received by user</item>
+        <item>Created by user</item>
     </string-array>
 
 

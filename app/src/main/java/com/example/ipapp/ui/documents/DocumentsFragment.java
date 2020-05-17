@@ -74,45 +74,38 @@ public class DocumentsFragment extends Fragment {
 //        actionBar.setCustomView(R.layout.action_bar_documents);
 //
 //        View actionBarRoot = actionBar.getCustomView();
-
-        List<String> categories = new ArrayList<>();
-        categories.add("");
-        categories.add("Created");
-        categories.add("Received");
-        categories.add("Sent");
-
         Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_list_item_1);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSortDocuments.setAdapter(spinnerAdapter);
 
         ProgressBar progressBar = root.findViewById(R.id.progressBarLoadDocuments);
         progressBar.setVisibility(View.VISIBLE);
 
+        final String[] textSpinner = getResources().getStringArray(R.array.spinnerSortDocuments);
 
         spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 progressBar.setVisibility(View.GONE);
 
-                if (item.equals("Created"))
+                if (item.equals(textSpinner[0]))
                 {
                     documents = new ArrayList<>();
                     requestRetrieveUserCreatedDocuments();
                     initRv(root);
                 }
 
-                if (item.equals("Received"))
+                if (item.equals(textSpinner[1]))
                 {
                     documents = new ArrayList<>();
                     requestRetrieveUserReceivedDocuments();
                     initRv(root);
                 }
 
-                if (item.equals("Sent"))
+                if (item.equals(textSpinner[2]))
                 {
                     documents = new ArrayList<>();
                     requestRetrieveUserSentDocuments();
@@ -168,7 +161,6 @@ public class DocumentsFragment extends Fragment {
                 {
                     if(response.contains("SUCCESS"))
                     {
-                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         callbackGetUserCreatedDocuments(response);
                     }
                 },
@@ -231,7 +223,6 @@ public class DocumentsFragment extends Fragment {
                 {
                     if(response.contains("SUCCESS"))
                     {
-                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                         callbackGetUserSentDocuments(response);
                     }
                 },
@@ -300,7 +291,6 @@ public class DocumentsFragment extends Fragment {
             Log.d(LOG_TAG, "RESPONSE : " + response);
             if(response.contains("SUCCESS"))
             {
-                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                 callbackGetUserReceivedDocuments(response);
             }
         },
