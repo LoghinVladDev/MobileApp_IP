@@ -51,7 +51,6 @@ import java.util.Map;
 
 public class DocumentsFragment extends Fragment {
 
-//    private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
     private List<Document> documents;
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
@@ -72,70 +71,67 @@ public class DocumentsFragment extends Fragment {
 
         this.initRv(root);
 
-        this.documents.add(new Invoice().setID(3));
-        this.documents.add(new Invoice().setID(4));
-//
-////        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
-////        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
-////        actionBar.setCustomView(R.layout.action_bar_documents);
-////
-////        View actionBarRoot = actionBar.getCustomView();
-//        Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
-//
-//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_list_item_1);
-//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinnerSortDocuments.setAdapter(spinnerAdapter);
-//
-//        ProgressBar progressBar = root.findViewById(R.id.progressBarLoadDocuments);
-//        progressBar.setVisibility(View.VISIBLE);
-//
-//        final String[] textSpinner = getResources().getStringArray(R.array.spinnerSortDocuments);
-//
-//        spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String item = parent.getItemAtPosition(position).toString();
-//                progressBar.setVisibility(View.GONE);
-//
-//                if (item.equals(textSpinner[0]))
-//                {
-//                    Log.d(LOG_TAG, "IN CREATED");
-////                    documents = new ArrayList<>();
-//                    documents.clear();
-//                    requestRetrieveUserCreatedDocuments();
-////                    initRv(root);
-//                }
-//
-//                if (item.equals(textSpinner[1]))
-//                {
-//                    Log.d(LOG_TAG, "IN Received");
-////                    documents = new ArrayList<>();
-//                    documents.clear();
-//                    requestRetrieveUserReceivedDocuments();
-////                    initRv(root);
-//                }
-//
-//                if (item.equals(textSpinner[2]))
-//                {
-//                    Log.d(LOG_TAG, "IN Sent");
-////                    documents = new ArrayList<>();
-//                    documents.clear();
-//                    requestRetrieveUserSentDocuments();
-////                    initRv(root);
-//                }
-////                LinearLayout l = root.findViewById(R.id.layoutSpinner);
-////                l.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                progressBar.setVisibility(View.VISIBLE);
-//            }
-//        });
-////        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-////
-////        spinnerSortDocuments.setAdapter(spinnerAdapter);
-//
+        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
+        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
+        actionBar.setCustomView(R.layout.action_bar_documents);
+
+        View actionBarRoot = actionBar.getCustomView();
+        Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_list_item_1);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSortDocuments.setAdapter(spinnerAdapter);
+
+        ProgressBar progressBar = root.findViewById(R.id.progressBarLoadDocuments);
+        progressBar.setVisibility(View.VISIBLE);
+
+        final String[] textSpinner = getResources().getStringArray(R.array.spinnerSortDocuments);
+
+        spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                progressBar.setVisibility(View.GONE);
+
+                if (item.equals(textSpinner[0]))
+                {
+                    Log.d(LOG_TAG, "IN CREATED");
+//                    documents = new ArrayList<>();
+                    documents.clear();
+                    requestRetrieveUserCreatedDocuments();
+//                    initRv(root);
+                }
+
+                if (item.equals(textSpinner[1]))
+                {
+                    Log.d(LOG_TAG, "IN Received");
+//                    documents = new ArrayList<>();
+                    documents.clear();
+                    requestRetrieveUserReceivedDocuments();
+//                    initRv(root);
+                }
+
+                if (item.equals(textSpinner[2]))
+                {
+                    Log.d(LOG_TAG, "IN Sent");
+//                    documents = new ArrayList<>();
+                    documents.clear();
+                    requestRetrieveUserSentDocuments();
+//                    initRv(root);
+                }
+//                LinearLayout l = root.findViewById(R.id.layoutSpinner);
+//                l.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerSortDocuments.setAdapter(spinnerAdapter);
+
         return root;
     }
 
