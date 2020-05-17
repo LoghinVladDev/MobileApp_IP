@@ -14,12 +14,10 @@ import com.example.ipapp.R;
 import java.util.List;
 
 class DocumentsAdapter<T> extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder> {
-    private final int recyclerViewID;
     private List<T> mData;
     private LayoutInflater mInflater;
 
-    DocumentsAdapter(Context context, int recyclerViewID, List<T> mData) {
-        this.recyclerViewID = recyclerViewID;
+    DocumentsAdapter(Context context, List<T> mData) {
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
     }
