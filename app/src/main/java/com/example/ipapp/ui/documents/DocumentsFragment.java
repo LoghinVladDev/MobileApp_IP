@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -47,7 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DocumentsFragment extends Fragment{
+public class DocumentsFragment extends Fragment {
 
     private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
@@ -63,19 +64,62 @@ public class DocumentsFragment extends Fragment{
         this.documents = new ArrayList<>();
 
         this.requestQueue = LoginActivity.getRequestQueue();
-        this.requestRetrieveUserCreatedDocuments();
 
         View root = inflater.inflate(R.layout.fragment_documents, container, false);
 
         this.initRv(root);
 
-     //   Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
 //        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
 //        actionBar.setCustomView(R.layout.action_bar_documents);
 //
 //        View actionBarRoot = actionBar.getCustomView();
-//        Spinner spinnerSortDocuments = actionBarRoot.findViewById(R.id.spinnerSortDocuments);
-//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_spinner_item);
+
+        List<String> categories = new ArrayList<>();
+        categories.add("");
+        categories.add("Created");
+        categories.add("Received");
+        categories.add("Sent");
+
+        Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSortDocuments.setAdapter(spinnerAdapter);
+
+        spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+
+                if (item.equals("Created"))
+                {
+                    documents = new ArrayList<>();
+                    requestRetrieveUserCreatedDocuments();
+                    initRv(root);
+                }
+
+                if (item.equals("Received"))
+                {
+                    documents = new ArrayList<>();
+                    requestRetrieveUserReceivedDocuments();
+                    initRv(root);
+                }
+
+                if (item.equals("Sent"))
+                {
+                    documents = new ArrayList<>();
+                    requestRetrieveUserSentDocuments();
+                    initRv(root);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
 //        spinnerSortDocuments.setAdapter(spinnerAdapter);
@@ -106,7 +150,6 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        //requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserCreatedDocuments(requestParams);
     }
@@ -134,8 +177,7 @@ public class DocumentsFragment extends Fragment{
         this.requestQueue.add(getRequest);
     }
 
-    private void callbackGetDocuments(String JSONEncodedResponse) {
-        Log.d(LOG_TAG, "DOCS ARRAY : " + JSONEncodedResponse);
+    private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
         try {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
@@ -144,41 +186,19 @@ public class DocumentsFragment extends Fragment{
 
             for(int i = 0, length = documentsListJSON.length(); i < length; i++) {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                Document document = null;
                 if (currentDocumentJSON.getString("documentType").equals("Receipt")) {
-                    document = new Receipt();
-                    //this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
                 }
                 else if(currentDocumentJSON.getString("documentType").equals("Invoice")) {
-                    document = new Invoice();
-                    //this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
                 }
-                if(document != null){
-                    this.documents.add(document
-                        .setID(Integer.parseInt(currentDocumentJSON.getString("ID").equals("null") ? "-1" : currentDocumentJSON.getString("ID")))
-                        .setSenderID(Integer.parseInt(currentDocumentJSON.getString("senderID").equals("null") ? "-1" : currentDocumentJSON.getString("senderID")))
-                        .setSenderInstitutionID(Integer.parseInt(currentDocumentJSON.getString("senderInstitutionID").equals("null") ? "-1" : currentDocumentJSON.getString("senderInstitutionID")))
-                        .setSenderAddressID(Integer.parseInt(currentDocumentJSON.getString("senderAddressID").equals("null") ? "-1" : currentDocumentJSON.getString("senderAddressID")))
-                        .setReceiverID(Integer.parseInt((currentDocumentJSON.getString("receiverID").equals("null")) ? "-1" : currentDocumentJSON.getString("receiverID")))
-                        .setReceiverInstitutionID(Integer.parseInt(currentDocumentJSON.getString("receiverInstitutionID").equals("null") ? "-1" : currentDocumentJSON.getString("receiverInstitutionID")))
-                        .setReceiverAddressID(Integer.parseInt(currentDocumentJSON.getString("receiverAddressID").equals("null") ? "-1" : currentDocumentJSON.getString("receiverAddressID")))
-                        .setCreatorID(Integer.parseInt(currentDocumentJSON.getString("creatorID").equals("null") ? "-1" : currentDocumentJSON.getString("creatorID")))
-                        .setDateCreated(currentDocumentJSON.getString("dateCreated"))
-                        .setDateSent(currentDocumentJSON.getString("dateSent"))
-                        .setSent(currentDocumentJSON.getInt("isSent") == 1)
-                    );
-                }
+                adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
         }
         catch (JSONException e) {
             Log.e(LOG_TAG, "ERROR : " + e.toString());
         }
-        adapter.notifyDataSetChanged();
-    }
-
-    private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
-        this.callbackGetDocuments(JSONEncodedResponse);
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -192,7 +212,6 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserSentDocuments(requestParams);
     }
@@ -221,8 +240,34 @@ public class DocumentsFragment extends Fragment{
         this.requestQueue.add(getRequest);
     }
 
-    private void callbackGetUserSentDocuments(String JSONEncodedResponse) {
-        this.callbackGetDocuments(JSONEncodedResponse);
+    private void callbackGetUserSentDocuments(String JSONEncodedResponse)
+    {
+        try
+        {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
+
+            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
+            {
+                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
+                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
+                {
+                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                }
+                else
+                {
+                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
+                adapter.notifyDataSetChanged();
+            }
+            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
+        }
+        catch (JSONException e)
+        {
+            Log.e(LOG_TAG, "ERROR : " + e.toString());
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -236,7 +281,6 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserReceivedDocuments(requestParams);
     }
@@ -267,6 +311,31 @@ public class DocumentsFragment extends Fragment{
 
     private void callbackGetUserReceivedDocuments(String JSONEncodedResponse)
     {
-        this.callbackGetDocuments(JSONEncodedResponse);
+        try
+        {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
+
+            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
+            {
+                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
+                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
+                {
+                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                }
+                else
+                {
+                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
+                adapter.notifyDataSetChanged();
+            }
+            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
+        }
+        catch (JSONException e)
+        {
+            Log.e(LOG_TAG, "ERROR : " + e.toString());
+        }
     }
 }

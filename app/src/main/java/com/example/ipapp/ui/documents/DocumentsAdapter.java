@@ -49,7 +49,10 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.View
     @Override
     public int getItemCount()
     {
-        return mData.size();
+        if (mData != null)
+           return mData.size();
+        else
+            return 0;
     }
 
 

@@ -137,8 +137,6 @@ public class LoginActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestRetrieveAccount(Map<String, String> requestParams)
     {
-        requestParams.put("apiKey", "");
-
         this.makeHTTPRetrieveAccountRequest(requestParams);
     }
 
