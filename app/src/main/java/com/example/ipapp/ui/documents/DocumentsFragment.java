@@ -63,7 +63,7 @@ public class DocumentsFragment extends Fragment{
         this.documents = new ArrayList<>();
 
         this.requestQueue = LoginActivity.getRequestQueue();
-        this.requestRetrieveUserCreatedDocuments();
+        this.requestRetrieveUserReceivedDocuments();
 
         View root = inflater.inflate(R.layout.fragment_documents, container, false);
 
@@ -216,7 +216,14 @@ public class DocumentsFragment extends Fragment{
             for(int i = 0, length = documentsListJSON.length(); i < length; i++)
             {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-          //      this.documents.add(currentDocumentJSON.getString("documentType"));
+                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
+                {
+                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                }
+                else
+                {
+                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
                 adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
@@ -278,7 +285,14 @@ public class DocumentsFragment extends Fragment{
             for(int i = 0, length = documentsListJSON.length(); i < length; i++)
             {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-              //  this.documents.add(currentDocumentJSON.getString("documentType"));
+                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
+                {
+                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                }
+                else
+                {
+                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
                 adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
