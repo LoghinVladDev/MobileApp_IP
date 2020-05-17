@@ -10,17 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ipapp.R;
+import com.example.ipapp.object.document.Document;
 
 import java.util.List;
 
 public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder>
 {
 
-    private List<String> mData;
+    private List<Document> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    DocumentsAdapter(Context context, List<String> data)
+    DocumentsAdapter(Context context, List<Document> data)
     {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -39,8 +40,8 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        String document = mData.get(position);
-        holder.myTextView.setText(document);
+        Document document = mData.get(position);
+        holder.myTextView.setText(document.toString());
     }
 
 
@@ -71,7 +72,7 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.View
     }
 
     // convenience method for getting data at click position
-    String getItem(int id)
+    Document getItem(int id)
     {
         return mData.get(id);
     }

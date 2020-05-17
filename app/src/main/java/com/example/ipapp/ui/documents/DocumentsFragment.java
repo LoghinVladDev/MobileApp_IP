@@ -32,6 +32,8 @@ import com.example.ipapp.HomeActivity;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
+import com.example.ipapp.object.document.Invoice;
+import com.example.ipapp.object.document.Receipt;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
@@ -49,7 +51,7 @@ public class DocumentsFragment extends Fragment{
 
     private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
-    private ArrayList<String> documents;
+    private List<Document> documents;
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
 
     private RequestQueue requestQueue;
@@ -83,9 +85,6 @@ public class DocumentsFragment extends Fragment{
 
     private void initRv(View root)
     {
-        this.documents.add("Hello");
-        this.documents.add("DE CE NU VREI");
-
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewDocuments);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
 
@@ -139,8 +138,6 @@ public class DocumentsFragment extends Fragment{
     {
         try
         {
-            this.documents.add("hello");
-
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
 
@@ -149,7 +146,14 @@ public class DocumentsFragment extends Fragment{
             for(int i = 0, length = documentsListJSON.length(); i < length; i++)
             {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                this.documents.add(currentDocumentJSON.getString("documentType"));
+                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
+                {
+                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                }
+                else
+                {
+                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
                 adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
@@ -212,7 +216,7 @@ public class DocumentsFragment extends Fragment{
             for(int i = 0, length = documentsListJSON.length(); i < length; i++)
             {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                this.documents.add(currentDocumentJSON.getString("documentType"));
+          //      this.documents.add(currentDocumentJSON.getString("documentType"));
                 adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
@@ -274,7 +278,7 @@ public class DocumentsFragment extends Fragment{
             for(int i = 0, length = documentsListJSON.length(); i < length; i++)
             {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                this.documents.add(currentDocumentJSON.getString("documentType"));
+              //  this.documents.add(currentDocumentJSON.getString("documentType"));
                 adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
