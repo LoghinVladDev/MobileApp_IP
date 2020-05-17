@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -50,10 +51,12 @@ import java.util.Map;
 
 public class DocumentsFragment extends Fragment {
 
-    private RecyclerView recyclerViewDocuments;
+//    private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
     private List<Document> documents;
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
+
+    private RecyclerView recyclerView;
 
     private RequestQueue requestQueue;
 
@@ -69,65 +72,76 @@ public class DocumentsFragment extends Fragment {
 
         this.initRv(root);
 
-//        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
-//        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
-//        actionBar.setCustomView(R.layout.action_bar_documents);
+        this.documents.add(new Invoice().setID(3));
+        this.documents.add(new Invoice().setID(4));
 //
-//        View actionBarRoot = actionBar.getCustomView();
-        Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
-
-        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_list_item_1);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSortDocuments.setAdapter(spinnerAdapter);
-
-        ProgressBar progressBar = root.findViewById(R.id.progressBarLoadDocuments);
-        progressBar.setVisibility(View.VISIBLE);
-
-        final String[] textSpinner = getResources().getStringArray(R.array.spinnerSortDocuments);
-
-        spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                progressBar.setVisibility(View.GONE);
-
-                if (item.equals(textSpinner[0]))
-                {
-                    documents = new ArrayList<>();
-                    requestRetrieveUserCreatedDocuments();
-                    initRv(root);
-                }
-
-                if (item.equals(textSpinner[1]))
-                {
-                    documents = new ArrayList<>();
-                    requestRetrieveUserReceivedDocuments();
-                    initRv(root);
-                }
-
-                if (item.equals(textSpinner[2]))
-                {
-                    documents = new ArrayList<>();
-                    requestRetrieveUserSentDocuments();
-                    initRv(root);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        });
+////        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
+////        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
+////        actionBar.setCustomView(R.layout.action_bar_documents);
+////
+////        View actionBarRoot = actionBar.getCustomView();
+//        Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
+//
+//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_list_item_1);
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
 //        spinnerSortDocuments.setAdapter(spinnerAdapter);
-
+//
+//        ProgressBar progressBar = root.findViewById(R.id.progressBarLoadDocuments);
+//        progressBar.setVisibility(View.VISIBLE);
+//
+//        final String[] textSpinner = getResources().getStringArray(R.array.spinnerSortDocuments);
+//
+//        spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String item = parent.getItemAtPosition(position).toString();
+//                progressBar.setVisibility(View.GONE);
+//
+//                if (item.equals(textSpinner[0]))
+//                {
+//                    Log.d(LOG_TAG, "IN CREATED");
+////                    documents = new ArrayList<>();
+//                    documents.clear();
+//                    requestRetrieveUserCreatedDocuments();
+////                    initRv(root);
+//                }
+//
+//                if (item.equals(textSpinner[1]))
+//                {
+//                    Log.d(LOG_TAG, "IN Received");
+////                    documents = new ArrayList<>();
+//                    documents.clear();
+//                    requestRetrieveUserReceivedDocuments();
+////                    initRv(root);
+//                }
+//
+//                if (item.equals(textSpinner[2]))
+//                {
+//                    Log.d(LOG_TAG, "IN Sent");
+////                    documents = new ArrayList<>();
+//                    documents.clear();
+//                    requestRetrieveUserSentDocuments();
+////                    initRv(root);
+//                }
+////                LinearLayout l = root.findViewById(R.id.layoutSpinner);
+////                l.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                progressBar.setVisibility(View.VISIBLE);
+//            }
+//        });
+////        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+////
+////        spinnerSortDocuments.setAdapter(spinnerAdapter);
+//
         return root;
     }
 
     private void initRv(View root)
     {
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewDocuments);
+        recyclerView = root.findViewById(R.id.recyclerViewDocuments);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
 
         adapter = new DocumentsAdapter(root.getContext(), this.documents);
@@ -135,11 +149,6 @@ public class DocumentsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getActivity().getMenuInflater().inflate(R.menu.document_spinner, menu);
-//        return true;
-//    }
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestRetrieveUserCreatedDocuments()
     {
@@ -150,6 +159,53 @@ public class DocumentsFragment extends Fragment {
         requestParams.put("institutionName", "");
 
         this.makeHTTPGetUserCreatedDocuments(requestParams);
+    }
+
+    private void callbackGetDocuments(String JSONEncodedResponse) {
+        Log.d(LOG_TAG, "DOCS ARRAY : " + JSONEncodedResponse);
+        try {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
+
+            for(int i = 0, length = documentsListJSON.length(); i < length; i++) {
+                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
+                Document document = null;
+                if (currentDocumentJSON.getString("documentType").equals("Receipt")) {
+                    document = new Receipt();
+                    //this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
+                }
+                else if(currentDocumentJSON.getString("documentType").equals("Invoice")) {
+                    document = new Invoice();
+                    //this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
+                }
+                if(document != null){
+                    this.documents.add(document
+                            .setID(Integer.parseInt(currentDocumentJSON.getString("ID").equals("null") ? "-1" : currentDocumentJSON.getString("ID")))
+                            .setSenderID(Integer.parseInt(currentDocumentJSON.getString("senderID").equals("null") ? "-1" : currentDocumentJSON.getString("senderID")))
+                            .setSenderInstitutionID(Integer.parseInt(currentDocumentJSON.getString("senderInstitutionID").equals("null") ? "-1" : currentDocumentJSON.getString("senderInstitutionID")))
+                            .setSenderAddressID(Integer.parseInt(currentDocumentJSON.getString("senderAddressID").equals("null") ? "-1" : currentDocumentJSON.getString("senderAddressID")))
+                            .setReceiverID(Integer.parseInt((currentDocumentJSON.getString("receiverID").equals("null")) ? "-1" : currentDocumentJSON.getString("receiverID")))
+                            .setReceiverInstitutionID(Integer.parseInt(currentDocumentJSON.getString("receiverInstitutionID").equals("null") ? "-1" : currentDocumentJSON.getString("receiverInstitutionID")))
+                            .setReceiverAddressID(Integer.parseInt(currentDocumentJSON.getString("receiverAddressID").equals("null") ? "-1" : currentDocumentJSON.getString("receiverAddressID")))
+                            .setCreatorID(Integer.parseInt(currentDocumentJSON.getString("creatorID").equals("null") ? "-1" : currentDocumentJSON.getString("creatorID")))
+                            .setDateCreated(currentDocumentJSON.getString("dateCreated"))
+                            .setDateSent(currentDocumentJSON.getString("dateSent"))
+                            .setSent(currentDocumentJSON.getInt("isSent") == 1)
+                    );
+                }
+            }
+            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
+        }
+        catch (JSONException e) {
+            Log.e(LOG_TAG, "ERROR : " + e.toString());
+        }
+        adapter.notifyDataSetChanged();
+        Log.d(LOG_TAG, "RV ITEMS COUNT : " + adapter.getItemCount());
+        Log.d(LOG_TAG, "PLM : " + this.recyclerView.getVisibility());
+        this.recyclerView.setVisibility(View.VISIBLE);
+        Log.d(LOG_TAG, "PLM : " + this.recyclerView.getVisibility());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -175,31 +231,9 @@ public class DocumentsFragment extends Fragment {
     }
 
     private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
-        try {
-            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
-            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
 
-            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
-
-            for(int i = 0, length = documentsListJSON.length(); i < length; i++) {
-                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                if (currentDocumentJSON.getString("documentType").equals("Receipt")) {
-                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
-                }
-                else if(currentDocumentJSON.getString("documentType").equals("Invoice")) {
-                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
-                }
-                adapter.notifyDataSetChanged();
-            }
-            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
-        }
-        catch (JSONException e) {
-            Log.e(LOG_TAG, "ERROR : " + e.toString());
-        }
+        this.callbackGetDocuments(JSONEncodedResponse);
     }
-
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestRetrieveUserSentDocuments()
@@ -238,36 +272,8 @@ public class DocumentsFragment extends Fragment {
 
     private void callbackGetUserSentDocuments(String JSONEncodedResponse)
     {
-        try
-        {
-            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
-            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
-
-            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
-
-            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
-            {
-                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
-                {
-                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
-                }
-                else
-                {
-                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
-                }
-                adapter.notifyDataSetChanged();
-            }
-            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
-        }
-        catch (JSONException e)
-        {
-            Log.e(LOG_TAG, "ERROR : " + e.toString());
-        }
+        this.callbackGetDocuments(JSONEncodedResponse);
     }
-
-    /////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestRetrieveUserReceivedDocuments()
@@ -306,31 +312,6 @@ public class DocumentsFragment extends Fragment {
 
     private void callbackGetUserReceivedDocuments(String JSONEncodedResponse)
     {
-        try
-        {
-            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
-            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
-
-            JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
-
-            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
-            {
-                JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
-                {
-                    this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
-                }
-                else
-                {
-                    this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
-                }
-                adapter.notifyDataSetChanged();
-            }
-            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
-        }
-        catch (JSONException e)
-        {
-            Log.e(LOG_TAG, "ERROR : " + e.toString());
-        }
+        this.callbackGetDocuments(JSONEncodedResponse);
     }
 }
