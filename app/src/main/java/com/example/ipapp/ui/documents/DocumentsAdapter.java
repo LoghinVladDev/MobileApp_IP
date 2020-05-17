@@ -41,7 +41,7 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         Document document = mData.get(position);
-        holder.myTextView.setText(document.toString());
+        holder.myTextView.setText(document.toViewString());
     }
 
 
