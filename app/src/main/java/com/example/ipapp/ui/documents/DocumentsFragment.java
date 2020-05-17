@@ -67,7 +67,7 @@ public class DocumentsFragment extends Fragment{
 
         this.initRv(root);
 
-        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
 //        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
 //        actionBar.setCustomView(R.layout.action_bar_documents);
 //
@@ -139,6 +139,8 @@ public class DocumentsFragment extends Fragment{
     {
         try
         {
+            this.documents.add("hello");
+
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
 
