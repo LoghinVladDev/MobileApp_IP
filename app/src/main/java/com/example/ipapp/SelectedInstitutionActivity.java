@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.object.institution.Address;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.object.institution.Member;
 import com.example.ipapp.object.institution.Role;
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +74,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                 .show();
 
         this.rolesRequest();
+        this.addressesRequest();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -173,8 +176,73 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         Log.d(LOG_TAG, "INSTITUTION : " + this.institution.debugToString());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void addressesRequest(){
+        Map<String, String> params = new HashMap<>();
+
+        params.put("email", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        params.put("hashedPassword", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        params.put("institutionName", this.institution.getName());
+
+        this.makeHTTPRetrieveAddressesRequest(params);
+    }
+
+    private void addressesRequestCallback(JSONObject responseObject){
+        try{
+            JSONArray addressesArray = responseObject.getJSONArray("Addresses");
+
+            List<Address> addresses = new ArrayList<>();
+            for(int i = 0, length = addressesArray.length(); i < length; i++){
+                JSONObject addressJSON = (JSONObject) addressesArray.get(i);
+
+                addresses.add(
+                        new Address()
+                            .setID(addressJSON.getInt("ID"))
+                            .setCountry(addressJSON.getString("Country"))
+                            .setRegion(addressJSON.getString("Region"))
+                            .setCity(addressJSON.getString("City"))
+                            .setStreet(addressJSON.getString("Street"))
+                            .setNumber(addressJSON.getInt("Number"))
+                            .setBuilding(addressJSON.getString("Building"))
+                            .setFloor(addressJSON.getInt("Floor"))
+                            .setApartment(addressJSON.getInt("Apartment"))
+                );
+            }
+
+            this.institution.addAddresses(addresses);
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void makeHTTPRetrieveAddressesRequest(final Map<String, String> bodyParameters){
+        StringRequest request = new StringRequest(
+            Request.Method.GET,
+            ApiUrls.encodeGetURLParams(ApiUrls.INSTITUTION_RETRIEVE_ADDRESSES, bodyParameters),
+            response -> {
+                Log.d(LOG_TAG, "RESPONSE : " + response);
+                if( response.contains("SUCCESS") ) {
+                    try {
+                        this.addressesRequestCallback(new JSONObject(response).getJSONObject("returnedObject"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                }
+            },
+            error -> {
+                Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                Toast.makeText(getApplicationContext(), "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        ) {
+            protected Map<String, String> getParams() { return bodyParameters; }
+        };
+        this.requestQueue.add(request);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

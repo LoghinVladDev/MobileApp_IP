@@ -1,5 +1,7 @@
 package com.example.ipapp.object.institution;
 
+import androidx.annotation.NonNull;
+
 public class Address {
     private int ID;
     private String country;
@@ -10,6 +12,13 @@ public class Address {
     private String building;
     private int floor;
     private int apartment;
+
+    @Override
+    public String toString() {
+        return "{id=" + this.ID + ",country=" + this.country + ",region=" + this.region + ",city=" + this.city +
+            ",street=" + this.street + ",number" + this.number + ",building=" + this.building + ",floor=" + this.floor +
+            "apartment=" + this.apartment + "}";
+    }
 
     public Address(){
 
