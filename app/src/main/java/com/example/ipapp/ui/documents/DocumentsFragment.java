@@ -192,6 +192,7 @@ public class DocumentsFragment extends Fragment {
                 else if(currentDocumentJSON.getString("documentType").equals("Invoice")) {
                     this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
                 }
+                adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
         }
