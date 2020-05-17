@@ -87,11 +87,16 @@ public class DocumentsFragment extends Fragment {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSortDocuments.setAdapter(spinnerAdapter);
 
+        ProgressBar progressBar = root.findViewById(R.id.progressBarLoadDocuments);
+        progressBar.setVisibility(View.VISIBLE);
+
+
         spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
+                progressBar.setVisibility(View.GONE);
 
                 if (item.equals("Created"))
                 {
@@ -117,7 +122,7 @@ public class DocumentsFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
