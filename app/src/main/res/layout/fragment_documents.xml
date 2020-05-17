@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.documents.DocumentsFragment">
+    tools:context=".ui.documents.DocumentsFragment" >
 
     <!-- GARBAGE
     <TextView
@@ -22,15 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /> -->
 
-    <Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="6dp" />
 
     <ProgressBar
         android:id="@+id/progressBarLoadDocuments"

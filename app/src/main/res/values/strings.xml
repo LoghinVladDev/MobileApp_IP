@@ -33,5 +33,11 @@
     <string name="descriptionFabAddInstitution">Add institution</string>
     <string name="descriptionInstitution">Institution</string>
 
+    <string-array name="spinnerSortDocuments">
+        <item> Sent by user </item>
+        <item> Received by user </item>
+        <item> Created by user </item>
+    </string-array>
+
 
 </resources>
