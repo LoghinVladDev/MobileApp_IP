@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -47,7 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DocumentsFragment extends Fragment{
+public class DocumentsFragment extends Fragment {
 
     private RecyclerView recyclerViewDocuments;
     private DocumentsAdapter adapter;
@@ -63,19 +64,61 @@ public class DocumentsFragment extends Fragment{
         this.documents = new ArrayList<>();
 
         this.requestQueue = LoginActivity.getRequestQueue();
-        this.requestRetrieveUserReceivedDocuments();
 
         View root = inflater.inflate(R.layout.fragment_documents, container, false);
 
         this.initRv(root);
 
-     //   Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
 //        ActionBar actionBar = ((HomeActivity)getActivity()).getSupportActionBar();
 //        actionBar.setCustomView(R.layout.action_bar_documents);
 //
 //        View actionBarRoot = actionBar.getCustomView();
-//        Spinner spinnerSortDocuments = actionBarRoot.findViewById(R.id.spinnerSortDocuments);
-//        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this.getContext(), R.array.spinnerSortDocuments, android.R.layout.simple_spinner_item);
+
+        List<String> categories = new ArrayList<>();
+        categories.add("Created");
+        categories.add("Received");
+        categories.add("Sent");
+
+        Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, categories);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSortDocuments.setAdapter(spinnerAdapter);
+
+        spinnerSortDocuments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+
+                if (item.equals("Created"))
+                {
+                    documents = new ArrayList<>();
+                    requestRetrieveUserCreatedDocuments();
+                    initRv(root);
+                }
+
+                if (item.equals("Received"))
+                {
+                    documents = new ArrayList<>();
+                    requestRetrieveUserReceivedDocuments();
+                    initRv(root);
+                }
+
+                if (item.equals("Sent"))
+                {
+                    documents = new ArrayList<>();
+                    requestRetrieveUserSentDocuments();
+                    initRv(root);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 //        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //
 //        spinnerSortDocuments.setAdapter(spinnerAdapter);
@@ -106,7 +149,6 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserCreatedDocuments(requestParams);
     }
@@ -175,7 +217,6 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserSentDocuments(requestParams);
     }
@@ -245,7 +286,6 @@ public class DocumentsFragment extends Fragment{
         requestParams.put("email", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(getActivity().getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "");
-        requestParams.put("apiKey", "");
 
         this.makeHTTPGetUserReceivedDocuments(requestParams);
     }
