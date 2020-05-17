@@ -32,6 +32,11 @@ public abstract class Document {
         return "Document " + this.ID;
     }
 
+    @NonNull
+    public String getType() {
+        return "Document ";
+    }
+
     protected Document(){
 
     }

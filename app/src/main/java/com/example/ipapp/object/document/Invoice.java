@@ -10,6 +10,8 @@ import java.util.List;
 public class Invoice extends Document {
     private List<Pair<Item, Integer>> items;
 
+    public String getType() { return "Invoice"; }
+
     public String toViewString(){
         return "Invoice, id = " + this.ID;
     }

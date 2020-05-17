@@ -2,6 +2,9 @@ package com.example.ipapp.ui.documents;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
+
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -26,9 +31,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.ipapp.HomeActivity;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
+import com.example.ipapp.SelectedDocumentActivity;
+import com.example.ipapp.SelectedInstitutionActivity;
 import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
 import com.example.ipapp.object.document.Receipt;
+import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
@@ -46,6 +54,7 @@ public class DocumentsFragment extends Fragment {
     private DocumentsAdapter adapter;
     private List<Document> documents;
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
+    private static final String INTENT_KEY_DOCUMENT_JSON = "document";
 
     private RecyclerView recyclerView;
 
@@ -56,6 +65,7 @@ public class DocumentsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         this.documents = new ArrayList<>();
+
 
         this.requestQueue = LoginActivity.getRequestQueue();
 
@@ -87,10 +97,10 @@ public class DocumentsFragment extends Fragment {
 
                 if (item.equals(textSpinner[0]))
                 {
-                    Log.d(LOG_TAG, "IN CREATED");
+                    Log.d(LOG_TAG, "IN Sent");
 //                    documents = new ArrayList<>();
                     documents.clear();
-                    requestRetrieveUserCreatedDocuments();
+                    requestRetrieveUserSentDocuments();
 //                    initRv(root);
                 }
 
@@ -105,10 +115,10 @@ public class DocumentsFragment extends Fragment {
 
                 if (item.equals(textSpinner[2]))
                 {
-                    Log.d(LOG_TAG, "IN Sent");
+                    Log.d(LOG_TAG, "IN Created");
 //                    documents = new ArrayList<>();
                     documents.clear();
-                    requestRetrieveUserSentDocuments();
+                    requestRetrieveUserCreatedDocuments();
 //                    initRv(root);
                 }
             }
@@ -129,7 +139,36 @@ public class DocumentsFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerViewDocuments);
         recyclerView.setLayoutManager( new LinearLayoutManager(root.getContext()));
 
-        adapter = new DocumentsAdapter(root.getContext(), this.documents);
+        adapter = new DocumentsAdapter(root.getContext(), this.documents, v -> {
+            TextView textView = v.findViewById(R.id.documentRow);
+
+            Intent goToSelectedDocument = new Intent(this.getActivity(), SelectedDocumentActivity.class);
+
+            JSONObject param = new JSONObject();
+
+            Document document = null;
+
+            for (Document i : this.documents)
+                if(i.toViewString().equals(textView.getText().toString()))
+                    document = i;
+
+            try {
+                if (document != null) {
+                    param.put("Type", document.toViewString());
+
+                    goToSelectedDocument.putExtra(INTENT_KEY_DOCUMENT_JSON, param.toString());
+                }
+                else{
+                    Log.e(LOG_TAG, "INTENT PARAM ERROR : " + "institution null?");
+                }
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //goToSelectedInstitution.putExtra(INTENT_KEY_INSTITUTION_NAME, textView.getText().toString());
+            startActivity(goToSelectedDocument);
+        });
 
         recyclerView.setAdapter(adapter);
     }
@@ -147,6 +186,7 @@ public class DocumentsFragment extends Fragment {
     }
 
     private void callbackGetDocuments(String JSONEncodedResponse) {
+
         Log.d(LOG_TAG, "DOCS ARRAY : " + JSONEncodedResponse);
         try {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);

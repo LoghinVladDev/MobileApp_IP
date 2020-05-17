@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity android:name=".SelectedInstitutionActivity"></activity>
+        <activity android:name=".SelectedDocumentActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_home">
