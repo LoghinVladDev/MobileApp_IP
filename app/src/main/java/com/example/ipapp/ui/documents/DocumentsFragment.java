@@ -177,32 +177,25 @@ public class DocumentsFragment extends Fragment {
         this.requestQueue.add(getRequest);
     }
 
-    private void callbackGetUserCreatedDocuments(String JSONEncodedResponse)
-    {
-        try
-        {
+    private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
+        try {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
 
             JSONArray documentsListJSON = (JSONArray) responseObject.get("documents");
 
-            for(int i = 0, length = documentsListJSON.length(); i < length; i++)
-            {
+            for(int i = 0, length = documentsListJSON.length(); i < length; i++) {
                 JSONObject currentDocumentJSON = documentsListJSON.getJSONObject(i);
-                if (currentDocumentJSON.getString("documentType").equals("Receipt"))
-                {
+                if (currentDocumentJSON.getString("documentType").equals("Receipt")) {
                     this.documents.add(new Receipt().setID(currentDocumentJSON.getInt("ID")));
                 }
-                else
-                {
+                else if(currentDocumentJSON.getString("documentType").equals("Invoice")) {
                     this.documents.add(new Invoice().setID(currentDocumentJSON.getInt("ID")));
                 }
-                adapter.notifyDataSetChanged();
             }
             Log.d(LOG_TAG, "LIST : " + this.documents.toString());
         }
-        catch (JSONException e)
-        {
+        catch (JSONException e) {
             Log.e(LOG_TAG, "ERROR : " + e.toString());
         }
     }
@@ -295,19 +288,20 @@ public class DocumentsFragment extends Fragment {
     private void makeHTTPGetUserReceivedDocuments(final Map<String, String> bodyParameters)
     {
         StringRequest getRequest = new StringRequest(Request.Method.GET,
-                ApiUrls.encodeGetURLParams(ApiUrls.DOCUMENT_RETRIEVE_FILTER_USER_RECEIVED, bodyParameters),
-                response ->
-                {
-                    if(response.contains("SUCCESS"))
-                    {
-                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                        callbackGetUserReceivedDocuments(response);
-                    }
-                },
-                error ->
-                {
-                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
-                }
+        ApiUrls.encodeGetURLParams(ApiUrls.DOCUMENT_RETRIEVE_FILTER_USER_RECEIVED, bodyParameters),
+        response ->
+        {
+            Log.d(LOG_TAG, "RESPONSE : " + response);
+            if(response.contains("SUCCESS"))
+            {
+                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                callbackGetUserReceivedDocuments(response);
+            }
+        },
+        error ->
+        {
+            Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+        }
         ) {
             protected Map<String, String> getParams() { return bodyParameters; }
         };
