@@ -45,6 +45,14 @@ public class InstitutionsFragment extends Fragment {
 
     private RequestQueue requestQueue;
 
+    private static List<Institution> institutionsInstance;
+
+    public static List<Institution> getInstitutions(){
+        if(institutionsInstance == null)
+            institutionsInstance = new ArrayList<>();
+        return institutionsInstance;
+    }
+
     private List<Institution> institutions;
 
     private static List<Institution> bundleInstitutionList;
@@ -63,9 +71,7 @@ public class InstitutionsFragment extends Fragment {
         this.requestQueue = LoginActivity.getRequestQueue();
         this.requestPopulateInstitutions();
 
-
-
-        this.institutions = new ArrayList<>();
+        this.institutions = InstitutionsFragment.getInstitutions();
 
         View root = inflater.inflate(R.layout.fragment_institutions, container, false);
         initialiseUI(root);
@@ -114,6 +120,7 @@ public class InstitutionsFragment extends Fragment {
     }
 
     private void callbackPopulateInstitutionsList(String JSONEncodedResponse) {
+        this.institutions.clear();
         try {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
