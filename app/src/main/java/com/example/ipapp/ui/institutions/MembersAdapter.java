@@ -1,9 +1,11 @@
 package com.example.ipapp.ui.institutions;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHolder> {
+    private static final String TAG = "M_ADAPT";
     private List<Member> mData;
     private LayoutInflater mInflater;
     private Institution memberInstitution;
@@ -35,6 +38,12 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     @Override
     public MembersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.rv_member_row, parent, false);
+        view.setOnClickListener(v -> {
+            TextView memberTextViewName = v.findViewById(R.id.textViewMemberRow);
+
+//            Toast.makeText(v.getContext(), memberTextViewName.getText().toString(), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "onCreateViewHolder: " + memberTextViewName.getText().toString());
+        });
         return new MembersAdapter.ViewHolder(view);
     }
 
@@ -42,10 +51,14 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     @Override
     public void onBindViewHolder(MembersAdapter.ViewHolder holder, int position) {
         Member member = mData.get(position);
-        holder.memberName.setText(member.getUsername());
-        holder.memberRole.setText(member.getRole().getName());
+        holder.textViewMemberName.setText(member.getUsername());
+        holder.textViewMemberRole.setText(member.getRole().getName());
+
+        Log.e(TAG, "MEMEBER NO BRO : " + member.getUsername());
 
         List<String> memberInstitutionRolesNames = new ArrayList<>();
+
+        memberInstitutionRolesNames.add(member.getRole().getName());
 
         for (Role r : memberInstitution.getRoleList()) {
             if (!r.getName().equals(member.getRole().getName())) {
@@ -53,10 +66,20 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
             }
         }
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(holder.itemView.getContext(), android.R.layout.simple_spinner_item, memberInstitutionRolesNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        holder.spinnerRoles.setAdapter(adapter);
+
+        //<editor-fold desc="FOR DEBUG PURPOSES">
+        //        holder.spinnerRoles.setVisibility(View.GONE);
+//        holder.textViewMemberRole.setVisibility(View.GONE);
+        //</editor-fold>
+
         if (!member.getRole().isAllowed(Role.CAN_MODIFY_ROLES)) {
-            holder.allRoles.setVisibility(View.GONE);
+            holder.spinnerRoles.setVisibility(View.GONE);
         } else {
-            holder.memberRole.setVisibility(View.GONE);
+            holder.textViewMemberRole.setVisibility(View.GONE);
         }
     }
 
@@ -64,24 +87,21 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     // total number of rows
     @Override
     public int getItemCount() {
-        if (mData != null)
-            return mData.size();
-        else
-            return 0;
+        return null != mData ? mData.size() : 0;
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView memberName;
-        TextView memberRole;
-        Spinner allRoles;
+        TextView textViewMemberName;
+        TextView textViewMemberRole;
+        Spinner spinnerRoles;
 
         ViewHolder(View itemView) {
             super(itemView);
-            memberName = itemView.findViewById(R.id.memberRow);
-            memberRole = itemView.findViewById(R.id.memberRole);
-            allRoles = itemView.findViewById(R.id.memberRoleSpinner);
+            textViewMemberName = itemView.findViewById(R.id.textViewMemberRow);
+            textViewMemberRole = itemView.findViewById(R.id.textViewMemberRole);
+            spinnerRoles = itemView.findViewById(R.id.spinnerMemberRole);
         }
 
         @Override
@@ -94,5 +114,4 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     Member getItem(int id) {
         return mData.get(id);
     }
-
 }

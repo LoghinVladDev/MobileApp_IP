@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPink"
     android:orientation="horizontal"
-    android:padding="10dp"
-    tools:ignore="ExtraText">
+    android:padding="10dp">
 
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/ic_institution_row"
+        android:contentDescription="@string/descriptionInstitution"
         android:scaleType="fitXY"
-        android:contentDescription="@string/descriptionInstitution" />
+        android:src="@drawable/ic_institution_row" />
 
     <TextView
         android:id="@+id/textViewRVRowInstitutionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
 </LinearLayout>

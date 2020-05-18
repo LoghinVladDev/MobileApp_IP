@@ -12,14 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import com.example.ipapp.HomeActivity;
+import com.example.ipapp.ui.MotoItemDecoration;
 import com.example.ipapp.ui.account.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
@@ -110,7 +109,8 @@ public class InstitutionsFragment extends Fragment {
             startActivity(goToSelectedInstitution);
         });
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new MotoItemDecoration(20));
     }
 
     private void callbackPopulateInstitutionsList(String JSONEncodedResponse) {
@@ -130,7 +130,7 @@ public class InstitutionsFragment extends Fragment {
                                 .setName(currentInstitutionJSON.getString("institutionName"))
                                 .setID(currentInstitutionJSON.getInt("ID"))
                 );
-                adapter.notifyDataSetChanged();
+                this.adapter.notifyDataSetChanged();
                 //Log.d(CLASS_TAG, "STATUS_UPD : " + currentInstitutionJSON.toString());
             }
             Log.d(CLASS_TAG, "LIST : " + this.institutions.toString());

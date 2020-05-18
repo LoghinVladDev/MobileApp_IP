@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import com.example.ipapp.object.institution.Address;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.object.institution.Member;
 import com.example.ipapp.object.institution.Role;
+import com.example.ipapp.ui.MotoItemDecoration;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
@@ -36,7 +38,6 @@ import java.util.Map;
 
 public class SelectedInstitutionActivity extends AppCompatActivity {
 
-    private static final String INTENT_KEY_INSTITUTION_NAME = "institutionName";
     private static final String INTENT_KEY_INSTITUTION_JSON = "institution";
 
     private RecyclerView recyclerView;
@@ -48,8 +49,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     private static final String LOG_TAG = "SELECTED_INSTITUTION";
 
     private Institution institution;
-
-    Toolbar toolbar;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -86,6 +85,9 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         adapter = new MembersAdapter(this, this.institution);
 
         recyclerView.setAdapter(adapter);
+
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new MotoItemDecoration(20));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -166,7 +168,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
             List<Member> memberList = new ArrayList<>();
 
-            for(int i = 0, length = membersArray.length(); i < length; i++){
+            for (int i = 0, length = membersArray.length(); i < length; i++) {
                 JSONObject memberJSON = (JSONObject) membersArray.get(i);
 
                 Role role = null;
@@ -184,14 +186,17 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                 );
 
 //                this.adapter.notifyDataSetChanged();
-
-                this.institution.addMembers(memberList);
             }
+
+            this.institution.addMembers(memberList);
+
         } catch (JSONException e){
             e.printStackTrace();
         }
 
         Log.d(LOG_TAG, "INSTITUTION : " + this.institution.debugToString());
+
+        Log.e(LOG_TAG, "MEMEBER NO BRO : " + this.institution.getMemberList().size());
 
         initialiseRecyclerViewMembers();
     }
