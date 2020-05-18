@@ -30,6 +30,7 @@ import com.example.ipapp.RegisterActivity;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,9 @@ public class AccountFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_account, container, false);
+
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fabCreateInstitution);
+        floatingActionButton.setVisibility(View.GONE);
 
         EditText emailEditText = root.findViewById(R.id.editTextCurrentEmail);
         emailEditText.setText(UtilsSharedPreferences.getString(getContext(),"EMAIL", ""));

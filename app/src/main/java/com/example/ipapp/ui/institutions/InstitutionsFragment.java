@@ -27,6 +27,7 @@ import com.example.ipapp.SelectedInstitutionActivity;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +53,9 @@ public class InstitutionsFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fabCreateInstitution);
+        floatingActionButton.setVisibility(View.VISIBLE);
 
         this.requestQueue = LoginActivity.getRequestQueue();
         this.requestPopulateInstitutions();

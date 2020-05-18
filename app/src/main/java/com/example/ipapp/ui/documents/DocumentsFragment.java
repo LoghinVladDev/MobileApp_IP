@@ -4,7 +4,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,14 +29,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.ipapp.HomeActivity;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
-import com.example.ipapp.SelectedDocumentActivity;
-import com.example.ipapp.SelectedInstitutionActivity;
 import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
 import com.example.ipapp.object.document.Receipt;
-import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.utils.ApiUrls;
+import com.example.ipapp.SelectedDocumentActivity;
 import com.example.ipapp.utils.UtilsSharedPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +60,9 @@ public class DocumentsFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fabCreateInstitution);
+        floatingActionButton.setVisibility(View.VISIBLE);
 
         this.documents = new ArrayList<>();
 
@@ -155,6 +155,9 @@ public class DocumentsFragment extends Fragment {
             try {
                 if (document != null) {
                     param.put("SelectedDocument", document.toViewString());
+                    param.put("DocumentType", document.getType());
+                    param.put("SenderInstitution", document.getSenderInstitutionID());
+                    param.put("DocumentID", document.getID());
 
                     goToSelectedDocument.putExtra(INTENT_KEY_DOCUMENT_JSON, param.toString());
                 }
