@@ -9,9 +9,81 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SelectedDocumentActivity">
 
-    <TextView
+    <EditText
+        android:id="@+id/editTextNewItemID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Modifica daca ai tupeu" />
+        android:hint="ID : "
+        android:inputType="text"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/newItemCheckBox" />
+
+    <EditText
+        android:id="@+id/editTextNewItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name : "
+        android:inputType="text"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/editTextNewItemID" />
+
+    <EditText
+        android:id="@+id/editTextNewItemCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Currency : "
+        android:inputType="text"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/editTextNewItemName" />
+
+    <EditText
+        android:id="@+id/editTextNewItemProductNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Product Number : "
+        android:inputType="number"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/editTextNewItemCurrency" />
+
+    <EditText
+        android:id="@+id/editTextNewItemTax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Tax : "
+        android:inputType="numberDecimal"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/editTextNewItemProductNumber" />
+
+    <EditText
+        android:id="@+id/editTextNewItemValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Value : "
+        android:inputType="numberDecimal"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/editTextNewItemTax" />
+
+    <EditText
+        android:id="@+id/editTextNewItemValueWithTax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Value with tax : "
+        android:inputType="numberDecimal"
+        tools:ignore="Autofill"
+        android:layout_below="@+id/editTextNewItemValue" />
+
+
+    <CheckBox
+        android:id="@+id/newItemCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add item" />
+
+    <Button
+        android:id="@+id/buttonModifyDocument"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNewItemValueWithTax"
+        android:text="Modify document" />
 
 </RelativeLayout>

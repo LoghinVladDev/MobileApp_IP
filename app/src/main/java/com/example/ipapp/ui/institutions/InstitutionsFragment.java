@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import com.example.ipapp.HomeActivity;
 import com.example.ipapp.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.SelectedInstitutionActivity;
@@ -50,6 +48,8 @@ public class InstitutionsFragment extends Fragment {
 
     private List<Institution> institutions;
 
+    private static List<Institution> bundleInstitutionList;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class InstitutionsFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_institutions, container, false);
         initialiseUI(root);
+        InstitutionsFragment.bundleInstitutionList = this.institutions;
         return root;
     }
 

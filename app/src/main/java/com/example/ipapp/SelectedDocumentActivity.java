@@ -90,22 +90,15 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
                 deleteAlertBuilder.setPositiveButton(
                         "Yes",
-                        new DialogInterface.OnClickListener() {
-                            @RequiresApi(api = Build.VERSION_CODES.N)
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                        (dialog, id) -> {
+                            dialog.cancel();
 //                                requestDeleteDocument();
-                                onBackPressed();
-                            }
+                            onBackPressed();
                         });
 
                 deleteAlertBuilder.setNegativeButton(
                         "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                        (dialog, id) -> dialog.cancel());
 
                 AlertDialog deleteAlert = deleteAlertBuilder.create();
                 deleteAlert.show();
