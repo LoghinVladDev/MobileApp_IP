@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -40,7 +41,9 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MembersAdapter adapter;
-    List<Member> members;
+    private List<Member> members;
+    private List<Role> roleList;
+    private List<String> roleNames;
 
     private String institutionName;
 
@@ -87,7 +90,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewMembers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MembersAdapter(this, this.members);
+        adapter = new MembersAdapter(this, this.members, this.institution);
 
         recyclerView.setAdapter(adapter);
     }
@@ -109,7 +112,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         try {
             JSONArray rolesArray = responseData.getJSONArray("roles");
-            List<Role> roleList = new ArrayList<>();
+            roleList = new ArrayList<>();
 
             for(int i = 0, length = rolesArray.length(); i < length; i++){
 
@@ -138,6 +141,8 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                         .setRight(Role.CAN_ASSIGN_ROLES,                        rights.getInt(Role.CAN_ASSIGN_ROLES)                        ==1)
                         .setRight(Role.CAN_DE_ASSIGN_ROLES,                     rights.getInt(Role.CAN_DE_ASSIGN_ROLES)                     ==1)
                 );
+
+                roleNames.add(role.getString("name"));
             }
 
             this.institution.addRoles(roleList);
