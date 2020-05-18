@@ -90,7 +90,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewMembers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MembersAdapter(this, this.members, this.institution);
+        adapter = new MembersAdapter(this, this.members);
 
         recyclerView.setAdapter(adapter);
     }
@@ -142,7 +142,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                         .setRight(Role.CAN_DE_ASSIGN_ROLES,                     rights.getInt(Role.CAN_DE_ASSIGN_ROLES)                     ==1)
                 );
 
-                roleNames.add(role.getString("name"));
+//                roleNames.add(role.getString("name"));
             }
 
             this.institution.addRoles(roleList);
