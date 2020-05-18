@@ -1,4 +1,4 @@
-package com.example.ipapp;
+package com.example.ipapp.ui.institutions;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Member;
 
 import java.util.List;
