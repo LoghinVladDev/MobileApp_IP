@@ -38,35 +38,24 @@ public class AccountFragment extends Fragment {
 
         Button buttonModifyAccount = root.findViewById(R.id.buttonModifyAccount);
 
-        buttonLogout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent goToLoginActivity = new Intent();
+        buttonLogout.setOnClickListener(v -> {
+            Intent goToLoginActivity = new Intent();
 
-                goToLoginActivity.setClass(getActivity(), LoginActivity.class);
+            goToLoginActivity.setClass(getActivity(), LoginActivity.class);
 
-                UtilsSharedPreferences.removeCredentials(getContext());
+            UtilsSharedPreferences.removeCredentials(getContext());
 
-                startActivity(goToLoginActivity);
+            startActivity(goToLoginActivity);
 
-                getActivity().finish();
-            }
+            getActivity().finish();
         });
 
-        buttonModifyAccount.setOnClickListener(new View.OnClickListener()
-        {
+        buttonModifyAccount.setOnClickListener(v -> {
+            Intent goToModifyAccountActivity = new Intent();
 
-            @Override
-            public void onClick(View v)
-            {
-                Intent goToModifyAccountActivity = new Intent();
+            goToModifyAccountActivity.setClass(getActivity(), ModifyAccountActivity.class);
 
-                goToModifyAccountActivity.setClass(getActivity(), ModifyAccountActivity.class);
-
-                startActivity(goToModifyAccountActivity);
-            }
+            startActivity(goToModifyAccountActivity);
         });
 
         return root;

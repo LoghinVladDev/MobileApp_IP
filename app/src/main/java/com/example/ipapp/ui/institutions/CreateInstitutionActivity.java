@@ -1,4 +1,4 @@
-package com.example.ipapp;
+package com.example.ipapp.ui.institutions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.HomeActivity;
+import com.example.ipapp.R;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
@@ -27,11 +29,13 @@ public class CreateInstitutionActivity extends AppCompatActivity {
     private RequestQueue httpRequestQueue;
 
     //<editor-fold desc="UI ELEMENTS">
-    private EditText editTextName;
+    private EditText editTextName, editTextCIF;
+
     private EditText editTextCountry, editTextRegion;
     private EditText editTextCity, editTextStreetName;
     private EditText editTextStreetNumber, editTextBuilding;
     private EditText editTextApartment;
+
     private Button buttonCreateInstitution;
     //</editor-fold>
 
@@ -41,19 +45,19 @@ public class CreateInstitutionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_institution);
 
         httpRequestQueue = Volley.newRequestQueue(this);
-
         initialiseUI();
     }
 
     private void initialiseUI() {
-        editTextName = findViewById(R.id.editTextCreateInstitutionName);
         editTextApartment = findViewById(R.id.editTextCreateInstitutionsApartment);
         editTextBuilding = findViewById(R.id.editTextCreateInstitutionsBuilding);
+        editTextCIF = findViewById(R.id.editTextCreateInstitutionsCIF);
         editTextCity = findViewById(R.id.editTextCreateInstitutionCity);
         editTextCountry = findViewById(R.id.editTextCreateInstitutionCountry);
+        editTextName = findViewById(R.id.editTextCreateInstitutionName);
         editTextRegion = findViewById(R.id.editTextCreateInstitutionRegion);
-        editTextStreetNumber = findViewById(R.id.editTextCreateInstitutionStreetNumber);
         editTextStreetName = findViewById(R.id.editTextCreateInstitutionStreetName);
+        editTextStreetNumber = findViewById(R.id.editTextCreateInstitutionStreetNumber);
 
         buttonCreateInstitution = findViewById(R.id.buttonCreateInstitution);
         buttonCreateInstitution.setOnClickListener(v -> {
@@ -108,6 +112,7 @@ public class CreateInstitutionActivity extends AppCompatActivity {
         params.put("email", UtilsSharedPreferences.getString(this, UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         params.put("hashedPassword", UtilsSharedPreferences.getString(this, UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         params.put("institutionName", editTextName.getText().toString());
+        params.put("institutionCIF", editTextCIF.getText().toString());
         params.put("institutionAddress", jsonAddress.toString());
 
         Log.v(LOG_TAG, "Inst Address : " + jsonAddress.toString());
@@ -124,10 +129,15 @@ public class CreateInstitutionActivity extends AppCompatActivity {
         String streetNo = editTextStreetNumber.getText().toString().trim();
         String building = editTextBuilding.getText().toString().trim();
         String apartment = editTextApartment.getText().toString().trim();
+        String cif = editTextCIF.getText().toString().trim();
+
         if (country.isEmpty() || region.isEmpty() || city.isEmpty() ||
                 streetName.isEmpty() || streetNo.isEmpty() || building.isEmpty() || apartment.isEmpty()) {
             Toast.makeText(this, getString(R.string.toastFillAllFields), Toast.LENGTH_LONG).show();
             return false;
+        }
+        if (!cif.startsWith("RO") || !cif.endsWith("C")) {
+            Toast.makeText(this, getString(R.string.toastBadCIF), Toast.LENGTH_SHORT).show();
         }
         return true;
     }

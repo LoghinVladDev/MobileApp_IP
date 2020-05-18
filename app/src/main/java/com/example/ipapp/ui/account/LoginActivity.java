@@ -139,10 +139,6 @@ public class LoginActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void makeHTTPRetrieveAccountRequest( final Map<String, String> bodyParameters)
     {
-        //Toast.makeText(getApplicationContext(), bodyParameters.get("email"), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getApplicationContext(), bodyParameters.get("hashedPassword"), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getApplicationContext(), bodyParameters.get("apiKey"), Toast.LENGTH_SHORT).show();
-
         StringRequest retrieveAccountRequest = new StringRequest(Request.Method.GET, ApiUrls.encodeGetURLParams(ApiUrls.ACCOUNT_RETRIEVE_INFORMATION, bodyParameters),
                 response ->
                 {

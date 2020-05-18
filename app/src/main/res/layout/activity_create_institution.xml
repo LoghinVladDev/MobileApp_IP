@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateInstitutionActivity">
+    tools:context=".ui.institutions.CreateInstitutionActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="ScrollViewCount,UselessParent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/editTextCreateInstitutionName"
@@ -18,11 +18,21 @@
             android:importantForAutofill="no"
             android:inputType="text" />
 
+        <EditText
+            android:id="@+id/editTextCreateInstitutionsCIF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintInstitutionCIF"
+            android:maxLength="11"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+
         <TextView
             style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textViewCreateInstitutionAddress" />
+
         <!-- ADDRESS FIELDS -->
         <EditText
             android:id="@+id/editTextCreateInstitutionCountry"
@@ -76,14 +86,15 @@
             android:id="@+id/editTextCreateInstitutionsApartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:importantForAutofill="no"
             android:hint="@string/hintInstitutionAddressApartment"
+            android:importantForAutofill="no"
             android:inputType="number" />
+
 
         <Button
             android:id="@+id/buttonCreateInstitution"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/buttonCreateInstitution" />
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

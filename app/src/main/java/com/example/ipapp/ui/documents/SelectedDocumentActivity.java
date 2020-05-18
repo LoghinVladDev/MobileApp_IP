@@ -32,6 +32,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
     private static final String INTENT_KEY_DOCUMENT_JSON = "document";
     private RequestQueue httpRequestQueue;
+
     private String documentInformation;
     private String institutionSender;
     private String documentType;

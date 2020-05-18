@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.example.ipapp.HomeActivity;
 import com.example.ipapp.ui.account.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
@@ -54,6 +55,10 @@ public class InstitutionsFragment extends Fragment {
         FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fabCreateInstitution);
         floatingActionButton.setVisibility(View.VISIBLE);
 
+        floatingActionButton.setOnClickListener(v -> {
+            Intent goToCreateInstitution = new Intent(getActivity(), CreateInstitutionActivity.class);
+            startActivity(goToCreateInstitution);
+        });
         this.requestQueue = LoginActivity.getRequestQueue();
         this.requestPopulateInstitutions();
 

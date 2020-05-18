@@ -13,4 +13,5 @@ public class ModifyDocumentActivity extends AppCompatActivity {
         super.onCreate(savedDocumentInformation);
         setContentView(R.layout.activity_modify_document);
     }
+
 }
