@@ -1,42 +1,19 @@
 package com.example.ipapp.ui.account;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
-import com.example.ipapp.HomeActivity;
-import com.example.ipapp.LoginActivity;
-import com.example.ipapp.ModifyAccountActivity;
 import com.example.ipapp.R;
-import com.example.ipapp.RegisterActivity;
-import com.example.ipapp.object.institution.Institution;
-import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Map;
 
 public class AccountFragment extends Fragment {
 

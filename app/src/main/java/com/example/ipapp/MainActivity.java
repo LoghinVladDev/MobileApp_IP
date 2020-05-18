@@ -6,13 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
+import com.example.ipapp.ui.account.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MAIN ACTIVITY";

@@ -17,9 +17,9 @@
         <activity android:name=".CreateInstitutionActivity"></activity>
         <activity android:name=".ui.institutions.SelectedInstitutionActivity" />
         <activity android:name=".ui.documents.SelectedDocumentActivity" />
-        <activity android:name=".ModifyDocumentActivity" />
+        <activity android:name=".ui.documents.ModifyDocumentActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.account.LoginActivity"
             android:label="@string/title_activity_home">
 
             <!-- <intent-filter> -->
@@ -27,8 +27,8 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ModifyAccountActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ui.account.ModifyAccountActivity" />
+        <activity android:name=".ui.account.RegisterActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

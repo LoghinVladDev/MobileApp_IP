@@ -1,4 +1,4 @@
-package com.example.ipapp;
+package com.example.ipapp.ui.documents;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,8 @@ import com.example.ipapp.utils.UtilsSharedPreferences;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.ipapp.R;
 
 
 public class ModifyDocumentActivity extends AppCompatActivity {
