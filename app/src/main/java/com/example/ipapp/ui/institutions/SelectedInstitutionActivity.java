@@ -1,4 +1,4 @@
-package com.example.ipapp;
+package com.example.ipapp.ui.institutions;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Address;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.object.institution.Member;

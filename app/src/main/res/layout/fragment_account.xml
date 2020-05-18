@@ -8,8 +8,6 @@
     tools:context=".ui.account.AccountFragment"
     android:padding="20dp">
 
-    <!-- TODO FILL THE EDITTEXTS BELOW WITH VALUES FROM SHARED PREF -->
-
     <TextView
         style="@android:style/TextAppearance.DeviceDefault.Large"
         android:layout_width="wrap_content"
