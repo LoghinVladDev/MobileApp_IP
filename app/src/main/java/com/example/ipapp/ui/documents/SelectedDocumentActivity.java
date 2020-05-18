@@ -1,21 +1,21 @@
-package com.example.ipapp;
+package com.example.ipapp.ui.documents;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.ModifyDocumentActivity;
+import com.example.ipapp.R;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,9 +29,10 @@ import java.util.Map;
 
 public class SelectedDocumentActivity extends AppCompatActivity {
 
-    private static final String INTENT_KEY_DOCUMENT_JSON = "document";
     private final static String LOG_TAG = "SELECTED DOC ACTIVITY";
-    private static RequestQueue httpRequestQueue;
+
+    private static final String INTENT_KEY_DOCUMENT_JSON = "document";
+    private RequestQueue httpRequestQueue;
     private String documentInformation;
     private String institutionSender;
     private String documentType;
@@ -41,7 +42,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         super.onCreate(savedDocumentInformation);
         setContentView(R.layout.activity_selected_document);
 
-        SelectedDocumentActivity.httpRequestQueue = Volley.newRequestQueue(this);
+        this.httpRequestQueue = Volley.newRequestQueue(this);
 
         try {
             JSONObject parameters = new JSONObject(getIntent().getStringExtra(INTENT_KEY_DOCUMENT_JSON));
@@ -55,67 +56,53 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         }
 
         Toast
-                .makeText(this.getApplicationContext(), "From Selected Document : " + this.documentInformation , Toast.LENGTH_LONG)
+                .makeText(this.getApplicationContext(), "From Selected Document : " + this.documentInformation, Toast.LENGTH_LONG)
                 .show();
 
         Toast
-                .makeText(this.getApplicationContext(), "From Institution : " + this.institutionSender , Toast.LENGTH_LONG)
+                .makeText(this.getApplicationContext(), "From Institution : " + this.institutionSender, Toast.LENGTH_LONG)
                 .show();
 
         Toast
-                .makeText(this.getApplicationContext(), "Document is : " + this.documentType , Toast.LENGTH_LONG)
+                .makeText(this.getApplicationContext(), "Document is : " + this.documentType, Toast.LENGTH_LONG)
                 .show();
 
         Toast
-                .makeText(this.getApplicationContext(), "With ID : " + this.documentID , Toast.LENGTH_LONG)
+                .makeText(this.getApplicationContext(), "With ID : " + this.documentID, Toast.LENGTH_LONG)
                 .show();
 
         FloatingActionButton buttonModifyAccount = findViewById(R.id.buttonModifyDocument);
-        buttonModifyAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToModifyDocument = new Intent(SelectedDocumentActivity.this, ModifyDocumentActivity.class);
-                startActivity(goToModifyDocument);
-            }
+        buttonModifyAccount.setOnClickListener(v -> {
+            Intent goToModifyDocument = new Intent(SelectedDocumentActivity.this, ModifyDocumentActivity.class);
+            startActivity(goToModifyDocument);
         });
 
 
         FloatingActionButton buttonDeleteAccount = findViewById(R.id.buttonDeleteDocument);
-        buttonDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder deleteAlertBuilder = new AlertDialog.Builder(v.getContext());
-                deleteAlertBuilder.setMessage("Are you sure?");
-                deleteAlertBuilder.setCancelable(true);
+        buttonDeleteAccount.setOnClickListener(v -> {
+            AlertDialog.Builder deleteAlertBuilder = new AlertDialog.Builder(v.getContext());
+            deleteAlertBuilder.setMessage("Are you sure?");
+            deleteAlertBuilder.setCancelable(true);
 
-                deleteAlertBuilder.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            @RequiresApi(api = Build.VERSION_CODES.N)
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+            deleteAlertBuilder.setPositiveButton(
+                    "Yes",
+                    (dialog, id) -> {
+                        dialog.cancel();
 //                                requestDeleteDocument();
-                                onBackPressed();
-                            }
-                        });
+                        onBackPressed();
+                    });
 
-                deleteAlertBuilder.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+            deleteAlertBuilder.setNegativeButton(
+                    "No",
+                    (dialog, id) -> dialog.cancel());
 
-                AlertDialog deleteAlert = deleteAlertBuilder.create();
-                deleteAlert.show();
-            }
+            AlertDialog deleteAlert = deleteAlertBuilder.create();
+            deleteAlert.show();
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void requestDeleteDocument()
-    {
+    private void requestDeleteDocument() {
         Map<String, String> requestParams = new HashMap<>();
 
         requestParams.put("email", UtilsSharedPreferences.getString(this.getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
@@ -127,16 +114,12 @@ public class SelectedDocumentActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void makeHTTPDeleteDocumentRequest( final Map<String, String> bodyParameters)
-    {
+    private void makeHTTPDeleteDocumentRequest(final Map<String, String> bodyParameters) {
         String deleteService = "";
 
-        if (this.documentType.equals("Receipt"))
-        {
+        if (this.documentType.equals("Receipt")) {
             deleteService = ApiUrls.DOCUMENT_DELETE_RECEIPT;
-        }
-        else if (this.documentType.equals("Invoice"))
-        {
+        } else if (this.documentType.equals("Invoice")) {
             deleteService = ApiUrls.DOCUMENT_DELETE_INVOICE;
         }
 
@@ -144,12 +127,9 @@ public class SelectedDocumentActivity extends AppCompatActivity {
                 response ->
                 {
                     Log.d(LOG_TAG, "RESPONSE : " + response);
-                    if (response.contains("SUCCESS"))
-                    {
+                    if (response.contains("SUCCESS")) {
                         Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(getApplicationContext(),
                                 response,
                                 Toast.LENGTH_SHORT).show();
@@ -162,15 +142,13 @@ public class SelectedDocumentActivity extends AppCompatActivity {
                             "Error : " + error,
                             Toast.LENGTH_SHORT).show();
                 }
-        )
-        {
+        ) {
             @Override
-            protected Map<String, String> getParams()
-            {
+            protected Map<String, String> getParams() {
                 return bodyParameters;
             }
         };
-        httpRequestQueue.add(deleteDocumentRequest);
+        this.httpRequestQueue.add(deleteDocumentRequest);
     }
 
 }

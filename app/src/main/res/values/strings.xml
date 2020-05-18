@@ -34,6 +34,24 @@
     <string name="descriptionInstitution">Institution</string>
     <string name="textViewShow">Show only:</string>
 
+    <!-- CREATE INST -->
+    <string name="hintInstitutionName">Your institutions name</string>
+    <string name="textViewCreateInstitutionAddress">Address of the institution</string>
+    <string name="hintInstitutionAddressCountry">Country of your institution</string>
+    <string name="hintInstitutionAddressRegion">Region of your institution</string>
+    <string name="hintInstitutionAddressCity">City of your institution</string>
+    <string name="hintInstitutionAddressStreetName">Street of the institution</string>
+    <string name="hintInstitutionAddressStreetNumber">Your institution\'s street number</string>
+    <string name="hintInstitutionAddressBuilding">Building or block of flats name</string>
+    <string name="hintInstitutionAddressApartment">Your institutions apartment number</string>
+    <string name="buttonCreateInstitution">Create institution</string>
+
+    <!-- Toast messages -->
+    <string name="toastErrorVolley">Server error! Please try again later!</string>
+    <string name="toastErrorRequestInput">Bad request! Reason : </string>
+    <string name="toastSuccessCreateInstitution">Success Create Institution</string>
+    <string name="toastFillAllFields">Fill al the fields</string>
+
     <string-array name="spinnerSortDocuments">
         <item>Sent by user</item>
         <item>Received by user</item>
