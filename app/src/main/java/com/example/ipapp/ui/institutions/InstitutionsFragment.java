@@ -119,6 +119,7 @@ public class InstitutionsFragment extends Fragment {
 
             for(int i = 0, length = institutionListJSON.length(); i < length; i++){
                 JSONObject currentInstitutionJSON = (JSONObject) institutionListJSON.getJSONObject(i);
+
                 this.institutions.add(
                         new Institution()
                                 .setName(currentInstitutionJSON.getString("institutionName"))

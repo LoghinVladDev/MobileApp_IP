@@ -24,9 +24,10 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     private Institution memberInstitution;
 
     // data is passed into the constructor
-    MembersAdapter(Context context, List<Member> data) {
+    MembersAdapter(Context context, Institution institution) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.memberInstitution = institution;
+        this.mData = this.memberInstitution.getMemberList();
     }
 
     // inflates the row layout from xml when needed
@@ -44,19 +45,19 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
         holder.memberName.setText(member.getUsername());
         holder.memberRole.setText(member.getRole().getName());
 
-//        List<String> memberInstitutionRolesNames = new ArrayList<>();
-//
-//        for (Role r : memberInstitution.getRoleList()) {
-//            if (!r.getName().equals(member.getRole().getName())) {
-//                memberInstitutionRolesNames.add(r.getName());
-//            }
-//        }
-//
-//        if (!member.getRole().isAllowed(Role.CAN_MODIFY_ROLES)) {
-//            holder.allRoles.setVisibility(View.GONE);
-//        } else {
-//            holder.memberRole.setVisibility(View.GONE);
-//        }
+        List<String> memberInstitutionRolesNames = new ArrayList<>();
+
+        for (Role r : memberInstitution.getRoleList()) {
+            if (!r.getName().equals(member.getRole().getName())) {
+                memberInstitutionRolesNames.add(r.getName());
+            }
+        }
+
+        if (!member.getRole().isAllowed(Role.CAN_MODIFY_ROLES)) {
+            holder.allRoles.setVisibility(View.GONE);
+        } else {
+            holder.memberRole.setVisibility(View.GONE);
+        }
     }
 
 
@@ -74,13 +75,13 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView memberName;
         TextView memberRole;
-//        Spinner allRoles;
+        Spinner allRoles;
 
         ViewHolder(View itemView) {
             super(itemView);
             memberName = itemView.findViewById(R.id.memberRow);
             memberRole = itemView.findViewById(R.id.memberRole);
-//            allRoles = itemView.findViewById(R.id.memberRoleSpinner);
+            allRoles = itemView.findViewById(R.id.memberRoleSpinner);
         }
 
         @Override

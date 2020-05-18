@@ -41,10 +41,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private MembersAdapter adapter;
-    private List<Member> members;
-    private List<Role> roleList;
-    private List<String> roleNames;
-
     private String institutionName;
 
     private RequestQueue requestQueue;
@@ -63,9 +59,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         this.requestQueue = Volley.newRequestQueue(this);
 
-        members = new ArrayList<>();
-
-        initialiseRecyclerViewMembers();
 
         //this.institutionName = getIntent().getStringExtra(INTENT_KEY_INSTITUTION_NAME);
 
@@ -90,7 +83,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewMembers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MembersAdapter(this, this.members);
+        adapter = new MembersAdapter(this, this.institution);
 
         recyclerView.setAdapter(adapter);
     }
@@ -112,7 +105,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         try {
             JSONArray rolesArray = responseData.getJSONArray("roles");
-            roleList = new ArrayList<>();
+            List<Role> roleList = new ArrayList<>();
 
             for(int i = 0, length = rolesArray.length(); i < length; i++){
 
@@ -171,6 +164,8 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         try {
             JSONArray membersArray = responseObject.getJSONArray("members");
 
+            List<Member> memberList = new ArrayList<>();
+
             for(int i = 0, length = membersArray.length(); i < length; i++){
                 JSONObject memberJSON = (JSONObject) membersArray.get(i);
 
@@ -181,22 +176,24 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                         role = r;
                 }
 
-                members.add(
+                memberList.add(
                         new Member()
                             .setUsername(memberJSON.getString("email"))
                             .setUserID(memberJSON.getInt("userID"))
                             .setRole(role)
                 );
 
-                this.adapter.notifyDataSetChanged();
+//                this.adapter.notifyDataSetChanged();
 
-                this.institution.addMembers(members);
+                this.institution.addMembers(memberList);
             }
         } catch (JSONException e){
             e.printStackTrace();
         }
 
         Log.d(LOG_TAG, "INSTITUTION : " + this.institution.debugToString());
+
+        initialiseRecyclerViewMembers();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
