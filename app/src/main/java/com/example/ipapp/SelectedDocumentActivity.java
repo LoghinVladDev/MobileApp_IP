@@ -20,7 +20,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
         try {
             JSONObject parameters = new JSONObject(getIntent().getStringExtra(INTENT_KEY_DOCUMENT_JSON));
-            this.documentInformation = parameters.getString("Type");
+            this.documentInformation = parameters.getString("SelectedDocument");
 
         } catch (JSONException e) {
             e.printStackTrace();

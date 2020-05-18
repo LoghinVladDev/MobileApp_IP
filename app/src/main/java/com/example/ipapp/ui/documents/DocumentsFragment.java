@@ -154,19 +154,18 @@ public class DocumentsFragment extends Fragment {
 
             try {
                 if (document != null) {
-                    param.put("Type", document.toViewString());
+                    param.put("SelectedDocument", document.toViewString());
 
                     goToSelectedDocument.putExtra(INTENT_KEY_DOCUMENT_JSON, param.toString());
                 }
                 else{
-                    Log.e(LOG_TAG, "INTENT PARAM ERROR : " + "institution null?");
+                    Log.e(LOG_TAG, "INTENT PARAM ERROR : " + "document null?");
                 }
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            //goToSelectedInstitution.putExtra(INTENT_KEY_INSTITUTION_NAME, textView.getText().toString());
             startActivity(goToSelectedDocument);
         });
 
