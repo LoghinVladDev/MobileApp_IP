@@ -27,7 +27,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.example.ipapp.HomeActivity;
-import com.example.ipapp.LoginActivity;
+import com.example.ipapp.ui.account.LoginActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
