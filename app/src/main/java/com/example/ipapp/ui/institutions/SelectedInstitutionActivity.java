@@ -1,16 +1,17 @@
 package com.example.ipapp.ui.institutions;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,7 +29,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +38,9 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
     private static final String INTENT_KEY_INSTITUTION_NAME = "institutionName";
     private static final String INTENT_KEY_INSTITUTION_JSON = "institution";
+
+    private RecyclerView recyclerView;
+    private MembersAdapter adapter;
     private String institutionName;
 
     private RequestQueue requestQueue;
@@ -56,6 +59,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         this.requestQueue = Volley.newRequestQueue(this);
 
+
         //this.institutionName = getIntent().getStringExtra(INTENT_KEY_INSTITUTION_NAME);
 
         try {
@@ -73,6 +77,15 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         this.rolesRequest();
         this.addressesRequest();
+    }
+
+    private void initialiseRecyclerViewMembers() {
+        recyclerView = findViewById(R.id.recyclerViewMembers);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new MembersAdapter(this, this.institution);
+
+        recyclerView.setAdapter(adapter);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -121,6 +134,8 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                         .setRight(Role.CAN_ASSIGN_ROLES,                        rights.getInt(Role.CAN_ASSIGN_ROLES)                        ==1)
                         .setRight(Role.CAN_DE_ASSIGN_ROLES,                     rights.getInt(Role.CAN_DE_ASSIGN_ROLES)                     ==1)
                 );
+
+//                roleNames.add(role.getString("name"));
             }
 
             this.institution.addRoles(roleList);
@@ -149,10 +164,10 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         try {
             JSONArray membersArray = responseObject.getJSONArray("members");
 
+            List<Member> memberList = new ArrayList<>();
+
             for(int i = 0, length = membersArray.length(); i < length; i++){
                 JSONObject memberJSON = (JSONObject) membersArray.get(i);
-
-                List<Member> members = new ArrayList<>();
 
                 Role role = null;
 
@@ -161,20 +176,24 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
                         role = r;
                 }
 
-                members.add(
+                memberList.add(
                         new Member()
                             .setUsername(memberJSON.getString("email"))
                             .setUserID(memberJSON.getInt("userID"))
                             .setRole(role)
                 );
 
-                this.institution.addMembers(members);
+//                this.adapter.notifyDataSetChanged();
+
+                this.institution.addMembers(memberList);
             }
         } catch (JSONException e){
             e.printStackTrace();
         }
 
         Log.d(LOG_TAG, "INSTITUTION : " + this.institution.debugToString());
+
+        initialiseRecyclerViewMembers();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -32,6 +32,8 @@ import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
 import com.example.ipapp.object.document.Receipt;
+import com.example.ipapp.object.institution.Institution;
+import com.example.ipapp.ui.institutions.InstitutionsFragment;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,6 +54,8 @@ public class DocumentsFragment extends Fragment {
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
     private static final String INTENT_KEY_DOCUMENT_JSON = "document";
 
+    private List<Institution> institutionsList;
+
     private RecyclerView recyclerView;
 
     private RequestQueue requestQueue;
@@ -64,7 +68,7 @@ public class DocumentsFragment extends Fragment {
         floatingActionButton.setVisibility(View.VISIBLE);
 
         this.documents = new ArrayList<>();
-
+        this.institutionsList = new ArrayList<>();
 
         this.requestQueue = LoginActivity.getRequestQueue();
 
@@ -96,26 +100,20 @@ public class DocumentsFragment extends Fragment {
 
                 if (item.equals(textSpinner[0])) {
                     Log.d(LOG_TAG, "IN Sent");
-//                    documents = new ArrayList<>();
                     documents.clear();
                     requestRetrieveUserSentDocuments();
-//                    initRv(root);
                 }
 
                 if (item.equals(textSpinner[1])) {
                     Log.d(LOG_TAG, "IN Received");
-//                    documents = new ArrayList<>();
                     documents.clear();
                     requestRetrieveUserReceivedDocuments();
-//                    initRv(root);
                 }
 
                 if (item.equals(textSpinner[2])) {
                     Log.d(LOG_TAG, "IN Created");
-//                    documents = new ArrayList<>();
                     documents.clear();
                     requestRetrieveUserCreatedDocuments();
-//                    initRv(root);
                 }
             }
 
