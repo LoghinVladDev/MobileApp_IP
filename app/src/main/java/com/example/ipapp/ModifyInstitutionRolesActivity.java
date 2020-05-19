@@ -24,7 +24,7 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_roles);
 
 
-        initialiseUI();
+        initialiseUI(roles);
     }
 
     private void initialiseUI(List<Role> roles) {

@@ -3,12 +3,15 @@ package com.example.ipapp.ui.documents;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,15 +20,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
+import com.example.ipapp.object.document.Invoice;
+import com.example.ipapp.object.document.Item;
+import com.example.ipapp.object.document.Receipt;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.ui.institutions.InstitutionsFragment;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +46,8 @@ public class SelectedDocumentActivity extends AppCompatActivity {
     private static final String INTENT_KEY_DOCUMENT_JSON = "document";
     private RequestQueue httpRequestQueue;
 
-    private String documentInformation; // ?
+    private ItemsAdapter adapter;
+    private List<Item> itemsList;
 
     private String documentType;
     private int documentID;
@@ -47,6 +56,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
     private Institution senderInstitution;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onCreate(Bundle savedDocumentInformation) {
         super.onCreate(savedDocumentInformation);
         setContentView(R.layout.activity_selected_document);
@@ -55,10 +65,15 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
         try {
             JSONObject parameters = new JSONObject(getIntent().getStringExtra(INTENT_KEY_DOCUMENT_JSON));
-//            this.documentInformation = parameters.getString("SelectedDocument");
             int senderInstitutionID = parameters.getInt("SenderInstitution");
-//            this.documentType = parameters.getString("DocumentType");
             this.documentID = parameters.getInt("DocumentID");
+            this.documentType = parameters.getString("DocumentType");
+
+            if (this.documentType.equals("Invoice")) {
+                document = new Invoice();
+            } else {
+                document = new Receipt();
+            }
 
             for(Institution i : InstitutionsFragment.getInstitutions())
                 if(i.getID() == senderInstitutionID)
@@ -70,22 +85,8 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
         Log.d(LOG_TAG, "Params for req : " + this.senderInstitution.getName() + ", " + this.documentID);
 
-//        Toast
-//                .makeText(this.getApplicationContext(), "From Selected Document : " + this.documentInformation, Toast.LENGTH_LONG)
-//                .show();
-//
-//        Toast
-//                .makeText(this.getApplicationContext(), "From Institution : " + this.institutionSender, Toast.LENGTH_LONG)
-//                .show();
-//
-//        Toast
-//                .makeText(this.getApplicationContext(), "Document is : " + this.documentType, Toast.LENGTH_LONG)
-//                .show();
-//
-//        Toast
-//                .makeText(this.getApplicationContext(), "With ID : " + this.documentID, Toast.LENGTH_LONG)
-//                .show();
-
+        TextView textViewDocumentType = findViewById(R.id.textViewDocumentType);
+        textViewDocumentType.setText(this.documentType);
 
 
         FloatingActionButton buttonModifyAccount = findViewById(R.id.buttonModifyDocument);
@@ -116,6 +117,125 @@ public class SelectedDocumentActivity extends AppCompatActivity {
             AlertDialog deleteAlert = deleteAlertBuilder.create();
             deleteAlert.show();
         });
+
+        requestRetrieveDocument();
+    }
+
+    private void initialiseRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewItems);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+//        adapter = new ItemsAdapter(this, document.getIt);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void requestRetrieveDocument() {
+        Map<String, String> requestParams = new HashMap<>();
+
+        requestParams.put("email", UtilsSharedPreferences.getString(this.getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        requestParams.put("hashedPassword", UtilsSharedPreferences.getString(this.getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        requestParams.put("institutionName", this.senderInstitution.getName());
+        requestParams.put("documentID", Integer.toString(this.documentID));
+
+        this.makeHTTPRetrieveDocumentRequest(requestParams);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void makeHTTPRetrieveDocumentRequest(final Map<String, String> bodyParameters) {
+        StringRequest retrieveDocumentRequest = new StringRequest(Request.Method.GET, ApiUrls.encodeGetURLParams(ApiUrls.DOCUMENT_RETRIEVE_INDIVIDUAL, bodyParameters),
+                response ->
+                {
+                    Log.d(LOG_TAG, "RESPONSE : " + response);
+                    if (response.contains("SUCCESS")) {
+                        Log.d(LOG_TAG, "makeHTTPRetrieveDocumentRequest: " + response.toString());
+                        callbackPopulateDocumentItems(response);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                response,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error ->
+                {
+                    Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Error : " + error,
+                            Toast.LENGTH_SHORT).show();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                return bodyParameters;
+            }
+        };
+        this.httpRequestQueue.add(retrieveDocumentRequest);
+    }
+
+    private void callbackPopulateDocumentItems(String JSONEncodedResponse) {
+        itemsList = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
+            JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
+
+            JSONObject documentJSON = (JSONObject) responseObject.get("document");
+
+            if (documentJSON.getString("documentType").equals("Invoice")) {
+                document = new Invoice()
+                        .setID(documentJSON.getInt("ID"))
+                        .setSenderID(documentJSON.getInt("senderID"))
+                        .setSenderInstitutionID(documentJSON.getInt("senderInstitutionID"))
+                        .setSenderAddressID(documentJSON.getInt("senderAddressID"))
+                        .setReceiverID(documentJSON.getInt("receiverID"))
+                        .setReceiverInstitutionID(documentJSON.getInt("receiverInstitutionID"))
+                        .setReceiverAddressID(documentJSON.getInt("receiverAddressID"))
+                        .setCreatorID(documentJSON.getInt("creatorID"))
+                        .setDateCreated(documentJSON.getString("dateCreated"))
+                        .setDateSent(documentJSON.getString("dateSent"))
+                        .setSent(documentJSON.getBoolean("isSent"));
+            } else {
+                document = new Receipt()
+                        .setID(documentJSON.getInt("ID"))
+                        .setSenderID(documentJSON.getInt("senderID"))
+                        .setSenderInstitutionID(documentJSON.getInt("senderInstitutionID"))
+                        .setSenderAddressID(documentJSON.getInt("senderAddressID"))
+                        .setReceiverID(documentJSON.getInt("receiverID"))
+                        .setReceiverInstitutionID(documentJSON.getInt("receiverInstitutionID"))
+                        .setReceiverAddressID(documentJSON.getInt("receiverAddressID"))
+                        .setCreatorID(documentJSON.getInt("creatorID"))
+                        .setDateCreated(documentJSON.getString("dateCreated"))
+                        .setDateSent(documentJSON.getString("dateSent"))
+                        .setSent(documentJSON.getBoolean("isSent"));
+            }
+
+            JSONArray itemsListJSON = (JSONArray) documentJSON.getJSONArray("items");
+
+            for (int i = 0, length = itemsListJSON.length(); i < length; i++) {
+                JSONObject currentItemJSON = (JSONObject) itemsListJSON.getJSONObject(i);
+
+                JSONObject currentItemDetailsJSON = (JSONObject) currentItemJSON.getJSONObject("item");
+
+                Log.d(LOG_TAG, "LIST : " + currentItemDetailsJSON.toString());
+
+                this.document(
+                        new Item()
+                                .setID(currentItemDetailsJSON.getInt("ID"))
+                                .setProductNumber(currentItemDetailsJSON.getInt("productNumber"))
+                                .setName(currentItemDetailsJSON.getString("description"))
+                                .setValue(currentItemDetailsJSON.getDouble("unitPrice"))
+                                .setTax(currentItemDetailsJSON.getDouble("itemTax"))
+                                .setValueWithTax(currentItemDetailsJSON.getDouble("unitPriceWithTax"))
+                                .setCurrency(currentItemDetailsJSON.getString("currencyTitle"))
+                );
+            }
+            Log.d(LOG_TAG, "LIST : " + this.itemsList.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "ERROR : " + e.toString());
+        }
+
+        initialiseRecyclerView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -125,8 +125,6 @@ public class InstitutionsFragment extends Fragment {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
             JSONObject responseObject = (JSONObject) jsonObject.get("returnedObject");
 
-            //Log.d(CLASS_TAG, "RESPONSE : " + responseObject.toString());
-
             JSONArray institutionListJSON = (JSONArray) responseObject.get("institution");
 
             for(int i = 0, length = institutionListJSON.length(); i < length; i++){
@@ -164,7 +162,7 @@ public class InstitutionsFragment extends Fragment {
                 response -> {
                     if(response.contains("SUCCESS"))
                         callbackPopulateInstitutionsList(response);
-                    //Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
+                    Log.d("INSTITUTIONS_FRAGMENT", "RESPONSE : " + response);
                 //    Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                 },
                 error -> {

@@ -122,6 +122,7 @@ public class DocumentsFragment extends Fragment {
                 progressBar.setVisibility(View.VISIBLE);
             }
         });
+
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerSortDocuments.setAdapter(spinnerAdapter);
@@ -143,10 +144,6 @@ public class DocumentsFragment extends Fragment {
             JSONObject param = new JSONObject();
 
             Document document = null;
-//
-//            for (Document i : this.documents)
-//                if (i.toViewString().equals(textView.getText().toString()))
-//                    document = i;
 
             int docID = Integer.parseInt(textView.getText().toString().split("=")[1].trim());
 
