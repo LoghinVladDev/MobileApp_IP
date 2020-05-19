@@ -105,20 +105,23 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         textViewSenderInstitutionName.setText(this.senderInstitution.getName());
 
         String sentDate = "Not sent";
+        String receiverInstitutionText = "No institution received this document";
 
-        if (this.document.getDateSent() != null)
+        if (this.document.getDateSent() != "null")
         {
             sentDate = "Sent on : " + this.document.getDateSent();
+        }
+
+        if (this.receiverInstitution != null)
+        {
+            receiverInstitutionText = "Sen to : " + this.receiverInstitution.getName();
         }
 
         TextView textViewSentDate = findViewById(R.id.textViewSentDate);
         textViewSentDate.setText(sentDate);
 
-        FloatingActionButton buttonModifyAccount = findViewById(R.id.buttonModifyDocument);
-        buttonModifyAccount.setOnClickListener(v -> {
-            Intent goToModifyDocument = new Intent(SelectedDocumentActivity.this, ModifyDocumentActivity.class);
-            startActivity(goToModifyDocument);
-        });
+        TextView textViewReceiverInstitution = findViewById(R.id.textViewReceiverInstitution);
+        textViewReceiverInstitution.setText(receiverInstitutionText);
 
 
         FloatingActionButton buttonDeleteAccount = findViewById(R.id.buttonDeleteDocument);
@@ -290,8 +293,6 @@ public class SelectedDocumentActivity extends AppCompatActivity {
             {
                 initialiseRecyclerView(castedReceipt.getItems());
             }
-
-//            setTotalPrices();
 
             Log.d(LOG_TAG, "LIST : " + this.itemsList.toString());
         } catch (JSONException e) {

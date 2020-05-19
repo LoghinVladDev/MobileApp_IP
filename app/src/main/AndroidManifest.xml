@@ -14,11 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".ModifyInstitutionRolesActivity"></activity>
         <activity android:name=".ui.institutions.CreateInstitutionActivity" />
         <activity android:name=".ui.institutions.SelectedInstitutionActivity" />
         <activity android:name=".ui.documents.SelectedDocumentActivity" />
-        <activity android:name=".ui.documents.ModifyDocumentActivity" />
         <activity
             android:name=".ui.account.LoginActivity"
             android:label="@string/title_activity_home">

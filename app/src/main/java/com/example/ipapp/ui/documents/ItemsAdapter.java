@@ -42,8 +42,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         holder.textViewItem.setText(itemCount);
         holder.textViewItemCurrency.setText(item.getFirst().getCurrency());
-        holder.textViewItemValueWithTax.setText(String.valueOf(item.getFirst().getValueWithTax()));
-        holder.textViewItemsTotalValueWithTax.setText(String.valueOf(item.getFirst().getValueWithTax() * item.getSecond()));
+        holder.textViewItemValueWithTax.setText(String.valueOf(item.getFirst().getValue()));
+        holder.textViewItemsTotalValueWithTax.setText(String.valueOf(item.getFirst().getValue() * item.getSecond()));
     }
 
 

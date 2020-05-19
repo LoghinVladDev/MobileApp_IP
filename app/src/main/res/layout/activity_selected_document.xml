@@ -118,20 +118,20 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textViewSenderInstitution"/>
 
+    <TextView
+        android:id="@+id/textViewReceiverInstitution"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewSentDate"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
         android:background="@color/colorGreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewDocumentItems" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonModifyDocument"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_build"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="end|bottom"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonDeleteDocument"
