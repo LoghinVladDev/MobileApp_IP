@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MotoItemDecoration extends RecyclerView.ItemDecoration {
     private int space;
+    private final int DEFAULT_SPACE = 20;
 
+    public MotoItemDecoration() {
+        this.space = DEFAULT_SPACE;
+    }
     public MotoItemDecoration(int space) {
         this.space = space;
     }

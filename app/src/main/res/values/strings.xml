@@ -53,6 +53,8 @@
     <string name="toastFillAllFields">Fill al the fields</string>
     <string name="hintInstitutionCIF">Institution\'s CIF</string>
     <string name="toastBadCIF">CIF must start with \"RO\" and end with \"C\"</string>
+    <string name="switchOn">On</string>
+    <string name="switchCanModifyInstitution">Can Modify Institution</string>
 
     <string-array name="spinnerSortDocuments">
         <item>Sent by user</item>
