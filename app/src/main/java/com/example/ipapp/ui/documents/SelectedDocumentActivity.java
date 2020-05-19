@@ -114,7 +114,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
         if (this.receiverInstitution != null)
         {
-            receiverInstitutionText = "Sen to : " + this.receiverInstitution.getName();
+            receiverInstitutionText = "Sent to : " + this.receiverInstitution.getName();
         }
 
         TextView textViewSentDate = findViewById(R.id.textViewSentDate);
