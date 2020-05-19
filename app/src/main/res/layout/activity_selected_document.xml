@@ -110,7 +110,13 @@
         android:layout_toEndOf="@+id/textViewSenderInstitution"
         android:layout_below="@+id/textViewTotal"/>
 
-
+    <TextView
+        android:id="@+id/textViewSentDate"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewSenderInstitution"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"

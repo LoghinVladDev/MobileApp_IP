@@ -50,12 +50,17 @@ public class SelectedDocumentActivity extends AppCompatActivity {
     private ItemsAdapter adapter;
     private List<Item> itemsList;
 
+    private double subTotalPrice;
+    private double totalPrice;
+    private double taxes;
+
     private String documentType;
     private int documentID;
 
     private Document document;
 
     private Institution senderInstitution;
+    private Institution receiverInstitution;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onCreate(Bundle savedDocumentInformation) {
@@ -63,6 +68,10 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selected_document);
 
         this.httpRequestQueue = Volley.newRequestQueue(this);
+
+        subTotalPrice = 0;
+        totalPrice = 0;
+        taxes = 0;
 
         try {
             JSONObject parameters = new JSONObject(getIntent().getStringExtra(INTENT_KEY_DOCUMENT_JSON));
@@ -77,10 +86,12 @@ public class SelectedDocumentActivity extends AppCompatActivity {
                 }
             }
 
-            for(Institution i : InstitutionsFragment.getInstitutions())
-                if(i.getID() == senderInstitutionID)
+            for(Institution i : InstitutionsFragment.getInstitutions()) {
+                if (i.getID() == senderInstitutionID)
                     this.senderInstitution = i;
-
+                if (i.getID() == this.document.getReceiverInstitutionID())
+                    this.receiverInstitution = i;
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -92,6 +103,16 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
         TextView textViewSenderInstitutionName = findViewById(R.id.textViewSenderInstitutionName);
         textViewSenderInstitutionName.setText(this.senderInstitution.getName());
+
+        String sentDate = "Not sent";
+
+        if (this.document.getDateSent() != null)
+        {
+            sentDate = "Sent on : " + this.document.getDateSent();
+        }
+
+        TextView textViewSentDate = findViewById(R.id.textViewSentDate);
+        textViewSentDate.setText(sentDate);
 
         FloatingActionButton buttonModifyAccount = findViewById(R.id.buttonModifyDocument);
         buttonModifyAccount.setOnClickListener(v -> {
@@ -110,7 +131,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
                     "Yes",
                     (dialog, id) -> {
                         dialog.cancel();
-//                                requestDeleteDocument();
+                                requestDeleteDocument();
                         onBackPressed();
                     });
 
@@ -132,19 +153,29 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         adapter = new ItemsAdapter(this, itemsList);
 
         recyclerView.setAdapter(adapter);
+
+        for (int i = 0; i < adapter.getItemCount(); i++)
+        {
+            subTotalPrice += adapter.getItem(i).getFirst().getValue() * adapter.getItem(i).getSecond();
+            totalPrice += adapter.getItem(i).getFirst().getValueWithTax() * adapter.getItem(i).getSecond();
+        }
+
+        taxes = totalPrice - subTotalPrice;
+
+        setTotalPrices();
     }
 
-//    private void setTotalPrices()
-//    {
-//        TextView textViewSubTotalPrice = findViewById(R.id.textViewSubTotalPrice);
-//        textViewSubTotalPrice.setText(String.valueOf(subTotalPrice));
-//
-//        TextView textViewTotalPrice = findViewById(R.id.textViewTotalPrice);
-//        textViewTotalPrice.setText(String.valueOf(totalPrice));
-//
-//        TextView textViewTaxesPrice = findViewById(R.id.textViewTaxesPrice);
-//        textViewTaxesPrice.setText(String.valueOf(taxes));
-//    }
+    private void setTotalPrices()
+    {
+        TextView textViewSubTotalPrice = findViewById(R.id.textViewSubTotalPrice);
+        textViewSubTotalPrice.setText(String.valueOf(subTotalPrice));
+
+        TextView textViewTotalPrice = findViewById(R.id.textViewTotalPrice);
+        textViewTotalPrice.setText(String.valueOf(totalPrice));
+
+        TextView textViewTaxesPrice = findViewById(R.id.textViewTaxesPrice);
+        textViewTaxesPrice.setText(String.valueOf(taxes));
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestRetrieveDocument() {
