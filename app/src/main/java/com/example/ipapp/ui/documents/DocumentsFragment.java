@@ -50,7 +50,18 @@ import java.util.Map;
 public class DocumentsFragment extends Fragment {
 
     private DocumentsAdapter adapter;
+
+    private static List<Document> documentsInstance;
+
+    public static List<Document> getDocuments(){
+        if(documentsInstance == null)
+            documentsInstance = new ArrayList<>();
+        return documentsInstance;
+    }
+
     private List<Document> documents;
+
+
     private static final String LOG_TAG = "DOCUMENTS_FRAGMENT";
     private static final String INTENT_KEY_DOCUMENT_JSON = "document";
 
@@ -67,7 +78,7 @@ public class DocumentsFragment extends Fragment {
         FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fabCreateInstitution);
         floatingActionButton.setVisibility(View.VISIBLE);
 
-        this.documents = new ArrayList<>();
+        this.documents = getDocuments();
         this.institutionsList = new ArrayList<>();
 
         this.requestQueue = LoginActivity.getRequestQueue();
@@ -186,7 +197,7 @@ public class DocumentsFragment extends Fragment {
     }
 
     private void callbackGetDocuments(String JSONEncodedResponse) {
-
+        this.documents.clear();
         Log.d(LOG_TAG, "DOCS ARRAY : " + JSONEncodedResponse);
         try {
             JSONObject jsonObject = new JSONObject(JSONEncodedResponse);
