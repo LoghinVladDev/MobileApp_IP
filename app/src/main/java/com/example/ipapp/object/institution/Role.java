@@ -9,6 +9,10 @@ public class Role {
         return "{id=" + this.ID + ",name=" + this.name + ",rights=" + this.rightsDictionary.toString() + "}";
     }
 
+    public String toViewString(){
+        return this.name;
+    }
+
     public static final String CAN_MODIFY_INSTITUTION = "Can_Modify_Institution";
     public static final String CAN_DELETE_INSTITUTION = "Can_Delete_Institution";
     public static final String CAN_ADD_MEMBERS = "Can_Add_Members";
