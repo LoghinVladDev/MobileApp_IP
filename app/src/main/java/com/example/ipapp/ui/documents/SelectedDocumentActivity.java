@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +16,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ipapp.R;
+import com.example.ipapp.object.document.Document;
+import com.example.ipapp.object.institution.Institution;
+import com.example.ipapp.ui.institutions.InstitutionsFragment;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -33,10 +38,14 @@ public class SelectedDocumentActivity extends AppCompatActivity {
     private static final String INTENT_KEY_DOCUMENT_JSON = "document";
     private RequestQueue httpRequestQueue;
 
-    private String documentInformation;
-    private String institutionSender;
+    private String documentInformation; // ?
+
     private String documentType;
-    private String documentID;
+    private int documentID;
+
+    private Document document;
+
+    private Institution senderInstitution;
 
     protected void onCreate(Bundle savedDocumentInformation) {
         super.onCreate(savedDocumentInformation);
@@ -46,30 +55,38 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
         try {
             JSONObject parameters = new JSONObject(getIntent().getStringExtra(INTENT_KEY_DOCUMENT_JSON));
-            this.documentInformation = parameters.getString("SelectedDocument");
-            this.institutionSender = parameters.getString("SenderInstitution");
-            this.documentType = parameters.getString("DocumentType");
-            this.documentID = parameters.getString("DocumentID");
+//            this.documentInformation = parameters.getString("SelectedDocument");
+            int senderInstitutionID = parameters.getInt("SenderInstitution");
+//            this.documentType = parameters.getString("DocumentType");
+            this.documentID = parameters.getInt("DocumentID");
+
+            for(Institution i : InstitutionsFragment.getInstitutions())
+                if(i.getID() == senderInstitutionID)
+                    this.senderInstitution = i;
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        Toast
-                .makeText(this.getApplicationContext(), "From Selected Document : " + this.documentInformation, Toast.LENGTH_LONG)
-                .show();
+        Log.d(LOG_TAG, "Params for req : " + this.senderInstitution.getName() + ", " + this.documentID);
 
-        Toast
-                .makeText(this.getApplicationContext(), "From Institution : " + this.institutionSender, Toast.LENGTH_LONG)
-                .show();
+//        Toast
+//                .makeText(this.getApplicationContext(), "From Selected Document : " + this.documentInformation, Toast.LENGTH_LONG)
+//                .show();
+//
+//        Toast
+//                .makeText(this.getApplicationContext(), "From Institution : " + this.institutionSender, Toast.LENGTH_LONG)
+//                .show();
+//
+//        Toast
+//                .makeText(this.getApplicationContext(), "Document is : " + this.documentType, Toast.LENGTH_LONG)
+//                .show();
+//
+//        Toast
+//                .makeText(this.getApplicationContext(), "With ID : " + this.documentID, Toast.LENGTH_LONG)
+//                .show();
 
-        Toast
-                .makeText(this.getApplicationContext(), "Document is : " + this.documentType, Toast.LENGTH_LONG)
-                .show();
 
-        Toast
-                .makeText(this.getApplicationContext(), "With ID : " + this.documentID, Toast.LENGTH_LONG)
-                .show();
 
         FloatingActionButton buttonModifyAccount = findViewById(R.id.buttonModifyDocument);
         buttonModifyAccount.setOnClickListener(v -> {
@@ -108,7 +125,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         requestParams.put("email", UtilsSharedPreferences.getString(this.getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestParams.put("hashedPassword", UtilsSharedPreferences.getString(this.getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
         requestParams.put("institutionName", "InstitutieTestare");                  ///// testat pentru invoice cu id 9
-        requestParams.put("documentID", this.documentID);
+        requestParams.put("documentID", Integer.toString(this.documentID));
 
         this.makeHTTPDeleteDocumentRequest(requestParams);
     }

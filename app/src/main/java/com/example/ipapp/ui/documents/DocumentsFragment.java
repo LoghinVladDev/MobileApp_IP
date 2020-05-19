@@ -126,6 +126,8 @@ public class DocumentsFragment extends Fragment {
 
         spinnerSortDocuments.setAdapter(spinnerAdapter);
 
+
+
         return root;
     }
 
@@ -141,10 +143,18 @@ public class DocumentsFragment extends Fragment {
             JSONObject param = new JSONObject();
 
             Document document = null;
+//
+//            for (Document i : this.documents)
+//                if (i.toViewString().equals(textView.getText().toString()))
+//                    document = i;
 
-            for (Document i : this.documents)
-                if (i.toViewString().equals(textView.getText().toString()))
-                    document = i;
+            int docID = Integer.parseInt(textView.getText().toString().split("=")[1].trim());
+
+            Log.d(LOG_TAG, "DOC ID : " + docID);
+
+            for(Document d : this.documents)
+                if(d.getID() == docID)
+                    document = d;
 
             try {
                 if (document != null) {
