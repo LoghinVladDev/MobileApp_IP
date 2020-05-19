@@ -22,6 +22,7 @@ import com.example.ipapp.R;
 import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
 import com.example.ipapp.object.document.Item;
+import com.example.ipapp.object.document.Pair;
 import com.example.ipapp.object.document.Receipt;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.ui.institutions.InstitutionsFragment;
@@ -69,10 +70,11 @@ public class SelectedDocumentActivity extends AppCompatActivity {
             this.documentID = parameters.getInt("DocumentID");
             this.documentType = parameters.getString("DocumentType");
 
-            if (this.documentType.equals("Invoice")) {
-                document = new Invoice();
-            } else {
-                document = new Receipt();
+            for (Document d : DocumentsFragment.getDocuments()) {
+                if (d.getID() == this.documentID)
+                {
+                    this.document = d;
+                }
             }
 
             for(Institution i : InstitutionsFragment.getInstitutions())
@@ -88,6 +90,8 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         TextView textViewDocumentType = findViewById(R.id.textViewDocumentType);
         textViewDocumentType.setText(this.documentType);
 
+        TextView textViewSenderInstitutionName = findViewById(R.id.textViewSenderInstitutionName);
+        textViewSenderInstitutionName.setText(this.senderInstitution.getName());
 
         FloatingActionButton buttonModifyAccount = findViewById(R.id.buttonModifyDocument);
         buttonModifyAccount.setOnClickListener(v -> {
@@ -121,14 +125,26 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         requestRetrieveDocument();
     }
 
-    private void initialiseRecyclerView() {
+    private void initialiseRecyclerView(List<Pair<Item, Integer>> itemsList) {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewItems);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        adapter = new ItemsAdapter(this, document.getIt);
+        adapter = new ItemsAdapter(this, itemsList);
 
         recyclerView.setAdapter(adapter);
     }
+
+//    private void setTotalPrices()
+//    {
+//        TextView textViewSubTotalPrice = findViewById(R.id.textViewSubTotalPrice);
+//        textViewSubTotalPrice.setText(String.valueOf(subTotalPrice));
+//
+//        TextView textViewTotalPrice = findViewById(R.id.textViewTotalPrice);
+//        textViewTotalPrice.setText(String.valueOf(totalPrice));
+//
+//        TextView textViewTaxesPrice = findViewById(R.id.textViewTaxesPrice);
+//        textViewTaxesPrice.setText(String.valueOf(taxes));
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestRetrieveDocument() {
@@ -173,6 +189,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         this.httpRequestQueue.add(retrieveDocumentRequest);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void callbackPopulateDocumentItems(String JSONEncodedResponse) {
         itemsList = new ArrayList<>();
 
@@ -182,35 +199,24 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
             JSONObject documentJSON = (JSONObject) responseObject.get("document");
 
-            if (documentJSON.getString("documentType").equals("Invoice")) {
-                document = new Invoice()
-                        .setID(documentJSON.getInt("ID"))
-                        .setSenderID(documentJSON.getInt("senderID"))
-                        .setSenderInstitutionID(documentJSON.getInt("senderInstitutionID"))
-                        .setSenderAddressID(documentJSON.getInt("senderAddressID"))
-                        .setReceiverID(documentJSON.getInt("receiverID"))
-                        .setReceiverInstitutionID(documentJSON.getInt("receiverInstitutionID"))
-                        .setReceiverAddressID(documentJSON.getInt("receiverAddressID"))
-                        .setCreatorID(documentJSON.getInt("creatorID"))
-                        .setDateCreated(documentJSON.getString("dateCreated"))
-                        .setDateSent(documentJSON.getString("dateSent"))
-                        .setSent(documentJSON.getBoolean("isSent"));
-            } else {
-                document = new Receipt()
-                        .setID(documentJSON.getInt("ID"))
-                        .setSenderID(documentJSON.getInt("senderID"))
-                        .setSenderInstitutionID(documentJSON.getInt("senderInstitutionID"))
-                        .setSenderAddressID(documentJSON.getInt("senderAddressID"))
-                        .setReceiverID(documentJSON.getInt("receiverID"))
-                        .setReceiverInstitutionID(documentJSON.getInt("receiverInstitutionID"))
-                        .setReceiverAddressID(documentJSON.getInt("receiverAddressID"))
-                        .setCreatorID(documentJSON.getInt("creatorID"))
-                        .setDateCreated(documentJSON.getString("dateCreated"))
-                        .setDateSent(documentJSON.getString("dateSent"))
-                        .setSent(documentJSON.getBoolean("isSent"));
+            JSONArray itemsListJSON = (JSONArray) documentJSON.getJSONArray("items");
+
+            Invoice castedInvoice = null;
+            Receipt castedReceipt = null;
+
+            try {
+                castedInvoice = (Invoice) this.document;
+            }
+            catch (ClassCastException ignored) {
             }
 
-            JSONArray itemsListJSON = (JSONArray) documentJSON.getJSONArray("items");
+            try {
+                castedReceipt = (Receipt) this.document;
+            }
+            catch (ClassCastException ignored) {
+            }
+
+
 
             for (int i = 0, length = itemsListJSON.length(); i < length; i++) {
                 JSONObject currentItemJSON = (JSONObject) itemsListJSON.getJSONObject(i);
@@ -219,23 +225,48 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
                 Log.d(LOG_TAG, "LIST : " + currentItemDetailsJSON.toString());
 
-                this.document(
-                        new Item()
+                if (castedInvoice != null)
+                {
+                    castedInvoice.addItem(new Item()
+                            .setID(currentItemDetailsJSON.getInt("ID"))
+                            .setProductNumber(currentItemDetailsJSON.getInt("productNumber"))
+                            .setName(currentItemDetailsJSON.getString("description"))
+                            .setValue(currentItemDetailsJSON.getDouble("unitPrice"))
+                            .setTax(currentItemDetailsJSON.getDouble("itemTax"))
+                            .setValueWithTax(currentItemDetailsJSON.getDouble("unitPriceWithTax"))
+                            .setCurrency(currentItemDetailsJSON.getString("currencyTitle")), currentItemJSON.getInt("quantity"));
+                }
+                else if (castedReceipt != null)
+                {
+                    castedReceipt.addItem(new Item()
                                 .setID(currentItemDetailsJSON.getInt("ID"))
                                 .setProductNumber(currentItemDetailsJSON.getInt("productNumber"))
                                 .setName(currentItemDetailsJSON.getString("description"))
                                 .setValue(currentItemDetailsJSON.getDouble("unitPrice"))
                                 .setTax(currentItemDetailsJSON.getDouble("itemTax"))
                                 .setValueWithTax(currentItemDetailsJSON.getDouble("unitPriceWithTax"))
-                                .setCurrency(currentItemDetailsJSON.getString("currencyTitle"))
-                );
+                                .setCurrency(currentItemDetailsJSON.getString("currencyTitle")), currentItemJSON.getInt("quantity"));
+
+                }
+
             }
+
+            if (castedInvoice != null)
+            {
+                initialiseRecyclerView(castedInvoice.getItems());
+            }
+            else if (castedReceipt != null)
+            {
+                initialiseRecyclerView(castedReceipt.getItems());
+            }
+
+//            setTotalPrices();
+
             Log.d(LOG_TAG, "LIST : " + this.itemsList.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, "ERROR : " + e.toString());
         }
 
-        initialiseRecyclerView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -37,9 +37,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ItemsAdapter.ViewHolder holder, int position) {
         Pair<Item, Integer> item = mData.get(position);
-        holder.textViewItem.setText(item.getFirst().getName());
+
+        String itemCount = item.getFirst().getName() + " x " + item.getSecond().toString();
+
+        holder.textViewItem.setText(itemCount);
         holder.textViewItemCurrency.setText(item.getFirst().getCurrency());
-        holder.textViewItemValue.setText(String.valueOf(item.getFirst().getValueWithTax()));
+        holder.textViewItemValueWithTax.setText(String.valueOf(item.getFirst().getValueWithTax()));
+        holder.textViewItemsTotalValueWithTax.setText(String.valueOf(item.getFirst().getValueWithTax() * item.getSecond()));
     }
 
 
@@ -57,13 +61,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textViewItem;
         TextView textViewItemCurrency;
-        TextView textViewItemValue;
+        TextView textViewItemValueWithTax;
+        TextView textViewItemsTotalValueWithTax;
 
         ViewHolder(View itemView) {
             super(itemView);
             textViewItem = itemView.findViewById(R.id.textViewItemDescription);
             textViewItemCurrency = itemView.findViewById(R.id.textViewItemCurrency);
-            textViewItemValue = itemView.findViewById(R.id.textViewItemValue);
+            textViewItemValueWithTax = itemView.findViewById(R.id.textViewItemValue);
+            textViewItemsTotalValueWithTax = itemView.findViewById(R.id.textViewItemsTotalValue);
         }
 
         @Override

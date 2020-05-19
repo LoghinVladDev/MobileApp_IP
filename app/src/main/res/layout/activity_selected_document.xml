@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textViewDocumentType"
-        android:text="Product or services" />
+        android:text="Items" />
 
     <TextView
         android:id="@+id/textViewPricePerItemLabel"
@@ -28,8 +28,89 @@
         android:text="Price/Item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/recyclerViewItems" />
+
+    <TextView
+        android:id="@+id/textViewSubTotal"
+        style="@android:style/TextAppearance.Medium"
+        android:text="Subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/recyclerViewItems" />
+
+    <TextView
+        android:id="@+id/textViewSubTotalPrice"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/recyclerViewItems" />
+
+    <TextView
+        android:id="@+id/textViewTaxes"
+        style="@android:style/TextAppearance.Medium"
+        android:text="Taxes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/textViewSubTotal" />
+
+    <TextView
+        android:id="@+id/textViewTaxesPrice"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textViewSubTotalPrice" />
+
+    <TextView
+        android:id="@+id/textViewTotal"
+        style="@android:style/TextAppearance.Medium"
+        android:text="Total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/textViewTaxes" />
+
+    <TextView
+        android:id="@+id/textViewTotalPrice"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textViewTaxesPrice" />
+
+
+    <TextView
+        android:id="@+id/textViewTotalPriceForItem"
+        style="@android:style/TextAppearance.Medium"
+        android:text="Total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/recyclerViewItems" />
+
+
+    <TextView
+        android:id="@+id/textViewSenderInstitution"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sender Institution : "
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewTotal"/>
+
+    <TextView
+        android:id="@+id/textViewSenderInstitutionName"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/textViewSenderInstitution"
+        android:layout_below="@+id/textViewTotal"/>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
