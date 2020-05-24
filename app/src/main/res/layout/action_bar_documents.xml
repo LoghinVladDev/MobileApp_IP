@@ -6,7 +6,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_documents" />
+        android:text="@string/title_documents"
+        android:textColor="@color/Black"/>
 
     <Spinner
         android:id="@+id/spinnerSortDocuments"

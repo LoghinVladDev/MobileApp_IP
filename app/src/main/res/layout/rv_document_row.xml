@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/Black">
 
     <ImageView
         android:id="@+id/receiptImage"
@@ -26,6 +27,8 @@
         android:id="@+id/documentRow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textColor="@color/White"
+        android:layout_marginStart="5dp"/>
 
 </LinearLayout>

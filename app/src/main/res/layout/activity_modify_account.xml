@@ -7,59 +7,103 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/Red"
     tools:context=".ui.account.ModifyAccountActivity">
 
-    <EditText
-        android:id="@+id/editTextNewPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintNewPassword"
-        android:inputType="textPassword"
-        tools:ignore="Autofill" />
+    <LinearLayout
+        android:layout_width="373dp"
+        android:layout_height="610dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/Black"
+        android:paddingTop="20dp"
+        android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/newPasswordCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/checkBoxChangePassword"
-        android:layout_below="@id/editTextNewPassword"/>
+        <EditText
+            android:id="@+id/editTextNewPassword"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/ic_edittext_background_white"
+            android:gravity="center"
+            android:hint="@string/hintNewPassword"
+            android:inputType="textPassword"
+            tools:ignore="Autofill" />
 
-    <EditText
-        android:id="@+id/editTextNewFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newPasswordCheckBox"
-        android:hint="@string/hintNewFirstName"
-        android:inputType="textPersonName"
-        tools:ignore="Autofill" />
+        <CheckBox
+            android:id="@+id/newPasswordCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextNewPassword"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_edittext_background_white"
+            android:text="@string/checkBoxChangePassword" />
 
-    <CheckBox
-        android:id="@+id/newFirstNameCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/checkBoxFirstNameCheckBox"
-        android:layout_below="@id/editTextNewFirstName"/>
+        <EditText
+            android:id="@+id/editTextNewFirstName"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/newPasswordCheckBox"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_edittext_background_white"
+            android:gravity="center"
+            android:hint="@string/hintNewFirstName"
+            android:inputType="textPersonName"
+            tools:ignore="Autofill" />
 
-    <EditText
-        android:id="@+id/editTextNewLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newFirstNameCheckBox"
-        android:hint="@string/hintNewLastName"
-        android:inputType="textPersonName"
-        tools:ignore="Autofill" />
+        <CheckBox
+            android:id="@+id/newFirstNameCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextNewFirstName"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_edittext_background_white"
+            android:text="@string/checkBoxFirstNameCheckBox" />
 
-    <CheckBox
-        android:id="@+id/newLastNameCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/checkBoxChangeLastName"
-        android:layout_below="@id/editTextNewLastName"/>
+        <EditText
+            android:id="@+id/editTextNewLastName"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/newFirstNameCheckBox"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_edittext_background_white"
+            android:gravity="center"
+            android:hint="@string/hintNewLastName"
+            android:inputType="textPersonName"
+            tools:ignore="Autofill" />
 
-    <Button
-        android:id="@+id/buttonModifyAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newLastNameCheckBox"
-        android:text="@string/buttonModifyAccount" />
+        <CheckBox
+            android:id="@+id/newLastNameCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextNewLastName"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_edittext_background_white"
+            android:text="@string/checkBoxChangeLastName" />
+
+        <Button
+            android:id="@+id/buttonModifyAccount"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/newLastNameCheckBox"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/ic_button_background_red"
+            style="@style/TextAppearance.AppCompat.Display2"
+            android:textSize="17sp"
+            android:textColor="@color/milkyWhite"
+            android:textStyle="bold"
+            android:text="@string/buttonModifyAccount" />
+    </LinearLayout>
 </RelativeLayout>

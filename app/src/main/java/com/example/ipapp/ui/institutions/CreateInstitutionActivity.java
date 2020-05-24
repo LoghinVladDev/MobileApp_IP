@@ -2,9 +2,11 @@ package com.example.ipapp.ui.institutions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,6 +60,7 @@ public class CreateInstitutionActivity extends AppCompatActivity {
         editTextRegion = findViewById(R.id.editTextCreateInstitutionRegion);
         editTextStreetName = findViewById(R.id.editTextCreateInstitutionStreetName);
         editTextStreetNumber = findViewById(R.id.editTextCreateInstitutionStreetNumber);
+
 
         buttonCreateInstitution = findViewById(R.id.buttonCreateInstitution);
         buttonCreateInstitution.setOnClickListener(v -> {

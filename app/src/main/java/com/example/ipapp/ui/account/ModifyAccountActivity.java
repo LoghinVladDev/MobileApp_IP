@@ -69,7 +69,7 @@ public class ModifyAccountActivity extends AppCompatActivity {
 
     private void onClickButtonModifyAccount() {
         final String PARAM_EMAIL = "email";
-        final String PARAM_PASSWORD = "hashedPassword";
+        final String PARAM_PASSWORD = "currentHashedPassword";
         final String PARAM_NEW_PASSWORD = "newHashedPassword";
         final String PARAM_NEW_FIRST_NAME = "newFirstName";
         final String PARAM_NEW_LAST_NAME = "newLastName";

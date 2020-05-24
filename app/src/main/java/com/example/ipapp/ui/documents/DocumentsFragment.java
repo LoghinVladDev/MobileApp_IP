@@ -33,6 +33,7 @@ import com.example.ipapp.object.document.Document;
 import com.example.ipapp.object.document.Invoice;
 import com.example.ipapp.object.document.Receipt;
 import com.example.ipapp.object.institution.Institution;
+import com.example.ipapp.ui.institutions.CreateInstitutionActivity;
 import com.example.ipapp.ui.institutions.InstitutionsFragment;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
@@ -77,6 +78,11 @@ public class DocumentsFragment extends Fragment {
 
         FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fabCreateInstitution);
         floatingActionButton.setVisibility(View.VISIBLE);
+
+        floatingActionButton.setOnClickListener(v -> {
+            Intent goToCreateDocument = new Intent(getActivity(), CreateDocumentActivity.class);
+            startActivity(goToCreateDocument);
+        });
 
         this.documents = getDocuments();
         this.institutionsList = new ArrayList<>();

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPink"
+    android:background="@color/Black"
     android:padding="10dp">
 
     <TextView
@@ -11,25 +11,29 @@
         style="@android:style/TextAppearance.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/White"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        tools:ignore="RelativeOverlap">
+        tools:ignore="RelativeOverlap"
+        android:background="@color/Black">
 
         <TextView
             android:id="@+id/textViewMemberRole"
             style="@android:style/TextAppearance.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:textColor="@color/White"/>
 
         <Spinner
             android:id="@+id/spinnerMemberRole"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/White"/>
     </LinearLayout>
 
 </RelativeLayout>

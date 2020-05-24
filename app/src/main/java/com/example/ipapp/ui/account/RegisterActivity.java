@@ -2,6 +2,7 @@ package com.example.ipapp.ui.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "Register Activity";
     //<editor-fold desc="UI ELEMENTS">
-    private EditText editTextEmail, editTextFirstName, editTextLastName, editTextPassword;
+    private EditText editTextEmail, editTextFirstName, editTextLastName, editTextPassword, editTextConfirmPassword;
     private Button buttonRegister;
     //</editor-fold>
 
@@ -46,19 +47,39 @@ public class RegisterActivity extends AppCompatActivity {
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
         editTextPassword = findViewById(R.id.editTextPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
 
         buttonRegister = findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(v -> onClickButtonRegister(v));
     }
 
     private void onClickButtonRegister(View v) {
-        Map<String, String> bodyParameters = new HashMap<>();
-        bodyParameters.put("email", editTextEmail.getText().toString());
-        bodyParameters.put("firstName", editTextFirstName.getText().toString());
-        bodyParameters.put("lastName", editTextLastName.getText().toString());
-        bodyParameters.put("hashedPassword", editTextPassword.getText().toString());
 
-        makeHTTPRegisterRequest(bodyParameters);
+        if (! (editTextEmail.getText().toString().isEmpty() && editTextPassword.getText().toString().isEmpty() && editTextFirstName.getText().toString().isEmpty() &&
+                editTextLastName.getText().toString().isEmpty() && editTextConfirmPassword.getText().toString().isEmpty()) ) {
+
+            if (editTextPassword.getText().toString().equals(editTextConfirmPassword.getText().toString())) {
+
+                Map<String, String> bodyParameters = new HashMap<>();
+                bodyParameters.put("email", editTextEmail.getText().toString());
+                bodyParameters.put("firstName", editTextFirstName.getText().toString());
+                bodyParameters.put("lastName", editTextLastName.getText().toString());
+                bodyParameters.put("hashedPassword", editTextPassword.getText().toString());
+
+                makeHTTPRegisterRequest(bodyParameters);
+            }
+            else {
+                editTextConfirmPassword.setError("Passwords doesn't match!");
+            }
+        }
+        else {
+            if (editTextPassword.getText().toString().isEmpty()) editTextPassword.setError("Insert a password!");
+            if (editTextEmail.getText().toString().isEmpty()) editTextEmail.setError("Insert an email!");
+            if (editTextFirstName.getText().toString().isEmpty()) editTextFirstName.setError("Insert your first name!");
+            if (editTextLastName.getText().toString().isEmpty()) editTextLastName.setError("Insert your last name!");
+            if (editTextConfirmPassword.getText().toString().isEmpty()) editTextConfirmPassword.setError("Confirm your password!");
+        }
+
     }
 
     private void makeHTTPRegisterRequest(final Map<String, String> bodyParameters) {
@@ -68,6 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             response,
                             Toast.LENGTH_SHORT).show();
+                    if (response.contains("SUCCESS")) {
+                        Intent goBackToLoginPage = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(goBackToLoginPage);
+                        finish();
+                    }
                 },
                 error -> {
                     Log.d(LOG_TAG, "VOLLEY ERROR : " + error.toString());

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/Red"
+    tools:context=".ui.documents.CreateDocumentActivity">
+
+    <ScrollView
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:background="@color/milkyWhite"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp">
+
+        <RelativeLayout
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:background="@color/milkyWhite">
+
+            <TextView
+                android:id="@+id/textviewCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Currency:"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/Black"
+                android:textSize="17sp"
+                android:layout_marginStart="20dp" />
+
+            <Spinner
+                android:id="@+id/spinnerReceiptCurrency"
+                android:layout_width="93dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewCurrency"
+                android:layout_marginStart="17dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/textviewCurrency"
+                android:layout_toRightOf="@+id/textviewCurrency" />
+
+            <TextView
+                android:id="@+id/textviewProductNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textviewCurrency"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Product number:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/receipt_productNumber"
+                android:layout_width="179dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductNumber"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="-11dp"
+                android:layout_toEndOf="@+id/textviewProductNumber"
+                android:layout_toRightOf="@+id/textviewProductNumber"
+                android:hint="Enter product number"
+                android:inputType="number"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textviewProductTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textviewProductNumber"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Title:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/receipt_productTitle"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductTitle"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="-11dp"
+                android:layout_toEndOf="@+id/textviewProductTitle"
+                android:layout_toRightOf="@+id/textviewProductTitle"
+                android:hint="Product name"
+                android:inputType="text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textviewProductDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receipt_productTitle"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Product description:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/receipt_productDescription"
+                android:layout_width="169dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductDescription"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="-11dp"
+                android:layout_toEndOf="@+id/textviewProductDescription"
+                android:layout_toRightOf="@+id/textviewProductDescription"
+                android:hint="Product description"
+                android:inputType="text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textviewProductValueBeforeTax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receipt_productDescription"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Value before taxes:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/receipt_productValueBeforeTaxes"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductValueBeforeTax"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="-11dp"
+                android:layout_toEndOf="@+id/textviewProductValueBeforeTax"
+                android:layout_toRightOf="@+id/textviewProductValueBeforeTax"
+                android:textSize="15sp"
+                android:inputType="numberDecimal"
+                android:hint=" e.g: 10"/>
+
+
+            <TextView
+                android:id="@+id/textviewProductTaxPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receipt_productValueBeforeTaxes"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Tax percentage:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+
+            <EditText
+                android:id="@+id/receipt_productTaxPercentage"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductTaxPercentage"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="-11dp"
+                android:layout_toEndOf="@+id/textviewProductTaxPercentage"
+                android:layout_toRightOf="@+id/textviewProductTaxPercentage"
+                android:textSize="15sp"
+                android:inputType="numberDecimal"
+                android:hint=" e.g: 0.14"/>
+
+
+            <TextView
+                android:id="@+id/textviewProductQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receipt_productTaxPercentage"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Quantity:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/receipt_productQuantity"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductQuantity"
+                android:layout_marginStart="22dp"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="-11dp"
+                android:layout_toEndOf="@+id/textviewProductQuantity"
+                android:layout_toRightOf="@+id/textviewProductQuantity"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:hint=" e.g: 2"/>
+
+            <TextView
+                android:id="@+id/textviewProductPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/receipt_productQuantity"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Payment Method:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinnerReceiptPayment"
+                android:layout_width="93dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductPayment"
+                android:layout_marginStart="17dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/textviewProductPayment"
+                android:layout_toRightOf="@+id/textviewProductPayment" />
+
+            <Button
+                android:id="@+id/receipt_endOfReceipt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/spinnerReceiptPayment"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="30dp"
+                android:text="That's all"
+                android:textColor="@color/milkyWhite"
+                android:background="@drawable/ic_button_background_red" />
+
+            <Button
+                android:id="@+id/receipt_nextItem"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/receipt_endOfReceipt"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="70dp"
+                android:layout_toEndOf="@+id/receipt_endOfReceipt"
+                android:layout_toRightOf="@+id/receipt_endOfReceipt"
+                android:background="@drawable/ic_button_background_red"
+                android:text="Next item"
+                android:textColor="@color/milkyWhite" />
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>

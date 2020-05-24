@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.documents.DocumentsFragment">
+    tools:context=".ui.documents.DocumentsFragment"
+    android:background="@color/Red">
 
     <ProgressBar
         android:id="@+id/progressBarLoadDocuments"
@@ -33,15 +34,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/textViewShow"
+            android:textColor="@color/White"
             style="@android:style/TextAppearance.DeviceDefault.Large" />
         <Spinner
             android:id="@+id/documentSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDocuments"
-        android:background="@color/colorGreen"
+        android:background="@color/Red"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

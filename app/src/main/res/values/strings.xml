@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IPApp</string>
+    <string name="app_name">Mobile App</string>
 
     <string name="hintPassword">Enter password here</string>
     <string name="hintEmail">Enter email here</string>
@@ -62,5 +62,29 @@
         <item>Created by user</item>
     </string-array>
 
+    <!-- ViewPager login texts -->
+
+    <string name="customer1">"I love Specter, it made me able to easily gather all my institutions invoices and receipts and my job is now a pleasure!"</string>
+    <string name="customer2">"I was pretty skeptical at first but after i tried the mobile app i realized Specter offered me so many options and so much versatility!."</string>
+    <string name="customer3">"Who would have think that such a small app can change my life so much more than expected. I am so happy our institution has chosen this app."</string>
+    <string name="customer4">"Not the conventional great app, but a creative one i can say surely! When i have problems the tech team always helps me! Great guys!"</string>
+    <string name="q1">Is Specter really free?</string>
+    <string name="a1">Absolutely. We only have the free plan that allows you to send unlimited invoices to an unlimited number of clients, using an unlimited number of institutions.</string>
+    <string name="q2">Are my invoices/receipts safe?</string>
+    <string name="a2">Keeping your data secure is one of our top priorities — that is why we did not spare any expenses when it comes to our encrypted server systems. This industry-leading setup enables us to sync your private invoicing data to the cloud.</string>
+    <string name="q3">Does Specter work on my Mac, PC and mobile device?</string>
+    <string name="a3">Absolutely — since Specter is a web-based application you will be able to keep track of your invoicing needs using any device with an internet connection — whether you are at home, in the office or on the go. Moreover we have a mobile app too!</string>
+    <string name="f1">Effortless Invoicing</string>
+    <string name="f2">Accept Online Payments</string>
+    <string name="f3">Accesible for anyone</string>
+    <string name="f4">Track Time, Expenses-Mileage</string>
+    <string name="f5">Manage Multiple institutions</string>
+    <string name="f6">Your Finances In One Place</string>
+    <string name="f12">Send professional and elegant looking receipts and invoices. </string>
+    <string name="f22">Receive instant online invoice payments from anywhere, any time!</string>
+    <string name="f32">With a clear and easy to use layout anyone can start using the app today!</string>
+    <string name="f42">Turn hours, miles and expenses into invoices and bills at the click of a button.</string>
+    <string name="f52">Setting up multiple institutions has never been this simple.</string>
+    <string name="f62">Stay on track with your finances by having a custom feed just for you!</string>
 
 </resources>
