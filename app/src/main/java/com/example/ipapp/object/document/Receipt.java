@@ -4,6 +4,10 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,30 @@ public class Receipt extends Document {
     public String toString(){
         return
                 "{documentHeader=" + super.toString() + ",type=Receipt}";
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public JSONArray getDocumentItemsJSON() {
+        JSONArray array = new JSONArray();
+
+        this.items.forEach(item->{
+            try {
+                array.put(
+                    new JSONObject()
+                        .put("currencyTitle", item.getFirst().getCurrency())
+                        .put("productNumber", item.getFirst().getProductNumber())
+                        .put("title", item.getFirst().getName())
+                        .put("description", item.getFirst().getDescription())
+                        .put("valueBeforeTax", Double.toString(item.getFirst().getValue()))
+                        .put("taxPercentage", Double.toString(item.getFirst().getTax()))
+                        .put("quantity", Integer.toString(item.getSecond()))
+                );
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        return array;
     }
 
     public Receipt(){

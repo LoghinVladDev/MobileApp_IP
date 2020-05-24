@@ -1,20 +1,33 @@
 package com.example.ipapp.object.document;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Item {
     private String name;
+    private String description;
     private int ID;
-    private int productNumber;
+    private String productNumber;
     private double value;
     private double tax;
     private double valueWithTax;
     private String currency;
-    
+
     public Item(){
         
     }
 
     public Item setID(int ID) {
         this.ID = ID;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Item setDescription(String description) {
+        this.description = description;
         return this;
     }
 
@@ -28,7 +41,7 @@ public class Item {
         return this;
     }
 
-    public Item setProductNumber(int productNumber) {
+    public Item setProductNumber(String productNumber) {
         this.productNumber = productNumber;
         return this;
     }
@@ -68,7 +81,7 @@ public class Item {
         return valueWithTax;
     }
 
-    public int getProductNumber() {
+    public String getProductNumber() {
         return productNumber;
     }
 
