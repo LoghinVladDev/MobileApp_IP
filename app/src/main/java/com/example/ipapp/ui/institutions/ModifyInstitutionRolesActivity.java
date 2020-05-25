@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.ipapp.R;
+import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.object.institution.Role;
 import com.example.ipapp.ui.MotoItemDecoration;
 
@@ -18,6 +19,7 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
     private ModifyRolesAdapter adapter;
 
     private List<Role> roles;
+    private Institution institution;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
         this.recyclerViewRoles = findViewById(R.id.recyclerViewRoles);
         this.recyclerViewRoles.setLayoutManager(new LinearLayoutManager(this));
         // TODO FINISH ADAPTER
-        this.adapter = new ModifyRolesAdapter(this, roles);
+        this.adapter = new ModifyRolesAdapter(this, roles, institution);
         this.recyclerViewRoles.addItemDecoration(new MotoItemDecoration());
         recyclerViewRoles.setAdapter(adapter);
     }

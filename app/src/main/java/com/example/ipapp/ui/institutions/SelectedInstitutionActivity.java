@@ -178,9 +178,22 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             case R.id.toolbar_removeMember:
                 onClickRemoveMember();
                 break;
+            case R.id.toolbar_modifyInstitution:
+                onclickModifyInstitution();
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void onclickModifyInstitution() {
+        Intent goToModifyInstitutionActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
+
+        // TODO add extra
+
+        startActivity(goToModifyInstitutionActivity);
     }
 
     private void onClickRemoveMember() {
