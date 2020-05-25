@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +47,8 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MembersAdapter adapter;
     private String institutionName;
-    public Button btnAddNewMember, btnRemoveMember;
+    private Button btnAddNewMember, btnRemoveMember;
+    private Toolbar toolbar;
 
     private RequestQueue requestQueue;
 
@@ -81,8 +86,9 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     }
 
     private void initialiseRecyclerViewMembers() {
-        btnAddNewMember = findViewById(R.id.buttonAddNewMember);
-        btnRemoveMember = findViewById(R.id.buttonRemoveMember);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerViewMembers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -94,24 +100,37 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.addItemDecoration(new MotoItemDecoration(20));
 
-
+/*
         for(Member m : institution.getMemberList()) {
             if (m.getUsername().equals(UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
                 member = m;
             }
         }
-        if (! member.getRole().isAllowed(Role.CAN_ADD_MEMBERS)) {
-            btnAddNewMember.setVisibility(View.GONE);
-        } else {
+
+        if (member.getRole().isAllowed(Role.CAN_ADD_MEMBERS)) {
+            btnAddNewMember.setVisibility(View.VISIBLE);
             btnAddNewMember.setOnClickListener(v -> {onClickAddNewMember();});
         }
 
-        if (! member.getRole().isAllowed(Role.CAN_REMOVE_MEMBERS)) {
-            btnRemoveMember.setVisibility(View.GONE);
-        } else {
+        if (member.getRole().isAllowed(Role.CAN_REMOVE_MEMBERS)) {
+            btnRemoveMember.setVisibility(View.VISIBLE);
             btnRemoveMember.setOnClickListener(v -> {onClickRemoveMember();});
         }
 
+         */
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+        // TODO: switch(item.getItemId()) pemtru butoane
     }
 
     private void onClickRemoveMember() {

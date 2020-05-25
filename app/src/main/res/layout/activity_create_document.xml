@@ -36,7 +36,7 @@
                 android:layout_marginStart="17dp"/>
 
             <CheckBox
-                android:id="@+id/spinnerDYHInvoiceID"
+                android:id="@+id/spinnerDoYouHaveInvoiceID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Do you have an invoice ID?"
@@ -53,7 +53,7 @@
                 android:textColor="@color/Black"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:layout_below="@+id/spinnerDYHInvoiceID"/>
+                android:layout_below="@+id/spinnerDoYouHaveInvoiceID"/>
 
             <TextView
                 android:id="@+id/textviewProductPayment"

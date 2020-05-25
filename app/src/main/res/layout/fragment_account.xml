@@ -7,15 +7,14 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".ui.account.AccountFragment"
-    android:padding="20dp"
     android:background="@color/Red">
 
     <LinearLayout
         android:layout_width="358dp"
         android:layout_height="627dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/Black"
         android:orientation="vertical">
 
@@ -31,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="@string/hintCurrentEmail"
             android:layout_gravity="center"
             android:textColor="@color/milkyWhite"
@@ -126,6 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/ic_button_background_red"
             style="@style/TextAppearance.AppCompat.Display2"
             android:textSize="17sp"

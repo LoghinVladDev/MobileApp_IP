@@ -9,9 +9,14 @@
     <string name="hintFirstName">Enter your first name</string>
     <string name="hintLastName">Enter your last name</string>
 
-    <string name="bottomNavBarDocuments">Documents</string>
-    <string name="bottomNavBarAccount">My Account</string>
-    <string name="bottomNavBarInstitutions">Institutions</string>
+    <!-- TOOLBAR -->
+    <string name="toolbarAddMember">Add member</string>
+    <string name="toolbarDeleteMember">Delete member</string>
+    <string name="toolbarModifyInstitution">Modify institution</string>
+    <string name="toolbarDeleteInstitution">Delete institution</string>
+    <string name="toolbarCreateRole">Create role</string>
+    <string name="toolbarModifyRole">Modify role</string>
+
 
     <string name="hintNewPassword">Enter your new password here</string>
     <string name="hintNewFirstName">Enter your first name here</string>
