@@ -23,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.AddNewRoleActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Address;
 import com.example.ipapp.object.institution.Institution;
@@ -164,6 +165,11 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             item.setVisible(true);
         }
 
+        if (member.getRole().isAllowed(Role.CAN_DELETE_INSTITUTION)) {
+            item = menu.findItem(R.id.toolbar_deleteRole);
+            item.setVisible(true);
+        }
+
 
         return true;
     }
@@ -181,17 +187,49 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             case R.id.toolbar_modifyInstitution:
                 onclickModifyInstitution();
                 break;
+            case R.id.toolbar_deleteInstitution:
+                onClickDeleteInstitution();
+                break;
+            case R.id.toolbar_createRole:
+                onClickCreateRole();
+                break;
+            case R.id.toolbar_modifyRole:
+                onClickModifyRole();
+                break;
+            case R.id.toolbar_deleteRole:
+                onClickDeleteRole();
+                break;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void onClickDeleteRole() {
+        // TODO add delete role activity
+    }
+
+    private void onClickModifyRole() {
+        // TODO add modify role activity
+    }
+
+    private void onClickCreateRole() {
+        Intent goToCreateRoleActivity = new Intent(getApplicationContext(), AddNewRoleActivity.class);
+
+        goToCreateRoleActivity.putExtra("KEY_INSTITUTION_NAME", institutionName);
+
+        startActivity(goToCreateRoleActivity);
+    }
+
+    private void onClickDeleteInstitution() {
+        // TODO add delete institution activity
+    }
+
 
     private void onclickModifyInstitution() {
         Intent goToModifyInstitutionActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
 
-        // TODO add extra
+        // TODO add modify institution activity
 
         startActivity(goToModifyInstitutionActivity);
     }

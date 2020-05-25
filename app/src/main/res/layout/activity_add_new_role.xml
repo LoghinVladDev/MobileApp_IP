@@ -5,20 +5,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".AddNewRoleActivity">
+    tools:context=".AddNewRoleActivity"
+    android:background="@color/Red">
 
-    <EditText
-        android:id="@+id/editTextNewRoleName"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/hintNewRoleName"
-        android:importantForAutofill="no"
-        android:inputType="text" />
+        android:background="@color/Black"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonAddNewRole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/buttonAddNewRole" />
+        <EditText
+            android:id="@+id/editTextNewRoleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintNewRoleName"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:background="@drawable/ic_edittext_background_white"
+            android:textColor="@color/Black"/>
+
+        <Button
+            android:id="@+id/buttonAddNewRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/buttonAddNewRole" />
+
+    </LinearLayout>
+
 </LinearLayout>

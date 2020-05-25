@@ -23,6 +23,11 @@
         android:visible="false"/>
 
     <item
+        android:id="@+id/toolbar_deleteRole"
+        android:title="@string/toolbarDeleteRole"
+        android:visible="false" />
+
+    <item
         android:id="@+id/toolbar_deleteInstitution"
         android:title="@string/toolbarDeleteInstitution"
         android:visible="false"/>

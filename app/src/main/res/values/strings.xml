@@ -16,6 +16,7 @@
     <string name="toolbarDeleteInstitution">Delete institution</string>
     <string name="toolbarCreateRole">Create role</string>
     <string name="toolbarModifyRole">Modify role</string>
+    <string name="toolbarDeleteRole">Delete role</string>
 
 
     <string name="hintNewPassword">Enter your new password here</string>
