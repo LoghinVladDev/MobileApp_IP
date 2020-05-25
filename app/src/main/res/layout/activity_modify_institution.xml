@@ -3,20 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="10dp"
     android:background="@color/Red"
     tools:context=".ui.institutions.ModifyInstitutionActivity">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/Black"
             android:orientation="vertical"
@@ -27,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/ic_edittext_background_white"
                 android:text="@string/change_institution_name" />
 
@@ -43,7 +44,8 @@
                 android:gravity="center"
                 android:hint="@string/new_institution_name"
                 android:inputType="textPassword"
-                tools:ignore="Autofill" />
+                tools:ignore="Autofill"
+                android:visibility="gone"/>
 
             <CheckBox
                 android:id="@+id/checkBoxNewInstitutionAddress"
@@ -65,10 +67,11 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionCountry"
+                    android:id="@+id/editTextModifyInstitutionCountry"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -83,7 +86,7 @@
                     android:textColor="@color/Black" />
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionRegion"
+                    android:id="@+id/editTextModifyInstitutionRegion"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -98,7 +101,7 @@
                     android:textColor="@color/Black" />
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionCity"
+                    android:id="@+id/editTextModifyInstitutionCity"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -113,7 +116,7 @@
                     android:textColor="@color/Black" />
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionStreetName"
+                    android:id="@+id/editTextModifyInstitutionStreetName"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -128,7 +131,7 @@
                     android:textColor="@color/Black" />
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionStreetNumber"
+                    android:id="@+id/editTextModifyInstitutionStreetNumber"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -143,7 +146,7 @@
                     android:textColor="@color/Black" />
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionsBuilding"
+                    android:id="@+id/editTextModifyInstitutionsBuilding"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -158,7 +161,7 @@
                     android:textColor="@color/Black" />
 
                 <EditText
-                    android:id="@+id/editTextCreateInstitutionsApartment"
+                    android:id="@+id/editTextModifyInstitutionsApartment"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -171,25 +174,21 @@
                     android:importantForAutofill="no"
                     android:inputType="number"
                     android:textColor="@color/Black" />
-
             </LinearLayout>
 
-
             <Button
-                android:id="@+id/buttonModifyAccount"
+                android:id="@+id/buttonModifyInstitution"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="50dp"
                 android:background="@drawable/ic_button_background_red"
-                android:text="@string/buttonModifyAccount"
+                android:text="@string/button_modify_institution"
                 android:textColor="@color/milkyWhite"
                 android:textSize="17sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-
     </ScrollView>
 
 </RelativeLayout>
