@@ -210,7 +210,11 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     }
 
     private void onClickModifyRole() {
-        // TODO add modify role activity
+        Intent goToModifyRoleActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
+
+        goToModifyRoleActivity.putExtra("KEY_INSTITUTION_NAME", institutionName);
+
+        startActivity(goToModifyRoleActivity);
     }
 
     private void onClickCreateRole() {

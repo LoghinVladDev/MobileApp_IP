@@ -18,6 +18,8 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
     private RecyclerView recyclerViewRoles;
     private ModifyRolesAdapter adapter;
 
+    private String institutionName;
+
     private List<Role> roles;
     private Institution institution;
 
@@ -26,7 +28,13 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_roles);
 
-        initialiseUI(roles);
+        this.institutionName = getIntent().getStringExtra("KEY_INSTITUTION_NAME");
+
+        for(Institution i : InstitutionsFragment.getInstitutions())
+            if(i.getName().equals(this.institutionName))
+                this.institution = i;
+
+        initialiseUI(this.institution.getRoleList());
     }
 
     private void initialiseUI(List<Role> roles) {
@@ -34,7 +42,7 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
         this.recyclerViewRoles = findViewById(R.id.recyclerViewRoles);
         this.recyclerViewRoles.setLayoutManager(new LinearLayoutManager(this));
         // TODO FINISH ADAPTER
-        this.adapter = new ModifyRolesAdapter(this, roles, institution);
+        this.adapter = new ModifyRolesAdapter(this, roles, this.institution);
         this.recyclerViewRoles.addItemDecoration(new MotoItemDecoration());
         recyclerViewRoles.setAdapter(adapter);
     }

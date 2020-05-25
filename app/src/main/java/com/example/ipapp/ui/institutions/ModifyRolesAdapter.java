@@ -131,7 +131,7 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
         }
 
         private void onClickModifyRole(){
-            String roleName = ""; // TODO : actual role name ,before modify
+            String roleName = this.textViewRoleName.getText().toString(); // TODO : actual role name ,before modify
 
             Role newRole = new Role()
                     .setName(this.textViewRoleName.getText().toString()) // TODO : new role name
