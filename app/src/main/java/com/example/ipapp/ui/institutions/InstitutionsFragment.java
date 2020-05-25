@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ipapp.ui.MotoItemDecoration;
 import com.example.ipapp.ui.account.LoginActivity;
 import com.example.ipapp.R;
@@ -68,7 +69,7 @@ public class InstitutionsFragment extends Fragment {
             Intent goToCreateInstitution = new Intent(getActivity(), CreateInstitutionActivity.class);
             startActivity(goToCreateInstitution);
         });
-        this.requestQueue = LoginActivity.getRequestQueue();
+        this.requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         this.requestPopulateInstitutions();
 
         this.institutions = InstitutionsFragment.getInstitutions();

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/toolbar_addMember"
+        android:title="@string/toolbarAddMember"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/toolbar_removeMember"
+        android:title="@string/toolbarRemoveMember"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/toolbar_createRole"
+        android:title="@string/toolbarCreateRole"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/toolbar_modifyRole"
+        android:title="@string/toolbarModifyRole"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/toolbar_deleteInstitution"
+        android:title="@string/toolbarDeleteInstitution"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/toolbar_modifyInstitution"
+        android:title="@string/toolbarModifyInstitution"
+        android:visible="false"/>
+
+</menu>
