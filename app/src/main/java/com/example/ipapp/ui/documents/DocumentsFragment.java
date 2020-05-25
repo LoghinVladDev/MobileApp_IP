@@ -95,7 +95,7 @@ public class DocumentsFragment extends Fragment {
         this.initialiseRecyclerViewDocuments(root);
 
         //Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
-        Toolbar actionBar = getActivity().findViewById(R.id.layoutSpinner);
+        Toolbar actionBar = getActivity().findViewById(R.id.layoutSpinner); // TODO : investigate
 
         Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
 
