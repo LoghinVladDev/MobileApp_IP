@@ -5,6 +5,10 @@
     android:orientation="vertical"
     android:padding="10dp">
 
+    <TextView
+        android:id="@+id/textViewRoleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <Switch
         android:id="@+id/switchCanModifyInstitution"
         android:layout_width="wrap_content"
@@ -17,110 +21,110 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can delete institution" />
+        android:text="@string/switchCanDeleteInstitution" />
 
     <Switch
         android:id="@+id/switchCanAddMembers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can add members" />
+        android:text="@string/switchCanAddMembers" />
 
     <Switch
         android:id="@+id/switchCanRemoveMembers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can delete institution" />
+        android:text="@string/switchCanRemoveMembers" />
 
     <Switch
         android:id="@+id/switchCanUploadMembers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can upload members" />
+        android:text="@string/switchCanUploadMembers" />
 
     <Switch
         android:id="@+id/switchCanPreviewUploadedDocuments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can preview uploaded documents" />
+        android:text="@string/switchCanPreviewUploadedDocuments" />
 
     <Switch
         android:id="@+id/switchCanRemoveUploadedDocuments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can remove uploaded documents" />
+        android:text="@string/switchCanRemoveUploadedDocuments" />
 
     <Switch
         android:id="@+id/switchCanSendDocuments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can send documents" />
+        android:text="@string/switchCanSendDocuments" />
 
     <Switch
         android:id="@+id/switchCanPreviewReceivedDocuments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="Can preview received documents" />
+        android:text="@string/switchCanPreviewDocuments" />
 
     <Switch
         android:id="@+id/switchCanPreviewSpecificReceivedDocument"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can preview specific received Document" />
+        android:text="@string/switchCanPreviewSpecificReceivedDocument" />
 
     <Switch
         android:id="@+id/switchCanRemoveReceivedDocument"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can remove received Document" />
+        android:text="@string/switchCanRemoveReceivedDocument" />
 
     <Switch
         android:id="@+id/switchCanDownloadDocuments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can download documents" />
+        android:text="@string/switchCanDownloadDocuments" />
 
     <Switch
         android:id="@+id/switchCanAddRoles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can add roles" />
+        android:text="@string/switchCanAddRoles" />
 
     <Switch
         android:id="@+id/switchCanRemoveRoles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can download documents" />
+        android:text="@string/switchCanRemoveRoles" />
 
     <Switch
         android:id="@+id/switchCanModifyRoles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can modify roles" />
+        android:text="@string/switchCanModifyRoles" />
 
     <Switch
         android:id="@+id/switchCanAssignRoles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can assign roles" />
+        android:text="@string/switchCanAssignRoles" />
 
     <Switch
         android:id="@+id/switchCanDeassignRoles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Can deassign roles" />
+        android:text="@string/switchCanDeassignRoles" />
 </LinearLayout>

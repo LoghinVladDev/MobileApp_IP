@@ -91,5 +91,21 @@
     <string name="f42">Turn hours, miles and expenses into invoices and bills at the click of a button.</string>
     <string name="f52">Setting up multiple institutions has never been this simple.</string>
     <string name="f62">Stay on track with your finances by having a custom feed just for you!</string>
+    <string name="switchCanDeleteInstitution">Can delete institution</string>
+    <string name="switchCanAddMembers">Can add members</string>
+    <string name="switchCanUploadMembers">Can upload members</string>
+    <string name="switchCanPreviewUploadedDocuments">Can preview uploaded documents</string>
+    <string name="switchCanRemoveUploadedDocuments">Can remove uploaded documents</string>
+    <string name="switchCanSendDocuments">Can send documents</string>
+    <string name="switchCanPreviewDocuments">Can preview received documents</string>
+    <string name="switchCanPreviewSpecificReceivedDocument">Can preview specific received Document</string>
+    <string name="switchCanRemoveReceivedDocument">Can remove received Document</string>
+    <string name="switchCanDownloadDocuments">Can download documents</string>
+    <string name="switchCanAddRoles">Can add roles</string>
+    <string name="switchCanModifyRoles">Can modify roles</string>
+    <string name="switchCanAssignRoles">Can assign roles</string>
+    <string name="switchCanDeassignRoles">Can deassign roles</string>
+    <string name="switchCanRemoveMembers">Can remove members</string>
+    <string name="switchCanRemoveRoles">Can remove roles</string>
 
 </resources>
