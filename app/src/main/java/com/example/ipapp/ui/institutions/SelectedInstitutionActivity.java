@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,6 +57,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
     private Institution institution;
     private Member member;
+    private Menu menu;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -124,13 +126,61 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
+        MenuItem item;
+
+        for (Member m : institution.getMemberList()) {
+            if (m.getUsername().equals(UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
+                member = m;
+            }
+        }
+
+        if (member.getRole().isAllowed(Role.CAN_ADD_MEMBERS)) {
+            item = menu.findItem(R.id.toolbar_addMember);
+            item.setVisible(true);
+        }
+
+        if (member.getRole().isAllowed(Role.CAN_REMOVE_MEMBERS)) {
+            item = menu.findItem(R.id.toolbar_removeMember);
+            item.setVisible(true);
+        }
+
+        if (member.getRole().isAllowed(Role.CAN_ADD_ROLES)) {
+            item = menu.findItem(R.id.toolbar_createRole);
+            item.setVisible(true);
+        }
+
+        if (member.getRole().isAllowed(Role.CAN_MODIFY_ROLES)) {
+            item = menu.findItem(R.id.toolbar_modifyRole);
+            item.setVisible(true);
+        }
+
+        if (member.getRole().isAllowed(Role.CAN_DELETE_INSTITUTION)) {
+            item = menu.findItem(R.id.toolbar_deleteInstitution);
+            item.setVisible(true);
+        }
+
+        if (member.getRole().isAllowed(Role.CAN_MODIFY_INSTITUTION)) {
+            item = menu.findItem(R.id.toolbar_modifyInstitution);
+            item.setVisible(true);
+        }
+
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.toolbar_addMember:
+                onClickAddNewMember();
+                break;
+            case R.id.toolbar_removeMember:
+                onClickRemoveMember();
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
-        // TODO: switch(item.getItemId()) pemtru butoane
     }
 
     private void onClickRemoveMember() {

@@ -4,26 +4,32 @@
 
     <item
         android:id="@+id/toolbar_addMember"
-        android:title="@string/toolbarAddMember" />
+        android:title="@string/toolbarAddMember"
+        android:visible="false"/>
 
     <item
-        android:id="@+id/toolbar_deleteMember"
-        android:title="@string/toolbarDeleteMember" />
+        android:id="@+id/toolbar_removeMember"
+        android:title="@string/toolbarRemoveMember"
+        android:visible="false"/>
 
     <item
         android:id="@+id/toolbar_createRole"
-        android:title="@string/toolbarCreateRole"/>
+        android:title="@string/toolbarCreateRole"
+        android:visible="false"/>
 
     <item
         android:id="@+id/toolbar_modifyRole"
-        android:title="@string/toolbarModifyRole" />
+        android:title="@string/toolbarModifyRole"
+        android:visible="false"/>
 
     <item
         android:id="@+id/toolbar_deleteInstitution"
-        android:title="@string/toolbarDeleteInstitution" />
+        android:title="@string/toolbarDeleteInstitution"
+        android:visible="false"/>
 
     <item
         android:id="@+id/toolbar_modifyInstitution"
-        android:title="@string/toolbarModifyInstitution" />
+        android:title="@string/toolbarModifyInstitution"
+        android:visible="false"/>
 
 </menu>
