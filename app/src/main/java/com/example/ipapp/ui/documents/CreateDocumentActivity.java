@@ -2,16 +2,17 @@ package com.example.ipapp.ui.documents;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -39,15 +40,13 @@ public class CreateDocumentActivity extends AppCompatActivity {
 
     private static String LOG_TAG = "CREATE_DOCUMENT_ACTIVITY";
 
-    EditText itemProductNumberEditText;
-    EditText itemTitleEditText;
-    EditText itemDescriptionEditText;
-    EditText itemValueEditText;
-    EditText itemTaxEditText;
-    EditText itemQuantityText;
+    private EditText itemProductNumberEditText, itemTitleEditText, itemDescriptionEditText, itemValueEditText, itemTaxEditText, itemQuantityText;
+    private Spinner spinnerDocumentType, spinnerPaymentMethod, spinnerCurrency, spinnerInstitution;
 
     private RequestQueue requestQueue;
 
+    private String[] documentType = {"Invoice", "Receipt"}, paymentMethodString, institutionArray, currencyArray;
+    private String selectedDocumentType, selectedInstitution, selectedCurrency, selectedPaymentMethod;
     private List<PaymentMethod> paymentMethodList;
     private List<Currency> currencyList;
 //    private List<Item> documentItemList;
@@ -82,11 +81,63 @@ public class CreateDocumentActivity extends AppCompatActivity {
         this.itemValueEditText = findViewById(R.id.receipt_productValueBeforeTaxes);
         this.itemTaxEditText = findViewById(R.id.receipt_productTaxPercentage);
         this.itemQuantityText = findViewById(R.id.receipt_productQuantity);
+        this.spinnerPaymentMethod = findViewById(R.id.spinnerReceiptPayment);
+        this.spinnerCurrency = findViewById(R.id.spinnerReceiptCurrency);
+        this.spinnerDocumentType = findViewById(R.id.spinnerDocumentType);
+        this.spinnerInstitution = findViewById(R.id.spinnerInstitutionName);
     }
 
     private void populateDocumentUtils(){
+
+        this.populateSpinnerDocumentType(); //keeps in selectedDocumentType the document type
+        this.populateSpinnerInstitution(); //keeps in selectedInstitution -.-
         this.makeHTTPRequestPaymentMethods();
         this.makeHTTPRequestCurrencies();
+    }
+
+
+    private void populateSpinnerInstitution() {
+
+        List<String> tempList = new ArrayList<>();
+        for (Institution i : institutionList) {
+            tempList.add(i.getName());
+        }
+
+        institutionArray = tempList.toArray(institutionArray);
+
+        ArrayAdapter<String> spinnerInstitutionAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, institutionArray);
+        spinnerInstitutionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerInstitution.setAdapter(spinnerInstitutionAdapter);
+        spinnerInstitution.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedInstitution = institutionArray[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void populateSpinnerDocumentType() {
+        ArrayAdapter<String> spinnerDocumentTypeAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, documentType);
+        spinnerDocumentTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerDocumentType.setAdapter(spinnerDocumentTypeAdapter);
+        spinnerDocumentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedDocumentType = documentType[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void callbackPaymentMethods(JSONObject responseObject) throws JSONException {
@@ -104,7 +155,32 @@ public class CreateDocumentActivity extends AppCompatActivity {
             );
         }
 
+        List<String> tempList = new ArrayList<>();
+        for (PaymentMethod p : paymentMethodList) {
+            tempList.add(p.getTitle());
+        }
+
+        paymentMethodString = new String[tempList.size()];
+        paymentMethodString = tempList.toArray(paymentMethodString);
+
         Log.d(LOG_TAG, "PAYMENT METHODS FINAL : " + this.paymentMethodList.toString());
+
+        ArrayAdapter<String> spinnerPaymentMethodAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, paymentMethodString);
+        spinnerPaymentMethodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerPaymentMethod.setAdapter(spinnerPaymentMethodAdapter);
+        spinnerPaymentMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedPaymentMethod = paymentMethodString[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     private void callbackCurrencies(JSONObject responseObject) throws JSONException {
@@ -121,6 +197,23 @@ public class CreateDocumentActivity extends AppCompatActivity {
                             .setTitle(currencyJSON.getString("title"))
             );
         }
+
+
+        ArrayAdapter<String> spinnerCurrencyAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, documentType);
+        spinnerCurrencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerCurrency.setAdapter(spinnerCurrencyAdapter);
+        spinnerCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedInstitution = paymentMethodList.get(i).getTitle();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         Log.d(LOG_TAG, "CURRENCIES FINAL : " + this.currencyList.toString());
     }

@@ -17,13 +17,12 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ipapp.AddNewRoleActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Address;
 import com.example.ipapp.object.institution.Institution;
@@ -49,7 +48,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MembersAdapter adapter;
     private String institutionName;
-    private Button btnAddNewMember, btnRemoveMember;
     private Toolbar toolbar;
 
     private RequestQueue requestQueue;
@@ -103,24 +101,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.addItemDecoration(new MotoItemDecoration(20));
 
-/*
-        for(Member m : institution.getMemberList()) {
-            if (m.getUsername().equals(UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
-                member = m;
-            }
-        }
-
-        if (member.getRole().isAllowed(Role.CAN_ADD_MEMBERS)) {
-            btnAddNewMember.setVisibility(View.VISIBLE);
-            btnAddNewMember.setOnClickListener(v -> {onClickAddNewMember();});
-        }
-
-        if (member.getRole().isAllowed(Role.CAN_REMOVE_MEMBERS)) {
-            btnRemoveMember.setVisibility(View.VISIBLE);
-            btnRemoveMember.setOnClickListener(v -> {onClickRemoveMember();});
-        }
-
-         */
     }
 
     @Override
@@ -212,7 +192,16 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     private void onClickModifyRole() {
         Intent goToModifyRoleActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
 
-        goToModifyRoleActivity.putExtra("KEY_INSTITUTION_NAME", institutionName);
+        JSONObject param = new JSONObject();
+        try {
+            param.put("ID", institution.getID());
+            param.put("name", institution.getName());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        goToModifyRoleActivity.putExtra(INTENT_KEY_INSTITUTION_JSON, param.toString());
 
         startActivity(goToModifyRoleActivity);
     }
@@ -220,13 +209,35 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     private void onClickCreateRole() {
         Intent goToCreateRoleActivity = new Intent(getApplicationContext(), AddNewRoleActivity.class);
 
-        goToCreateRoleActivity.putExtra("KEY_INSTITUTION_NAME", institutionName);
+        JSONObject param = new JSONObject();
+        try {
+            param.put("ID", institution.getID());
+            param.put("name", institution.getName());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        goToCreateRoleActivity.putExtra(INTENT_KEY_INSTITUTION_JSON, param.toString());
 
         startActivity(goToCreateRoleActivity);
     }
 
     private void onClickDeleteInstitution() {
-        // TODO add delete institution activity
+        Intent goToDeleteInstitution = new Intent(getApplicationContext(), DeleteInstitutionActivity.class);
+
+        JSONObject param = new JSONObject();
+        try {
+            param.put("ID", institution.getID());
+            param.put("name", institution.getName());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        goToDeleteInstitution.putExtra(INTENT_KEY_INSTITUTION_JSON, param.toString());
+
+        startActivity(goToDeleteInstitution);
     }
 
 

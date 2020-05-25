@@ -204,9 +204,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-
-
     private void onClickButtonRegister(View v) {
         Intent goToRegisterActivity = new Intent(this, RegisterActivity.class);
         startActivity(goToRegisterActivity);
@@ -274,7 +271,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.contains("SUCCESS"))
                     {
                         callbackRetrieveAccountInformation(response);
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Login succesful", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

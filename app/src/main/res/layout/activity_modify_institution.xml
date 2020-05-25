@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="10dp"
+    android:background="@color/Red"
+    tools:context=".ui.institutions.ModifyInstitutionActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/Black"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+
+            <CheckBox
+                android:id="@+id/checkBoxNewInstitutionName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/ic_edittext_background_white"
+                android:text="@string/change_institution_name" />
+
+            <EditText
+                android:id="@+id/editTextNewInstitutionName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/ic_edittext_background_white"
+                android:gravity="center"
+                android:hint="@string/new_institution_name"
+                android:inputType="textPassword"
+                tools:ignore="Autofill"
+                android:visibility="gone"/>
+
+            <CheckBox
+                android:id="@+id/checkBoxNewInstitutionAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_edittext_background_white"
+                android:text="@string/new_institution_address" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutNewInstitutionAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionCountry"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressCountry"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColor="@color/Black" />
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionRegion"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressRegion"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColor="@color/Black" />
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionCity"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressCity"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColor="@color/Black" />
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionStreetName"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressStreetName"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColor="@color/Black" />
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionStreetNumber"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressStreetNumber"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:textColor="@color/Black" />
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionsBuilding"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressBuilding"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColor="@color/Black" />
+
+                <EditText
+                    android:id="@+id/editTextModifyInstitutionsApartment"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_edittext_background_white"
+                    android:gravity="center"
+                    android:hint="@string/hintInstitutionAddressApartment"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:textColor="@color/Black" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonModifyInstitution"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/ic_button_background_red"
+                android:text="@string/button_modify_institution"
+                android:textColor="@color/milkyWhite"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -44,11 +44,11 @@ public class ModifyAccountActivity extends AppCompatActivity {
     }
 
     private void initialiseUI() {
-        editTextNewPassword = findViewById(R.id.editTextNewPassword);
+        editTextNewPassword = findViewById(R.id.editTextNewInstitutionName);
         editTextNewFirstName = findViewById(R.id.editTextNewFirstName);
         editTextNewLastName = findViewById(R.id.editTextNewLastName);
         buttonModifyAccount = findViewById(R.id.buttonModifyAccount);
-        checkBoxPassword = findViewById(R.id.newPasswordCheckBox);
+        checkBoxPassword = findViewById(R.id.checkBoxNewInstitutionName);
         checkBoxFirstName = findViewById(R.id.newFirstNameCheckBox);
         checkBoxLastName = findViewById(R.id.newLastNameCheckBox);
 

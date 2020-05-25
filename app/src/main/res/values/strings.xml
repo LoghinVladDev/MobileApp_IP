@@ -116,5 +116,12 @@
     <string name="buttonDeleteRole">Delete Role</string>
     <string name="buttonDeleteCurrentRole">DELETE</string>
     <string name="buttonSaveRoleChanges">SAVE</string>
+    <string name="confirm_institution_deletion">Confirm institution deletion.</string>
+    <string name="confirm_deletion">Confirm.</string>
+    <string name="deny_deletion">No</string>
+    <string name="new_institution_name">"Enter the new institution name. "</string>
+    <string name="change_institution_name">Change institution name.</string>
+    <string name="new_institution_address">New institution address</string>
+    <string name="button_modify_institution">Modify institution</string>
 
 </resources>
