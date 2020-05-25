@@ -43,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     private static final String LOG_TAG = "LOGIN ACTIVITY";
     private static RequestQueue httpRequestQueue;
 
+    private static final String DEFAULT_USER = "vlad.loghin00@gmail.com";
+    private static final String DEFAULT_PASSWORD = "password";
+
     public static RequestQueue getRequestQueue(){
         return LoginActivity.httpRequestQueue;
     }
@@ -173,8 +176,8 @@ public class LoginActivity extends AppCompatActivity {
                 buttonLogin = view.findViewById(R.id.buttonLogin);
                 buttonRegister = view.findViewById(R.id.buttonRegister);
 
-                editTextEmail.setText("lau.lau95@yahoo.com");
-                editTextPassword.setText("pass");
+                editTextEmail.setText(DEFAULT_USER);
+                editTextPassword.setText(DEFAULT_PASSWORD);
 
                 buttonLogin.setOnClickListener(new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)

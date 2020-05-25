@@ -36,6 +36,21 @@ public class Institution {
             "}";
     }
 
+    public Institution setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+        return this;
+    }
+
+    public Institution setMemberList(List<Member> memberList) {
+        this.memberList = memberList;
+        return this;
+    }
+
+    public Institution setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+        return this;
+    }
+
     public Institution(){
         this.memberList = new ArrayList<>();
         this.roleList = new ArrayList<>();

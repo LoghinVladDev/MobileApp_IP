@@ -412,8 +412,13 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
         InstitutionsFragment.debugInstitutionList();
         for(Institution i : InstitutionsFragment.getInstitutions()){
             if(i.getName().equals(this.institution.getName())){
-                InstitutionsFragment.getInstitutions().remove(i);
-                InstitutionsFragment.getInstitutions().add(this.institution);
+//                InstitutionsFragment.getInstitutions().remove(i);
+//                InstitutionsFragment.getInstitutions().add(this.institution);
+
+                i
+                        .setMemberList(this.institution.getMemberList())
+                        .setAddressList(this.institution.getAddressList())
+                        .setRoleList(this.institution.getRoleList());
             }
         }
     }

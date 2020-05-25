@@ -66,15 +66,6 @@ public class CreateDocumentActivity extends AppCompatActivity {
 
         this.requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        this.populateDocumentUtils();
-
-        this.institutionList = InstitutionsFragment.getInstitutions(); // TODO : ADD IN SPINNER
-
-        this.newReceipt = new Receipt();
-
-        findViewById(R.id.receipt_nextItem).setOnClickListener(e->addNewItemToDocument());
-        findViewById(R.id.receipt_endOfReceipt).setOnClickListener(e->finishDocumentCreation());
-
         this.itemProductNumberEditText = findViewById(R.id.receipt_productNumber);
         this.itemTitleEditText = findViewById(R.id.receipt_productTitle);
         this.itemDescriptionEditText = findViewById(R.id.receipt_productDescription);
@@ -85,6 +76,16 @@ public class CreateDocumentActivity extends AppCompatActivity {
         this.spinnerCurrency = findViewById(R.id.spinnerReceiptCurrency);
         this.spinnerDocumentType = findViewById(R.id.spinnerDocumentType);
         this.spinnerInstitution = findViewById(R.id.spinnerInstitutionName);
+
+        this.institutionList = InstitutionsFragment.getInstitutions(); // TODO : ADD IN SPINNER
+
+        this.newReceipt = new Receipt();
+
+        this.populateDocumentUtils();
+
+        findViewById(R.id.receipt_nextItem).setOnClickListener(e->addNewItemToDocument());
+        findViewById(R.id.receipt_endOfReceipt).setOnClickListener(e->finishDocumentCreation());
+
     }
 
     private void populateDocumentUtils(){
