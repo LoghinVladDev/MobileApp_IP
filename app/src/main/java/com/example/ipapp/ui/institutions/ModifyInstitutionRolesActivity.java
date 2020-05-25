@@ -1,4 +1,4 @@
-package com.example.ipapp;
+package com.example.ipapp.ui.institutions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Role;
 import com.example.ipapp.ui.MotoItemDecoration;
 
@@ -22,7 +23,6 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_roles);
-
 
         initialiseUI(roles);
     }

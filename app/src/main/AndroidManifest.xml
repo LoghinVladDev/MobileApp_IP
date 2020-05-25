@@ -30,6 +30,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".ui.account.ModifyAccountActivity" />
+        <activity android:name=".ui.institutions.ModifyInstitutionRolesActivity" />
         <activity android:name=".ui.account.RegisterActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">
