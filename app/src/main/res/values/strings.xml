@@ -102,5 +102,8 @@
     <string name="switchCanDeassignRoles">Can deassign roles</string>
     <string name="switchCanRemoveMembers">Can remove members</string>
     <string name="switchCanRemoveRoles">Can remove roles</string>
+    <string name="hintNewRoleName">The name of the new role</string>
+    <string name="buttonAddNewRole">Add new role</string>
+    <string name="toastNewRoleName">Role name can not be empty</string>
 
 </resources>
