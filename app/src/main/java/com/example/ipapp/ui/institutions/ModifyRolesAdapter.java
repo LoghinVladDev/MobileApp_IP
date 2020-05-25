@@ -46,6 +46,8 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewRoleName;
+
+        //<editor-fold desc="SWITCHES">
         Switch switchCanAddMembers;
         Switch switchCanAddRoles;
         Switch switchCanAssignRoles;
@@ -63,9 +65,13 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
         Switch switchCanRemoveReceivedDocument;
         Switch switchCanDownloadDocuments;
         Switch switchCanRemoveRoles;
+        //</editor-fold>
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            textViewRoleName = itemView.findViewById(R.id.textViewRoleName);
+
+            //<editor-fold desc="SWITCHES">
             switchCanModifyInstitution = itemView.findViewById(R.id.switchCanModifyInstitution);
             switchCanDeleteInstitution = itemView.findViewById(R.id.switchCanDeleteInstitution);
             switchCanAddMembers = itemView.findViewById(R.id.switchCanAddMembers);
@@ -88,6 +94,7 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
             switchCanDeassignRoles = itemView.findViewById(R.id.switchCanDeassignRoles);
 
             switchCanModifyRoles = itemView.findViewById(R.id.switchCanModifyRoles);
+            //</editor-fold>
 
         }
 
