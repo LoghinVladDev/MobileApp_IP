@@ -398,6 +398,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     }
 
     private void populateStaticInstitutionList(){
+        InstitutionsFragment.debugInstitutionList();
         for(Institution i : InstitutionsFragment.getInstitutions()){
             if(i.getName().equals(this.institution.getName())){
                 InstitutionsFragment.getInstitutions().remove(i);

@@ -9,6 +9,27 @@
         android:id="@+id/textViewRoleName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonDeleteCurrentRole"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonDeleteCurrentRole" />
+
+        <Button
+            android:id="@+id/buttonSaveRoleChanges"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonSaveRoleChanges" />
+    </LinearLayout>
+
     <Switch
         android:id="@+id/switchCanModifyInstitution"
         android:layout_width="wrap_content"

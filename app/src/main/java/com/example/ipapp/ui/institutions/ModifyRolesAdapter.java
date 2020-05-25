@@ -1,6 +1,7 @@
 package com.example.ipapp.ui.institutions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.DeleteRoleActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
 import com.example.ipapp.object.institution.Role;
@@ -71,7 +73,8 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewRoleName;
-
+        Button buttonDeleteRole;
+        Button buttonSaveRoleChanges;
         //<editor-fold desc="SWITCHES">
         Switch switchCanAddMembers;
         Switch switchCanAddRoles;
@@ -93,11 +96,13 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
 
         //</editor-fold>
 
-        private Button finishRoleModifyButton;
+
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewRoleName = itemView.findViewById(R.id.textViewRoleName);
+            buttonDeleteRole = itemView.findViewById(R.id.buttonDeleteCurrentRole);
+            buttonSaveRoleChanges = itemView.findViewById(R.id.buttonSaveRoleChanges);
 
             //<editor-fold desc="SWITCHES">
             switchCanModifyInstitution = itemView.findViewById(R.id.switchCanModifyInstitution);
@@ -124,10 +129,18 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
             switchCanModifyRoles = itemView.findViewById(R.id.switchCanModifyRoles);
             //</editor-fold>
 
-            /// TODO : this.finishRoleModifyButton = findViewByID(...)
 
-            this.finishRoleModifyButton.setOnClickListener(e->this.onClickModifyRole());
+            this.buttonSaveRoleChanges.setOnClickListener(e -> this.onClickModifyRole());
+            this.buttonDeleteRole.setOnClickListener(v -> {
+                this.onClickDeleteRole(v);
+            });
+        }
 
+        private void onClickDeleteRole(View v) {
+            Intent goToDeleteRole = new Intent(itemView.getContext(), DeleteRoleActivity.class);
+            goToDeleteRole.putExtra("KEY_INSTITUTION_NAME", getInstitutionName());
+            goToDeleteRole.putExtra("KEY_ROLE_NAME", textViewRoleName.getText().toString());
+            context.startActivity(goToDeleteRole);
         }
 
         private void onClickModifyRole(){
@@ -160,6 +173,10 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
             }
         }
 
+    }
+
+    private String getInstitutionName() {
+        return this.institution.getName();
     }
 
     /**

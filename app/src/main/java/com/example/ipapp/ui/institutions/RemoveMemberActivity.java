@@ -33,8 +33,8 @@ public class RemoveMemberActivity extends AppCompatActivity {
     private static final String INTENT_KEY_INSTITUTION_JSON = "institution";
     private final static String LOG_TAG = "MEMBER_DELETE";
 
-    private Spinner spinnerMemberToDelete;
-    private Button btnDeleteMember;
+    Spinner spinnerMemberToDelete;
+    Button buttonDeleteMember;
     private RequestQueue requestQueue;
 
     private String institutionName, selectedMemberToDelete;
@@ -69,7 +69,7 @@ public class RemoveMemberActivity extends AppCompatActivity {
 
     private void initialiseUI() {
         spinnerMemberToDelete = findViewById(R.id.spinnerSelectMemberToRemove);
-        btnDeleteMember = findViewById(R.id.btnConfirmRemoveSelectedMember);
+        buttonDeleteMember = findViewById(R.id.btnConfirmRemoveSelectedMember);
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, institutionMembers);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -87,7 +87,7 @@ public class RemoveMemberActivity extends AppCompatActivity {
             }
         });
 
-        btnDeleteMember.setOnClickListener(v -> deleteMemberRequest());
+        buttonDeleteMember.setOnClickListener(v -> deleteMemberRequest());
     }
 
     private void deleteMemberRequest() {

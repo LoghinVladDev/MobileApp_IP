@@ -21,7 +21,7 @@ public class InstitutionsAdapter extends RecyclerView.Adapter<InstitutionsAdapte
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public InstitutionsAdapter(Context context, List<Institution> mData, View.OnClickListener rowOnClickListener) {
+    InstitutionsAdapter(Context context, List<Institution> mData, View.OnClickListener rowOnClickListener) {
         this.mData = mData;
         this.mInflater = LayoutInflater.from(context);
         this.listRowOnClickListener = rowOnClickListener;
