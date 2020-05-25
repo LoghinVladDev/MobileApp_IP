@@ -96,7 +96,6 @@ public class ModifyAccountActivity extends AppCompatActivity {
     private void makeHTTPModifyAccountRequest(final Map<String, String> requestParameters) {
         StringRequest modifyAccountRequest = new StringRequest(Request.Method.POST, ApiUrls.ACCOUNT_MODIFY,
                 response -> {
-                    // TODO IMPLEMENT PROPER USER RESPONSE (ON MODIFYING ACC)
                     Log.d(LOG_TAG, "RESPONSE : " + response);
                     if (response.contains("SUCCESS")) {
                         Toast.makeText(getApplicationContext(), getString(R.string.toastModifyAccountRequestSuccess), Toast.LENGTH_SHORT).show();
