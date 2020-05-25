@@ -2,6 +2,7 @@ package com.example.ipapp.ui.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -97,8 +98,13 @@ public class ModifyAccountActivity extends AppCompatActivity {
                 response -> {
                     // TODO IMPLEMENT PROPER USER RESPONSE (ON MODIFYING ACC)
                     Log.d(LOG_TAG, "RESPONSE : " + response);
-                    if (response.contains("SUCCESS"))
+                    if (response.contains("SUCCESS")) {
                         Toast.makeText(getApplicationContext(), getString(R.string.toastModifyAccountRequestSuccess), Toast.LENGTH_SHORT).show();
+
+                        Intent goBackToAccountFragment = new Intent(getApplicationContext(), AccountFragment.class);
+                        startActivity(goBackToAccountFragment);
+                        finish();
+                    }
                     else
                         Toast.makeText(getApplicationContext(), "Error : " + response, Toast.LENGTH_LONG).show();
                 },

@@ -19,12 +19,75 @@
             android:background="@color/milkyWhite">
 
             <TextView
+                android:id="@+id/textViewDocumentType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Document type: "
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="17sp"
+                android:textColor="@color/Black" />
+
+            <Spinner
+                android:layout_width="93dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/textViewDocumentType"
+                android:layout_toEndOf="@id/textViewDocumentType"
+                android:layout_marginStart="17dp"/>
+
+            <CheckBox
+                android:id="@+id/spinnerDYHInvoiceID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Do you have an invoice ID?"
+                android:textColor="@color/Black"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_below="@id/textViewDocumentType"/>
+
+            <EditText
+                android:id="@+id/editTextInvoiceID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter the invoice ID."
+                android:textColor="@color/Black"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/spinnerDYHInvoiceID"/>
+
+            <TextView
+                android:id="@+id/textviewProductPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextInvoiceID"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Payment Method:"
+                android:textColor="@color/Black"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinnerReceiptPayment"
+                android:layout_width="93dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textviewProductPayment"
+                android:layout_marginStart="17dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/textviewProductPayment"
+                android:layout_toRightOf="@+id/textviewProductPayment" />
+
+            <TextView
                 android:id="@+id/textviewCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Currency:"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
+                android:layout_below="@+id/textviewProductPayment"
                 android:textColor="@color/Black"
                 android:textSize="17sp"
                 android:layout_marginStart="20dp" />
@@ -44,7 +107,7 @@
                 android:id="@+id/textviewProductNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textviewCurrency"
+                android:layout_below="@+id/textviewProductTitle"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="20dp"
@@ -72,7 +135,7 @@
                 android:id="@+id/textviewProductTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textviewProductNumber"
+                android:layout_below="@+id/textviewCurrency"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="20dp"
@@ -100,7 +163,7 @@
                 android:id="@+id/textviewProductDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/receipt_productTitle"
+                android:layout_below="@+id/textviewProductNumber"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginStart="20dp"
@@ -211,36 +274,12 @@
                 android:inputType="number"
                 android:hint=" e.g: 2"/>
 
-            <TextView
-                android:id="@+id/textviewProductPayment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/receipt_productQuantity"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
-                android:text="Payment Method:"
-                android:textColor="@color/Black"
-                android:textSize="17sp" />
-
-            <Spinner
-                android:id="@+id/spinnerReceiptPayment"
-                android:layout_width="93dp"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textviewProductPayment"
-                android:layout_marginStart="17dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="0dp"
-                android:layout_toEndOf="@+id/textviewProductPayment"
-                android:layout_toRightOf="@+id/textviewProductPayment" />
 
             <Button
                 android:id="@+id/receipt_endOfReceipt"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/spinnerReceiptPayment"
+                android:layout_alignTop="@+id/textviewProductQuantity"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="100dp"

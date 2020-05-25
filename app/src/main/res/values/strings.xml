@@ -50,7 +50,7 @@
     <string name="toastErrorVolley">Server error! Please try again later!</string>
     <string name="toastErrorRequestInput">Bad request! Reason : </string>
     <string name="toastSuccessCreateInstitution">Success Create Institution</string>
-    <string name="toastFillAllFields">Fill al the fields</string>
+    <string name="toastFillAllFields">Fill all the fields</string>
     <string name="hintInstitutionCIF">Institution\'s CIF</string>
     <string name="toastBadCIF">CIF must start with \"RO\" and end with \"C\"</string>
     <string name="switchOn">On</string>

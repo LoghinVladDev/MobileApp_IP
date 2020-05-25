@@ -57,6 +57,7 @@ public class CreateDocumentActivity extends AppCompatActivity {
     private Receipt newReceipt;
 
     // TODO : paymentMethods
+    // TODO : spinner receipt/invoice + visibility on fields
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

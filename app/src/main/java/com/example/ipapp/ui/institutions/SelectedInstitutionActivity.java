@@ -3,14 +3,14 @@ package com.example.ipapp.ui.institutions;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Spinner;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,12 +43,14 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MembersAdapter adapter;
     private String institutionName;
+    public Button btnAddNewMember, btnRemoveMember;
 
     private RequestQueue requestQueue;
 
     private static final String LOG_TAG = "SELECTED_INSTITUTION";
 
     private Institution institution;
+    private Member member;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -79,6 +81,9 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
     }
 
     private void initialiseRecyclerViewMembers() {
+        btnAddNewMember = findViewById(R.id.buttonAddNewMember);
+        btnRemoveMember = findViewById(R.id.buttonRemoveMember);
+
         recyclerView = findViewById(R.id.recyclerViewMembers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -88,6 +93,71 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.addItemDecoration(new MotoItemDecoration(20));
+
+
+        for(Member m : institution.getMemberList()) {
+            if (m.getUsername().equals(UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
+                member = m;
+            }
+        }
+        if (! member.getRole().isAllowed(Role.CAN_ADD_MEMBERS)) {
+            btnAddNewMember.setVisibility(View.GONE);
+        } else {
+            btnAddNewMember.setOnClickListener(v -> {onClickAddNewMember();});
+        }
+
+        if (! member.getRole().isAllowed(Role.CAN_REMOVE_MEMBERS)) {
+            btnRemoveMember.setVisibility(View.GONE);
+        } else {
+            btnRemoveMember.setOnClickListener(v -> {onClickRemoveMember();});
+        }
+
+    }
+
+    private void onClickRemoveMember() {
+        Intent goToRemoveMemberActivity = new Intent(getApplicationContext(), RemoveMemberActivity.class);
+
+        JSONObject param = new JSONObject();
+        StringBuilder result = new StringBuilder();
+
+        try {
+            param.put("ID", institution.getID());
+            param.put("name", institution.getName());
+
+            for (Member m : institution.getMemberList()) {
+                result.append(m.getUsername()).append(",");
+            }
+
+            param.put("members", result.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        goToRemoveMemberActivity.putExtra(INTENT_KEY_INSTITUTION_JSON, param.toString());
+
+        startActivity(goToRemoveMemberActivity);
+    }
+
+    private void onClickAddNewMember() {
+        Intent goToAddMemberActivity = new Intent(getApplicationContext(), AddMemberActivity.class);
+
+        JSONObject param = new JSONObject();
+        StringBuilder result = new StringBuilder();
+
+        try {
+            param.put("ID", institution.getID());
+            param.put("name", institution.getName());
+            for(Role r : institution.getRoleList()) {
+                result.append(r.getName()).append(",");
+            }
+            param.put("roles", result.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        goToAddMemberActivity.putExtra(INTENT_KEY_INSTITUTION_JSON, param.toString());
+
+        startActivity(goToAddMemberActivity);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

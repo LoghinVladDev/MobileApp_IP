@@ -111,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     private void addBottomDots(LinearLayout layout_dots, int size, int current) {
 
         ImageView[] dots = new ImageView[size];

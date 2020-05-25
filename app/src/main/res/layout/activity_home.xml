@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_fab_add"
+        android:backgroundTint="@color/Black"
+        app:borderWidth="0dp"
         android:visibility="visible"
         android:layout_margin="@dimen/marginFloatingActionButton"
         app:elevation="20dp"

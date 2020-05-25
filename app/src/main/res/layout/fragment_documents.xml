@@ -35,6 +35,8 @@
             android:layout_height="wrap_content"
             android:text="@string/textViewShow"
             android:textColor="@color/White"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             style="@android:style/TextAppearance.DeviceDefault.Large" />
         <Spinner
             android:id="@+id/documentSpinner"

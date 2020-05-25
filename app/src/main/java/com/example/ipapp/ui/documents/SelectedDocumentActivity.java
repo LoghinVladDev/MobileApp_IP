@@ -263,7 +263,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
                 {
                     castedInvoice.addItem(new Item()
                             .setID(currentItemDetailsJSON.getInt("ID"))
-                            .setProductNumber(currentItemDetailsJSON.getInt("productNumber"))
+                            .setProductNumber(currentItemDetailsJSON.getString("productNumber"))
                             .setName(currentItemDetailsJSON.getString("description"))
                             .setValue(currentItemDetailsJSON.getDouble("unitPrice"))
                             .setTax(currentItemDetailsJSON.getDouble("itemTax"))
@@ -274,7 +274,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
                 {
                     castedReceipt.addItem(new Item()
                                 .setID(currentItemDetailsJSON.getInt("ID"))
-                                .setProductNumber(currentItemDetailsJSON.getInt("productNumber"))
+                                .setProductNumber(currentItemDetailsJSON.getString("productNumber"))
                                 .setName(currentItemDetailsJSON.getString("description"))
                                 .setValue(currentItemDetailsJSON.getDouble("unitPrice"))
                                 .setTax(currentItemDetailsJSON.getDouble("itemTax"))

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.institutions.InstitutionsFragment">
 
-    <!-- TODO [DESIGN] RECYCLER VIEW HERE (WITH FAKE DATA AT FIRST) -->
     <!-- (WHERE ALL INSTITUTIONS OF THE LOGGED MEMBER WILL BE SHOWN) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvInstitutions"
