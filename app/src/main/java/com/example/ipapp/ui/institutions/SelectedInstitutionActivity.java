@@ -392,7 +392,18 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
         Log.e(LOG_TAG, "MEMEBER NO BRO : " + this.institution.getMemberList().size());
 
+        this.populateStaticInstitutionList();
+
         initialiseRecyclerViewMembers();
+    }
+
+    private void populateStaticInstitutionList(){
+        for(Institution i : InstitutionsFragment.getInstitutions()){
+            if(i.getName().equals(this.institution.getName())){
+                InstitutionsFragment.getInstitutions().remove(i);
+                InstitutionsFragment.getInstitutions().add(this.institution);
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

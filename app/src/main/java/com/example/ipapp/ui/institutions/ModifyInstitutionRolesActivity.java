@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
@@ -20,6 +21,8 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
 
     private String institutionName;
 
+    private static String LOG_TAG = "MODIFY_INSTITUTION_ROLES_ACTIVITY";
+
     private List<Role> roles;
     private Institution institution;
 
@@ -34,10 +37,18 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
             if(i.getName().equals(this.institutionName))
                 this.institution = i;
 
+        this.roles = this.institution.getRoleList();
+
+        InstitutionsFragment.debugInstitutionList();
+
+        Log.d(LOG_TAG, "Roles : " + roles.toString());
+
         initialiseUI(this.institution.getRoleList());
     }
 
     private void initialiseUI(List<Role> roles) {
+
+        Log.d(LOG_TAG, "Roles : " + roles.toString());
 
         this.recyclerViewRoles = findViewById(R.id.recyclerViewRoles);
         this.recyclerViewRoles.setLayoutManager(new LinearLayoutManager(this));

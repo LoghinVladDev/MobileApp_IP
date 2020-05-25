@@ -54,6 +54,17 @@ public class InstitutionsFragment extends Fragment {
         return institutionsInstance;
     }
 
+    public static void debugInstitutionList(){
+        if(institutionsInstance == null){
+            Log.e(CLASS_TAG, "Institution List is NULL");
+            return;
+        }
+
+        for(Institution i : institutionsInstance){
+            Log.d(CLASS_TAG, "Institution in list : " + i.debugToString());
+        }
+    }
+
     private List<Institution> institutions;
 
     private static List<Institution> bundleInstitutionList;
