@@ -63,6 +63,11 @@ public class RemoveMemberActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        for (int i = 0, length = institutionMembers.length; i < length; i++) {
+            if (institutionMembers[i].equals(UtilsSharedPreferences.getString(getApplicationContext(),UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
+                institutionMembers[i] = "";
+            }
+        }
         this.initialiseUI();
 
     }
