@@ -17,6 +17,7 @@ import java.util.List;
 
 public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.ViewHolder>
 {
+
     private final View.OnClickListener listRowOnClickListener;
     private List<Document> mData;
     private LayoutInflater mInflater;

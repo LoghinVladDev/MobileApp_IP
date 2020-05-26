@@ -40,6 +40,7 @@ import com.example.ipapp.ui.institutions.CreateInstitutionActivity;
 import com.example.ipapp.ui.institutions.InstitutionsFragment;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -156,6 +157,16 @@ public class DocumentsFragment extends Fragment {
     private void initialiseRecyclerViewDocuments(View root) {
         recyclerView = root.findViewById(R.id.recyclerViewDocuments);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
+        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY > oldScrollY){
+                    ((HomeActivity)getActivity()).getNavView().setVisibility(View.GONE);
+                } else {
+                    ((HomeActivity)getActivity()).getNavView().setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         adapter = new DocumentsAdapter(root.getContext(), this.documents, v -> {
             TextView textView = v.findViewById(R.id.documentRow);
@@ -180,6 +191,8 @@ public class DocumentsFragment extends Fragment {
                     param.put("DocumentType", document.getType());
                     param.put("SenderInstitution", document.getSenderInstitutionID());
                     param.put("DocumentID", document.getID());
+
+                    ((HomeActivity)getActivity()).getNavView().setVisibility(View.VISIBLE);
 
                     goToSelectedDocument.putExtra(INTENT_KEY_DOCUMENT_JSON, param.toString());
                 } else {

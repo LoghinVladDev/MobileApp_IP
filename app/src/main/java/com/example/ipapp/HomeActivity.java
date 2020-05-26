@@ -15,6 +15,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
 
+    private BottomNavigationView navView;
+
+    public BottomNavigationView getNavView() {
+        return navView;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initialiseBottomNavigation() {
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         /*

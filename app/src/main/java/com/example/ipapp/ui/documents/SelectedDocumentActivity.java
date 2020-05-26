@@ -309,6 +309,9 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @deprecated
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestDeleteDocument() {
         Map<String, String> requestParams = new HashMap<>();
