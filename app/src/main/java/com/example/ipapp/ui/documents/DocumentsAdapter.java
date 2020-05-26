@@ -69,7 +69,6 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.View
             return 0;
     }
 
-
     // stores and recycles views as they are scrolled off screen
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {

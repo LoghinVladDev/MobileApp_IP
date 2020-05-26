@@ -318,6 +318,7 @@ public class DocumentsFragment extends Fragment {
         this.requestQueue.add(getRequest);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void callbackGetUserSentDocuments(String JSONEncodedResponse) {
         this.callbackGetDocuments(JSONEncodedResponse);
     }

@@ -304,7 +304,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
     }
 
     private void checkForUnsentDoc(Document document){
-        if(document.isSent()){
+        if(!document.isSent()){
             // TODO : floating button / button ?? show for goto send activity
         }
     }
