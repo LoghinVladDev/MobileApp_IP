@@ -34,130 +34,160 @@
             android:text="@string/buttonSaveRoleChanges"
             android:textColor="@color/White"
             tools:ignore="ButtonStyle"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="50dp"/>
     </LinearLayout>
 
     <Switch
         android:id="@+id/switchCanModifyInstitution"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:layout_marginTop="10dp"
         android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanModifyInstitution" />
 
     <Switch
         android:id="@+id/switchCanDeleteInstitution"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:switchPadding="200dp"
+        android:switchPadding="205dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanDeleteInstitution" />
 
     <Switch
         android:id="@+id/switchCanAddMembers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:switchPadding="216dp"
+        android:switchPadding="220dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanAddMembers" />
 
     <Switch
         android:id="@+id/switchCanRemoveMembers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:switchPadding="216dp"
+        android:switchPadding="190dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanRemoveMembers" />
 
     <Switch
         android:id="@+id/switchCanUploadMembers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanUploadMembers" />
 
     <Switch
         android:id="@+id/switchCanPreviewUploadedDocuments"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="165dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanPreviewUploadedDocuments" />
 
     <Switch
         android:id="@+id/switchCanRemoveUploadedDocuments"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="165dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanRemoveUploadedDocuments" />
 
     <Switch
         android:id="@+id/switchCanSendDocuments"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanSendDocuments" />
 
     <Switch
         android:id="@+id/switchCanPreviewReceivedDocuments"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="170dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanPreviewDocuments" />
 
     <Switch
         android:id="@+id/switchCanPreviewSpecificReceivedDocument"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="150dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanPreviewSpecificReceivedDocument" />
 
     <Switch
         android:id="@+id/switchCanRemoveReceivedDocument"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="165dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanRemoveReceivedDocument" />
 
     <Switch
         android:id="@+id/switchCanDownloadDocuments"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="165dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanDownloadDocuments" />
 
     <Switch
         android:id="@+id/switchCanAddRoles"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanAddRoles" />
 
     <Switch
         android:id="@+id/switchCanRemoveRoles"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanRemoveRoles" />
 
     <Switch
         android:id="@+id/switchCanModifyRoles"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanModifyRoles" />
 
     <Switch
         android:id="@+id/switchCanAssignRoles"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchMinWidth="50dp"
+        android:switchPadding="200dp"
         android:text="@string/switchCanAssignRoles" />
 
     <Switch
         android:id="@+id/switchCanDeassignRoles"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:switchPadding="200dp"
+        android:switchMinWidth="50dp"
         android:text="@string/switchCanDeassignRoles" />
 </LinearLayout>
