@@ -33,7 +33,9 @@ public class ModifyInstitutionRolesActivity extends AppCompatActivity {
 
         this.institutionName = getIntent().getStringExtra("KEY_INSTITUTION_NAME");
 
-        for(Institution i : InstitutionsFragment.getInstitutions())
+        InstitutionsFragment.debugInstitutionList();
+        Log.d(LOG_TAG, "INST NAME : " + institutionName);
+        for (Institution i : InstitutionsFragment.getInstitutions())
             if(i.getName().equals(this.institutionName))
                 this.institution = i;
 

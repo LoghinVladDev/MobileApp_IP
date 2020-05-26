@@ -15,25 +15,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity android:name=".DeleteRoleActivity"></activity>
-        <activity android:name=".AddNewRoleActivity" />
+        <activity android:name=".ui.institutions.AddNewRoleActivity" />
         <activity android:name=".ui.institutions.CreateInstitutionActivity" />
         <activity android:name=".ui.institutions.SelectedInstitutionActivity" />
         <activity android:name=".ui.documents.SelectedDocumentActivity" />
         <activity android:name=".ui.documents.CreateDocumentActivity" />
         <activity android:name=".ui.institutions.AddMemberActivity" />
         <activity android:name=".ui.institutions.RemoveMemberActivity" />
-        <activity
-            android:name=".ui.account.LoginActivity"
-            android:label="@string/title_activity_home">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity android:name=".ui.account.ModifyAccountActivity" />
         <activity android:name=".ui.institutions.ModifyInstitutionRolesActivity" />
         <activity android:name=".ui.account.RegisterActivity" />
+        <activity
+            android:name=".ui.account.LoginActivity"
+            android:label="@string/title_activity_home">
+        </activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -42,8 +42,6 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
     private static String LOG_TAG = "MODIFY_ROLES_ADAPTER";
 
     ModifyRolesAdapter(Context context, List<Role> mData, Institution institution) {
-        // TODO FINISH THIS
-
         this.requestQueue = Volley.newRequestQueue(context);
 
         this.institution = institution;
@@ -55,7 +53,7 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.rv_institution_row, parent, false);
+        View view = mInflater.inflate(R.layout.rv_role_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -63,7 +61,12 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TODO FINISH THIS
         Role role = mData.get(position);
-        holder.textViewRoleName.setText(role.toString());
+        Log.v(LOG_TAG, "Role: " + role + "Position: " + position);
+        Log.v(LOG_TAG, "Holder " + holder.toString());
+        Log.v(LOG_TAG, holder.textViewRoleName == null ? "TEXTVIEW NULL" : "TEXTVIEW OK");
+        holder.textViewRoleName.setText(role.toViewString());
+        holder.buttonSaveRoleChanges.setOnClickListener(e -> holder.onClickModifyRole());
+        holder.buttonDeleteRole.setOnClickListener(holder::onClickDeleteRole);
     }
 
     @Override
@@ -129,18 +132,13 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
             switchCanModifyRoles = itemView.findViewById(R.id.switchCanModifyRoles);
             //</editor-fold>
 
-
-            this.buttonSaveRoleChanges.setOnClickListener(e -> this.onClickModifyRole());
-            this.buttonDeleteRole.setOnClickListener(v -> {
-                this.onClickDeleteRole(v);
-            });
         }
 
         private void onClickDeleteRole(View v) {
             Intent goToDeleteRole = new Intent(itemView.getContext(), DeleteRoleActivity.class);
             goToDeleteRole.putExtra("KEY_INSTITUTION_NAME", getInstitutionName());
             goToDeleteRole.putExtra("KEY_ROLE_NAME", textViewRoleName.getText().toString());
-            context.startActivity(goToDeleteRole);
+            itemView.getContext().startActivity(goToDeleteRole);
         }
 
         private void onClickModifyRole(){

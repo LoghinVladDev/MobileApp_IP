@@ -191,7 +191,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
     private void onClickModifyRole() {
         Intent goToModifyRoleActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
-
+        goToModifyRoleActivity.putExtra("KEY_INSTITUTION_NAME", institution.getName());
         JSONObject param = new JSONObject();
         try {
             param.put("ID", institution.getID());
