@@ -21,8 +21,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/layoutSpinner"
+        android:background="@color/Red"
+        style="@style/DocumentFragment"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
@@ -40,17 +42,19 @@
         <Spinner
             android:id="@+id/documentSpinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDocuments"
-        android:background="@color/Red"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/Red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutSpinner"
-        />
+        app:layout_constraintVertical_bias="0.195" />
 </androidx.constraintlayout.widget.ConstraintLayout>

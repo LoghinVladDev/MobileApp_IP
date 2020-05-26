@@ -9,7 +9,8 @@
     <TextView
         android:id="@+id/textViewRoleName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/Black"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,17 +19,22 @@
 
         <Button
             android:id="@+id/buttonDeleteCurrentRole"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_button_background_black"
+            android:textColor="@color/White"
             android:text="@string/buttonDeleteCurrentRole"
             tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/buttonSaveRoleChanges"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_button_background_black"
             android:text="@string/buttonSaveRoleChanges"
-            tools:ignore="ButtonStyle" />
+            android:textColor="@color/White"
+            tools:ignore="ButtonStyle"
+            android:layout_marginLeft="30dp"/>
     </LinearLayout>
 
     <Switch
@@ -36,6 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:layout_marginTop="10dp"
+        android:switchPadding="200dp"
         android:text="@string/switchCanModifyInstitution" />
 
     <Switch
@@ -43,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="200dp"
         android:text="@string/switchCanDeleteInstitution" />
 
     <Switch
@@ -50,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="216dp"
         android:text="@string/switchCanAddMembers" />
 
     <Switch
@@ -57,6 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
+        android:switchPadding="216dp"
         android:text="@string/switchCanRemoveMembers" />
 
     <Switch

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/Red"
+    tools:context=".ui.institutions.SendDocumentActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/milkyWhite">
+
+        <TextView
+            android:id="@+id/textViewInstitutionReceiverName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name of the receiving institution"
+            android:textColor="@color/Black"
+            android:textSize="14sp"
+            android:layout_marginTop="40dp"
+            android:gravity="center" />
+
+        <Spinner
+            android:id="@+id/spinnerInstitutionReceiverName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/textViewInstitutionReceiverName"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="50dp" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSelectInstitutionAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinnerInstitutionReceiverName"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textViewInstitutionReceiverID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinnerInstitutionReceiverName"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Select institution address"
+                android:textColor="@color/Black"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/spinnerInstitutionReceiverID"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textViewInstitutionReceiverID"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="50dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSelectUserReceiver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayoutSelectInstitutionAddress"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textViewUserReceiver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(Optional) Select user receiver"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                android:layout_below="@+id/spinnerInstitutionReceiverID"
+                android:layout_marginTop="10dp"
+                android:gravity="center"/>
+
+            <Spinner
+                android:id="@+id/spinnerUserReceiver"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textViewUserReceiver"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="50dp" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/buttonSendDocument"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@+id/linearLayoutSelectUserReceiver"
+            android:background="@drawable/ic_button_background_red"
+            android:text="Send document"
+            android:textColor="@color/White"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

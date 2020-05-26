@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DocumentFragment" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/Red</item>
+    </style>
+
     <style name="CustomPopup" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset">-4dp</item>

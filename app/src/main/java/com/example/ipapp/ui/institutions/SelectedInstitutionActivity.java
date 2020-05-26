@@ -145,10 +145,6 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             item.setVisible(true);
         }
 
-        if (member.getRole().isAllowed(Role.CAN_DELETE_INSTITUTION)) {
-            item = menu.findItem(R.id.toolbar_deleteRole);
-            item.setVisible(true);
-        }
 
 
         return true;
@@ -176,18 +172,12 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
             case R.id.toolbar_modifyRole:
                 onClickModifyRole();
                 break;
-            case R.id.toolbar_deleteRole:
-                onClickDeleteRole();
-                break;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void onClickDeleteRole() {
-        // TODO add delete role activity
-    }
 
     private void onClickModifyRole() {
         Intent goToModifyRoleActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
@@ -242,7 +232,7 @@ public class SelectedInstitutionActivity extends AppCompatActivity {
 
 
     private void onclickModifyInstitution() {
-        Intent goToModifyInstitutionActivity = new Intent(getApplicationContext(), ModifyInstitutionRolesActivity.class);
+        Intent goToModifyInstitutionActivity = new Intent(getApplicationContext(), ModifyInstitutionActivity.class);
 
         // TODO add modify institution activity
 

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -95,7 +96,8 @@ public class DocumentsFragment extends Fragment {
         this.initialiseRecyclerViewDocuments(root);
 
         //Toast.makeText(getContext(), String.valueOf(adapter.getItemCount()), Toast.LENGTH_SHORT).show();
-        Toolbar actionBar = getActivity().findViewById(R.id.layoutSpinner); // TODO : investigate
+        Toolbar actionBar = root.findViewById(R.id.layoutSpinner); // TODO : investigate
+        ((AppCompatActivity) getActivity()).setSupportActionBar(actionBar);
 
         Spinner spinnerSortDocuments = root.findViewById(R.id.documentSpinner);
 

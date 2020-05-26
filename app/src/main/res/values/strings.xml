@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mobile App</string>
+    <string name="app_name"></string>
 
     <string name="hintPassword">Enter password here</string>
     <string name="hintEmail">Enter email here</string>
@@ -112,7 +112,7 @@
     <string name="buttonAddNewRole">Add new role</string>
     <string name="toastNewRoleName">Role name can not be empty</string>
     <string name="hintDeleteInstitutionName">Name of the institution you want to delete</string>
-    <string name="hintDeleteRoleName">Name of the  role you want to delete</string>
+    <string name="hintDeleteRoleName">Role you want to delete</string>
     <string name="buttonDeleteRole">Delete Role</string>
     <string name="buttonDeleteCurrentRole">DELETE</string>
     <string name="buttonSaveRoleChanges">SAVE</string>

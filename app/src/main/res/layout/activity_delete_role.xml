@@ -4,20 +4,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DeleteRoleActivity">
+    tools:context=".DeleteRoleActivity"
+    android:background="@color/Red">
 
-    <EditText
-        android:id="@+id/editTextDeleteRoleName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:hint="@string/hintDeleteRoleName"
-        android:importantForAutofill="no"
-        android:inputType="text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@color/Black">
 
-    <Button
-        android:id="@+id/buttonDeleteRole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/buttonDeleteRole" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter the role you want to delete"
+            android:textColor="@color/White"
+            android:gravity="center"
+            android:layout_marginTop="40dp" />
+
+        <EditText
+            android:id="@+id/editTextDeleteRoleName"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:gravity="center_horizontal"
+            android:hint="@string/hintDeleteRoleName"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_edittext_background_white"/>
+
+        <Button
+            android:id="@+id/buttonDeleteRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/buttonDeleteRole"
+            android:textColor="@color/White"
+            android:background="@drawable/ic_button_background_red"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"/>
+
+    </LinearLayout>
+
 </LinearLayout>
