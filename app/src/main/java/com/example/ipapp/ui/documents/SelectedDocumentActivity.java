@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
     private ItemsAdapter adapter;
     private List<Item> itemsList;
+    private Button btnSendDocument;
 
     private double subTotalPrice;
     private double totalPrice;
@@ -68,6 +71,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selected_document);
 
         this.httpRequestQueue = Volley.newRequestQueue(this);
+        btnSendDocument = findViewById(R.id.buttonDocumentSend);
 
         subTotalPrice = 0;
         totalPrice = 0;
@@ -305,7 +309,8 @@ public class SelectedDocumentActivity extends AppCompatActivity {
 
     private void checkForUnsentDoc(Document document){
         if(!document.isSent()){
-            // TODO : floating button / button ?? show for goto send activity
+            btnSendDocument.setVisibility(View.VISIBLE);
+            //TODO continue
         }
     }
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/Red"
-    tools:context=".ui.institutions.SendDocumentActivity">
+    tools:context=".ui.documents.SendDocumentActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

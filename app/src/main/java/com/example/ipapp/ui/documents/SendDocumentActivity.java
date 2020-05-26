@@ -1,4 +1,4 @@
-package com.example.ipapp.ui.institutions;
+package com.example.ipapp.ui.documents;
 
 import android.os.Build;
 import android.os.Bundle;

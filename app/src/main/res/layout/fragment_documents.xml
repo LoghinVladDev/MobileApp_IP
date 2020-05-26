@@ -23,27 +23,30 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/layoutSpinner"
-        android:background="@color/Red"
         style="@style/DocumentFragment"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@color/Red"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
         <TextView
+            style="@android:style/TextAppearance.DeviceDefault.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/textViewShow"
-            android:textColor="@color/White"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            style="@android:style/TextAppearance.DeviceDefault.Large" />
+            android:text="@string/textViewShow"
+            android:textColor="@color/White" />
+
         <Spinner
             android:id="@+id/documentSpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginStart="20dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
