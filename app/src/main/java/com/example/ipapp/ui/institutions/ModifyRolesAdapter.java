@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ipapp.DeleteRoleActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Institution;
+import com.example.ipapp.object.institution.Member;
 import com.example.ipapp.object.institution.Role;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
@@ -66,7 +68,31 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
         Log.v(LOG_TAG, holder.textViewRoleName == null ? "TEXTVIEW NULL" : "TEXTVIEW OK");
         holder.textViewRoleName.setText(role.toViewString());
         holder.buttonSaveRoleChanges.setOnClickListener(e -> holder.onClickModifyRole());
-        holder.buttonDeleteRole.setOnClickListener(holder::onClickDeleteRole);
+        holder.buttonDeleteRole.setOnClickListener(e->this.onClickDeleteRole(holder.textViewRoleName.getText().toString()));
+
+        for(Role r : mData){
+            //Log.d(LOG_TAG,"ROLE CHECK : " + r.getName() + ", look for : " + textViewRoleName.getText().toString());
+            if(r.getName().equals(holder.textViewRoleName.getText().toString())){
+                holder.switchCanModifyInstitution.setChecked(r.isAllowed(Role.CAN_MODIFY_INSTITUTION));
+                holder.switchCanDeassignRoles.setChecked(r.isAllowed(Role.CAN_DE_ASSIGN_ROLES));
+                holder.switchCanAddMembers.setChecked(r.isAllowed(Role.CAN_ADD_MEMBERS));
+                holder.switchCanDeleteInstitution.setChecked(r.isAllowed(Role.CAN_DELETE_INSTITUTION));
+                holder.switchCanAssignRoles.setChecked(r.isAllowed(Role.CAN_ASSIGN_ROLES));
+                holder.switchCanRemoveMembers.setChecked(r.isAllowed(Role.CAN_REMOVE_MEMBERS));
+                holder.switchCanUploadMembers.setChecked(r.isAllowed(Role.CAN_UPLOAD_DOCUMENTS));
+                holder.switchCanPreviewUploadedDocuments.setChecked(r.isAllowed(Role.CAN_PREVIEW_UPLOADED_DOCUMENTS));
+                holder.switchCanRemoveUploadedDocuments.setChecked(r.isAllowed(Role.CAN_REMOVE_UPLOADED_DOCUMENT));
+                holder.switchCanSendDocuments.setChecked(r.isAllowed(Role.CAN_SEND_DOCUMENTS));
+                holder.switchCanPreviewReceivedDocuments.setChecked(r.isAllowed(Role.CAN_PREVIEW_RECEIVED_DOCUMENTS));
+                holder.switchCanPreviewSpecificReceivedDocument.setChecked(r.isAllowed(Role.CAN_PREVIEW_SPECIFIC_RECEIVED_DOCUMENT));
+                holder.switchCanRemoveReceivedDocument.setChecked(r.isAllowed(Role.CAN_REMOVE_RECEIVED_DOCUMENT));
+                holder.switchCanDownloadDocuments.setChecked(r.isAllowed(Role.CAN_DOWNLOAD_DOCUMENTS));
+                holder.switchCanAddRoles.setChecked(r.isAllowed(Role.CAN_ADD_ROLES));
+                holder.switchCanRemoveRoles.setChecked(r.isAllowed(Role.CAN_REMOVE_ROLES));
+                holder.switchCanModifyRoles.setChecked(r.isAllowed(Role.CAN_MODIFY_ROLES));
+                break;
+            }
+        }
     }
 
     @Override
@@ -132,6 +158,8 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
             switchCanModifyRoles = itemView.findViewById(R.id.switchCanModifyRoles);
             //</editor-fold>
 
+
+
         }
 
         private void onClickDeleteRole(View v) {
@@ -165,12 +193,70 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
                     .setRight(Role.CAN_DE_ASSIGN_ROLES, this.switchCanDeassignRoles.isChecked());
 
             try {
+
+//                Log.d(LOG_TAG, "test : " + roleName + ", " + newRole.toString());
+
                 finishModifyRole(roleName, newRole);
             } catch (JSONException exception){
                 Log.d(LOG_TAG, "HOPA : " + exception.toString());
             }
         }
 
+    }
+
+    private boolean isRoleAssigned(String roleName){
+        for(Member m : this.institution.getMemberList())
+            if(m.getRole().getName().equals(roleName))
+                return true;
+
+        return false;
+    }
+
+    private void onClickDeleteRole(String roleName){
+        Log.d(LOG_TAG, "WANT TO DELETE : " + roleName);
+
+        if(this.isRoleAssigned(roleName)) {
+            Toast.makeText(context, "Cannot delete this role,there are members assigned with this role", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, String> params = new HashMap<>();
+
+        params.put("email", UtilsSharedPreferences.getString(this.context, UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        params.put("hashedPassword", UtilsSharedPreferences.getString(this.context, UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
+        params.put("institutionName", this.institution.getName());
+        params.put("roleName", roleName);
+
+        this.makeHTTPRequestDeleteRole(params);
+    }
+
+    private void makeHTTPRequestDeleteRole(Map<String ,String> params){
+        StringRequest request = new StringRequest(
+            Request.Method.POST,
+            ApiUrls.INSTITUTION_ROLE_DELETE,
+            response -> {
+                Log.d(LOG_TAG, "DELETE ROLE : " + response);
+                if(response.contains("SUCCESS")){
+                    Toast.makeText(context, "Role Deletion Success", Toast.LENGTH_SHORT).show();
+                    for(Role r : this.mData){
+                        if(r.getName().equals(params.get("roleName"))) {
+                            this.mData.remove(r);
+                            this.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            },
+            error -> {
+                Log.e(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+            }
+        ) {
+            @Override
+            protected Map<String, String> getParams(){
+                return params;
+            }
+        };
+        this.requestQueue.add(request);
     }
 
     private String getInstitutionName() {
@@ -192,11 +278,14 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
         params.put("newRoleName", newRole.getName() == null ? oldRoleName : (newRole.getName().isEmpty() ? oldRoleName : newRole.getName()));
         params.put("newRoleRights", newRole.getRightsDictionaryJSON().toString());
 
+        Log.d(LOG_TAG, "Debug before save role : " + params.toString());
+
         this.makeHTTPRequestModifyRole(params);
     }
 
     private void callbackRoleModify(){
         Log.d(LOG_TAG, "ROLE MODIFY SUCCESS");
+        Toast.makeText(this.context, "Role Update Success!", Toast.LENGTH_SHORT).show();
     }
 
     private void makeHTTPRequestModifyRole(Map<String, String> params){
