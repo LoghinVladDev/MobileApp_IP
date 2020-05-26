@@ -47,6 +47,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
     private final static String LOG_TAG = "SELECTED DOC ACTIVITY";
 
     public static final String INTENT_SEND_KEY = "SENDER_INSTITUTION_KEY";
+    public static final String INTENT_SEND_DOC_ID_KEY = "DOCUMENT_ID";
 
     private static final String INTENT_KEY_DOCUMENT_JSON = "document";
     private RequestQueue httpRequestQueue;
@@ -316,6 +317,7 @@ public class SelectedDocumentActivity extends AppCompatActivity {
             btnSendDocument.setOnClickListener(e-> {
                 Intent goToSendDocumentIntent = new Intent(this, SendDocumentActivity.class);
                 goToSendDocumentIntent.putExtra(INTENT_SEND_KEY, this.senderInstitution.getName());
+                goToSendDocumentIntent.putExtra(INTENT_SEND_DOC_ID_KEY, this.documentID);
                 startActivity(goToSendDocumentIntent);
             });
         }

@@ -1,5 +1,6 @@
 package com.example.ipapp.ui.documents;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +19,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ipapp.HomeActivity;
 import com.example.ipapp.R;
 import com.example.ipapp.object.institution.Address;
 import com.example.ipapp.object.institution.Institution;
+import com.example.ipapp.ui.institutions.InstitutionsFragment;
 import com.example.ipapp.utils.ApiUrls;
 import com.example.ipapp.utils.UtilsSharedPreferences;
 
@@ -28,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +51,7 @@ public class SendDocumentActivity extends AppCompatActivity {
     private String institutionName;
     private int selectedInstitutionAddressID;
     private Institution institution;
+    private int documentID;
 
     private List<Institution> institutionList;
     private List<Address> addressesList;
@@ -58,13 +64,66 @@ public class SendDocumentActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
+        institutionName = getIntent().getStringExtra(SelectedDocumentActivity.INTENT_SEND_KEY);
+        this.documentID = getIntent().getIntExtra(SelectedDocumentActivity.INTENT_SEND_DOC_ID_KEY, 0);
+
         spinnerInstitutionReceiverName = findViewById(R.id.spinnerInstitutionReceiverName);
         spinnerInstitutionReceiverAddressID = findViewById(R.id.spinnerInstitutionReceiverID);
         spinnerUserReceiver = findViewById(R.id.spinnerUserReceiver);
         btnSendDocument = findViewById(R.id.buttonSendDocument);
 
+        btnSendDocument.setOnClickListener(e->{
+            this.sendDocument();
+        });
+
 
         getInstitutionReceiverName();
+    }
+
+    private void sendDocument(){
+        Map<String, String> params = new HashMap<>();
+
+        params.put("email", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
+        params.put("hashedPassword", UtilsSharedPreferences.getString(getApplicationContext(), UtilsSharedPreferences.KEY_LOGGED_PASSWORD,""));
+        params.put("senderInstitutionName", this.institutionName);
+        params.put("documentID", Integer.toString(this.documentID));
+
+        int receiverInstitutionID = 0;
+
+        if(selectedInstitutionReceiver == null)
+            return;
+
+        for(Institution i : InstitutionsFragment.getInstitutions()){
+            if(i.getName().equals(selectedInstitutionReceiver))
+                receiverInstitutionID = i.getID();
+        }
+
+        params.put("receiverInstitutionID", Integer.toString(receiverInstitutionID));
+
+        this.makeHTTPRequestSendDocument(params);
+    }
+
+    private void makeHTTPRequestSendDocument(Map<String, String> params){
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                ApiUrls.DOCUMENT_SEND,
+                response -> {
+                    Log.d(LOG_TAG, "SEND RESPONSE : " + response);
+                    if(response.contains("SUCCESS")){
+                        Intent goToHomeActivity = new Intent(this, HomeActivity.class);
+                        startActivity(goToHomeActivity);
+                    }
+                },
+                error -> {
+                    Log.e(LOG_TAG, "VOLLEY ERROR : " + error.toString());
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams(){
+                return params;
+            }
+        };
+        this.requestQueue.add(request);
     }
 
     private void populateInstitutionAddressesSpinner() {
@@ -72,21 +131,28 @@ public class SendDocumentActivity extends AppCompatActivity {
         int index = 0;
 
         for (Address a : addressesList) {
-            addressesArray[index++] = a.toString();
+            addressesArray[index++] = a.getID() + "";
         }
+
+        Log.d(LOG_TAG, "ADDR LIST DEBUG : " + addressesList.toString() + ", addr array : " + Arrays.toString(addressesArray) );
 
         ArrayAdapter spinnerInstitutionAddressesAdapter = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_dropdown_item, addressesArray);
         spinnerInstitutionAddressesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        spinnerInstitutionReceiverAddressID.setAdapter(spinnerInstitutionAddressesAdapter);
+
+//        spinnerInstitutionReceiverAddressID.setVisibility(View.VISIBLE);
+        findViewById(R.id.linearLayoutSelectInstitutionAddress).setVisibility(View.VISIBLE);
+
         spinnerInstitutionReceiverAddressID.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedInstitutionAddressID = Integer.parseInt(addressesArray[i]);
+//                selectedInstitutionAddressID = Integer.parseInt(addressesArray[i]);
+//                getInstitutionAddressID();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
@@ -111,10 +177,22 @@ public class SendDocumentActivity extends AppCompatActivity {
 
             JSONArray jsonArray = returnObject.getJSONArray("Addresses");
 
+            this.addressesList = new ArrayList<>();
+
             for (int i = 0, length = jsonArray.length(); i < length; i++) {
                 JSONObject currentInstitutionJSON = jsonArray.getJSONObject(i);
 
-                addressesList.add(new Address().setID(currentInstitutionJSON.getInt("ID")));
+                addressesList.add(
+                        new Address()
+                                .setID(currentInstitutionJSON.getInt("ID"))
+                                .setCountry(currentInstitutionJSON.getString("Country"))
+                                .setRegion(currentInstitutionJSON.getString("Region"))
+                                .setCity(currentInstitutionJSON.getString("City"))
+                                .setStreet(currentInstitutionJSON.getString("Street"))
+                                .setNumber(currentInstitutionJSON.getInt("Number"))
+                                .setBuilding(currentInstitutionJSON.getString("Building"))
+                                .setFloor(currentInstitutionJSON.getInt("Floor"))
+                                .setApartment(currentInstitutionJSON.getInt("Apartment")));
             }
 
 
@@ -150,8 +228,12 @@ public class SendDocumentActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 return params;
             }
+
         };
+
+        this.requestQueue.add(getInstitutionAdressesID);
     }
+
 
     private void populateInstitutionReceiverSpinner() {
         String[] institutionReceiverArray = new String[institutionList.size()];
@@ -163,7 +245,6 @@ public class SendDocumentActivity extends AppCompatActivity {
 
         ArrayAdapter spinnerInstitutionReceiverNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, institutionReceiverArray);
         spinnerInstitutionReceiverNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinnerInstitutionReceiverName.setAdapter(spinnerInstitutionReceiverNameAdapter);
         spinnerInstitutionReceiverName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -171,6 +252,7 @@ public class SendDocumentActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedInstitutionReceiver = institutionList.get(i).toString();
 
+                findViewById(R.id.linearLayoutSelectInstitutionAddress).setVisibility(View.VISIBLE);
 
                 getInstitutionAddressID();
             }
@@ -230,10 +312,20 @@ public class SendDocumentActivity extends AppCompatActivity {
 
             JSONArray jsonArray = returnObject.getJSONArray("institutions");
 
+            this.institutionList = new ArrayList<>();
+
             for (int i = 0, length = jsonArray.length(); i < length; i++) {
                 JSONObject currentInstitutionJSON = jsonArray.getJSONObject(i);
 
-                institutionList.add(new Institution().setName(currentInstitutionJSON.getString("name")).setID(currentInstitutionJSON.getInt("ID")));
+                institutionList.add(
+                        new Institution()
+                                .setName(
+                                        currentInstitutionJSON.getString("name")
+                                )
+                                .setID(
+                                        currentInstitutionJSON.getInt("ID")
+                                )
+                );
             }
 
 
