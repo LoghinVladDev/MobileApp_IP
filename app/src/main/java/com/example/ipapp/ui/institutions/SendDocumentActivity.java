@@ -65,25 +65,6 @@ public class SendDocumentActivity extends AppCompatActivity {
 
 
         getInstitutionReceiverName();
-        populateInstitutionReceiverSpinner();
-
-        for(Institution i : institutionList) {
-            if (i.getName().equals(selectedInstitutionReceiver)) {
-                institution = i;
-            }
-        }
-
-        getInstitutionAddressID();
-        populateInstitutionAddressesSpinner();
-        for(Address a : addressesList) {
-            if (a.getID() == selectedInstitutionAddressID) {
-                //
-            }
-        }
-
-
-
-
     }
 
     private void populateInstitutionAddressesSpinner() {
@@ -91,7 +72,7 @@ public class SendDocumentActivity extends AppCompatActivity {
         int index = 0;
 
         for (Address a : addressesList) {
-            addressesArray[index++] = String.valueOf(a.getID());
+            addressesArray[index++] = a.toString();
         }
 
         ArrayAdapter spinnerInstitutionAddressesAdapter = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_dropdown_item, addressesArray);
@@ -116,7 +97,7 @@ public class SendDocumentActivity extends AppCompatActivity {
 
         requestBody.put("email", UtilsSharedPreferences.getString(this, UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestBody.put("hashedPassword", UtilsSharedPreferences.getString(this, UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
-        requestBody.put("institutionName", institutionName);
+        requestBody.put("institutionName", selectedInstitutionReceiver);
 
         makeHTTPRetrieveInstitutionAddressID(requestBody);
 
@@ -135,6 +116,14 @@ public class SendDocumentActivity extends AppCompatActivity {
 
                 addressesList.add(new Address().setID(currentInstitutionJSON.getInt("ID")));
             }
+
+
+            populateInstitutionAddressesSpinner();
+//            for(Address a : addressesList) {
+//                if (a.getID() == selectedInstitutionAddressID) {
+//                    //
+//                }
+//            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -177,10 +166,13 @@ public class SendDocumentActivity extends AppCompatActivity {
 
         spinnerInstitutionReceiverName.setAdapter(spinnerInstitutionReceiverNameAdapter);
         spinnerInstitutionReceiverName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedInstitutionReceiver = institutionList.get(i).toString();
 
+
+                getInstitutionAddressID();
             }
 
             @Override
@@ -197,7 +189,7 @@ public class SendDocumentActivity extends AppCompatActivity {
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("email", UtilsSharedPreferences.getString(this, UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""));
         requestBody.put("hashedPassword", UtilsSharedPreferences.getString(this, UtilsSharedPreferences.KEY_LOGGED_PASSWORD, ""));
-        requestBody.put("institutionsPerPage", String.valueOf(20));
+        requestBody.put("institutionsPerPage", String.valueOf(100));
         requestBody.put("pageNumber", String.valueOf(1));
         requestBody.put("orderByAsc", String.valueOf(1));
 
@@ -229,6 +221,7 @@ public class SendDocumentActivity extends AppCompatActivity {
         requestQueue.add(getRequest);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void callbbackGetInstitutionList(String JSONEncodedString) {
 
         try {
@@ -242,6 +235,17 @@ public class SendDocumentActivity extends AppCompatActivity {
 
                 institutionList.add(new Institution().setName(currentInstitutionJSON.getString("name")).setID(currentInstitutionJSON.getInt("ID")));
             }
+
+
+            populateInstitutionReceiverSpinner();
+//
+//            for(Institution i : institutionList) {
+//                if (i.getName().equals(selectedInstitutionReceiver)) {
+//                    institution = i;
+//                }
+//            }
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();

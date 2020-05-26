@@ -140,6 +140,10 @@ public abstract class Document {
         return this;
     }
 
+    public boolean isSent() {
+        return isSent;
+    }
+
     public Document setToLocation(Address toLocation) {
         this.toLocation = toLocation;
         return this;

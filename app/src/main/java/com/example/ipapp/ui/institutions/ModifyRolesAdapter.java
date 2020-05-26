@@ -304,7 +304,7 @@ public class ModifyRolesAdapter extends RecyclerView.Adapter<ModifyRolesAdapter.
         ){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
+                return params;
             }
         };
         this.requestQueue.add(request);

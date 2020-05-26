@@ -288,10 +288,12 @@ public class SelectedDocumentActivity extends AppCompatActivity {
             if (castedInvoice != null)
             {
                 initialiseRecyclerView(castedInvoice.getItems());
+                this.checkForUnsentDoc(castedInvoice);
             }
             else if (castedReceipt != null)
             {
                 initialiseRecyclerView(castedReceipt.getItems());
+                this.checkForUnsentDoc(castedReceipt);
             }
 
             Log.d(LOG_TAG, "LIST : " + this.itemsList.toString());
@@ -299,6 +301,12 @@ public class SelectedDocumentActivity extends AppCompatActivity {
             Log.e(LOG_TAG, "ERROR : " + e.toString());
         }
 
+    }
+
+    private void checkForUnsentDoc(Document document){
+        if(document.isSent()){
+            // TODO : floating button / button ?? show for goto send activity
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

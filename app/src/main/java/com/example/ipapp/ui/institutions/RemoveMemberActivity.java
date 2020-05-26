@@ -63,11 +63,17 @@ public class RemoveMemberActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        String[] newInstitutionMembers = new String[institutionMembers.length-1];
+        int uselessIndex = 0;
+
         for (int i = 0, length = institutionMembers.length; i < length; i++) {
-            if (institutionMembers[i].equals(UtilsSharedPreferences.getString(getApplicationContext(),UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
-                institutionMembers[i] = "";
+            if (!institutionMembers[i].equals(UtilsSharedPreferences.getString(getApplicationContext(),UtilsSharedPreferences.KEY_LOGGED_EMAIL, ""))) {
+                newInstitutionMembers[uselessIndex++] = institutionMembers[i];
             }
         }
+
+        institutionMembers = newInstitutionMembers;
+
         this.initialiseUI();
 
     }
@@ -103,10 +109,10 @@ public class RemoveMemberActivity extends AppCompatActivity {
         requestBody.put("institutionName", institutionName);
         requestBody.put("memberEmail", selectedMemberToDelete);
 
-        makeHTTPPostDeleteMemberRequesT(requestBody);
+        makeHTTPRequestRemoveMember(requestBody);
     }
 
-    private void makeHTTPPostDeleteMemberRequesT(Map<String, String> params) {
+    private void makeHTTPRequestRemoveMember(Map<String, String> params) {
         StringRequest request = new StringRequest(Request.Method.POST, ApiUrls.INSTITUTION_MEMBER_REMOVE,
                 response -> {
                     Log.d(LOG_TAG, "RESPONSE REMOVE MEMBER: " + response);
