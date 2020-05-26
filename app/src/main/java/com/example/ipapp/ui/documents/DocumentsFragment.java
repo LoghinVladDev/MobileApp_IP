@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ipapp.HomeActivity;
 import com.example.ipapp.ui.account.LoginActivity;
 import com.example.ipapp.R;
@@ -89,7 +90,9 @@ public class DocumentsFragment extends Fragment {
         this.documents = getDocuments();
         this.institutionsList = new ArrayList<>();
 
-        this.requestQueue = LoginActivity.getRequestQueue();
+//        this.requestQueue = LoginActivity.getRequestQueue();
+
+        this.requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         View root = inflater.inflate(R.layout.fragment_documents, container, false);
 
@@ -203,6 +206,7 @@ public class DocumentsFragment extends Fragment {
         this.makeHTTPGetUserCreatedDocuments(requestParams);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void callbackGetDocuments(String JSONEncodedResponse) {
         this.documents.clear();
         Log.d(LOG_TAG, "DOCS ARRAY : " + JSONEncodedResponse);
@@ -238,7 +242,10 @@ public class DocumentsFragment extends Fragment {
                     );
                 }
             }
-            Log.d(LOG_TAG, "LIST : " + this.documents.toString());
+
+            this.documents.forEach(e->Log.d(LOG_TAG, "DOCUMENT FROM LIST : " + e.toString()));
+
+            //Log.d(LOG_TAG, "LIST : " + this.documents.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, "ERROR : " + e.toString());
         }
@@ -271,6 +278,7 @@ public class DocumentsFragment extends Fragment {
         this.requestQueue.add(getRequest);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void callbackGetUserCreatedDocuments(String JSONEncodedResponse) {
 
         this.callbackGetDocuments(JSONEncodedResponse);
