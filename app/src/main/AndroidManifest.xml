@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity android:name=".DeleteRoleActivity"></activity>
+        <activity android:name=".ui.documents.SendDocumentActivity"/>
         <activity android:name=".ui.institutions.AddNewRoleActivity" />
         <activity android:name=".ui.institutions.CreateInstitutionActivity" />
         <activity android:name=".ui.institutions.SelectedInstitutionActivity" />
